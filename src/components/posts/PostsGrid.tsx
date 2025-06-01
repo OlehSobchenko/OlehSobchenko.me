@@ -24,7 +24,7 @@ export default function PostsGrid() {
             1024: 1,
         } }
         className="flex gap-32"
-        columnClassName="bg-clip-padding"
+        columnClassName="posts-column bg-clip-padding"
     >
         { fullPosts.map(post => <PostCard
             key={ post.id }

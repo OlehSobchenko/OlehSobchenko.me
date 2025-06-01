@@ -1,4 +1,6 @@
-import './globals.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import '@/app/globals.css';
+import '@/styles/datepicker.css';
 import type { Metadata } from 'next';
 import { Roboto_Condensed } from 'next/font/google';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';

@@ -13,7 +13,8 @@ const PostHeaderTitle: React.FC<{
     }
 
     return <div
-        className="flex max-w-full text-lg leading-tight py-1 overflow-hidden text-ellipsis whitespace-nowrap md:text-xl md:leading-xl">
+        className="flex max-w-full text-lg leading-tight overflow-hidden text-ellipsis whitespace-nowrap md:text-xl md:leading-xl"
+    >
         { type && <span className="uppercase">
           { getLocalized(type.name, lang) }
         </span> }

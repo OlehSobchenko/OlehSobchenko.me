@@ -1,14 +1,11 @@
 'use client';
 import PostsGrid from '@/components/posts/PostsGrid';
-import { useTranslations } from 'next-intl';
+import PostsFilter from '@/components/posts/PostsFilter';
+import PostsTitle from '@/components/posts/PostsTitle';
 
 export default function PostsContainer() {
-    const t = useTranslations('PostsContainer');
-
     return <div className="lg:p-16 p-8">
-        <div className="lg:text-8xl text-6xl uppercase lg:pb-16 pb-8">
-            { t('title') }
-        </div>
+        <PostsFilter title={ <PostsTitle/> }/>
         <PostsGrid/>
     </div>;
 }
