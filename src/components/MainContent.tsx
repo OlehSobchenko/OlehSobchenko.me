@@ -1,3 +1,4 @@
+import './globals.css';
 import portrait from '@/img/main-photo.svg';
 import PersonInfo from '@/components/specific/PersonInfo';
 import ScrollDown from '@/components/specific/ScrollDown';
