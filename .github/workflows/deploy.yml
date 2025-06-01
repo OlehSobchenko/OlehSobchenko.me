@@ -57,10 +57,6 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Add index.html to root
-        run: |
-          echo '<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=./uk/"></head><body>Redirecting to <a href="./uk/">Ukrainian version</a>...</body></html>' > ./out/index.html
-
       - name: List build output
         run: ls -la ./out
 
