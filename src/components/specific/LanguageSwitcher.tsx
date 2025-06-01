@@ -2,10 +2,10 @@
 
 import Modal from '@/components/base/Modal';
 import { useLocale } from 'use-intl';
-import changeLocale from '@/actions/changeLocale';
 import { languages } from '@/i18n/config';
 import { useTranslations } from 'next-intl';
 import useOpen from '@/utils/hooks/useOpen';
+import changeLocale from '@/utils/changeLocale';
 
 export default function LanguageSwitcher() {
     const { open, close, opened } = useOpen();

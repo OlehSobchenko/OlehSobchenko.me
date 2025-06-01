@@ -1,4 +1,4 @@
-'use server';
+'use client';
 
 import React from 'react';
 import Modal from '@/components/base/Modal';
@@ -7,14 +7,14 @@ import { Languages } from '@/i18n/config';
 import PostHeaderTitle from '@/components/posts/parts/PostHeaderTitle';
 import PostDate from '@/components/posts/parts/PostDate';
 import PostHeaderIcon from '@/components/posts/parts/PostHeaderIcon';
-import getPost from '@/actions/getPost';
-import { getLocale } from 'next-intl/server';
-import { Params } from 'next/dist/server/request/params';
+import { useParams } from 'next/navigation';
+import { useLocale } from 'use-intl';
+import getPost from '@/utils/getPost';
 
-export default async function Page({ params }: { params: Promise<Params> }) {
-    const { id } = await params;
-    const locale = await getLocale() as Languages;
-    const post = await getPost(String(id));
+export default function Page() {
+    const { id } = useParams();
+    const locale = useLocale() as Languages;
+    const post = getPost(String(id));
 
     if (!post) {
         return null;
@@ -41,4 +41,3 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         <PostCard post={ post } lang={ locale } short={ false } fullImage/>
     </Modal>;
 }
-

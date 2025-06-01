@@ -1,6 +1,6 @@
 'use client';
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
-import redirectTo from '@/actions/redirectTo';
+import redirectTo from '@/utils/redirectTo';
 
 export interface ModalProps {
     open: boolean;
