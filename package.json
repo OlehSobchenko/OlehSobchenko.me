@@ -14,8 +14,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export"
   },
+  "homepage": "https://olehsobchenko.me",
   "dependencies": {
     "htmlparser2": "^10.0.0",
     "next": "^15.3.2",
