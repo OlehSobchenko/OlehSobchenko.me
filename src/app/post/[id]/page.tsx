@@ -1,33 +1,29 @@
+'use server';
+
 import Modal from '@/components/base/Modal';
-import redirectTo from '@/actions/redirectTo';
-import { useParams } from 'next/navigation';
 import posts from '@/data/posts.json';
 import categories from '@/data/categories.json';
 import types from '@/data/types.json';
 import PostCard from '@/components/posts/PostCard';
-import { useLocale } from 'use-intl';
 import { Languages } from '@/i18n/config';
 import PostHeaderTitle from '@/components/posts/parts/PostHeaderTitle';
 import PostDate from '@/components/posts/parts/PostDate';
 import PostHeaderIcon from '@/components/posts/parts/PostHeaderIcon';
 import React from 'react';
 import { Post } from '@/components/posts/types';
+import { getLocale } from 'next-intl/server';
 
-export function generateStaticParams() {
-  return posts.map(post => ({ id: post.path || post.id }));
-}
-
-    'use client';
-
-export default function Page() {
-    const { id } = useParams<{ id?: string; }>();
+export default async function Page(
+    { params }: { params: Promise<{ id: string }> },
+) {
+    const { id } = await params;
     const post = posts.find(post => post.path === id);
     const fullPost: Post | null = post ? {
         ...post,
         type: types.find(type => type.id === post.typeId),
         category: categories.find(category => category.id === post.categoryId),
     } : null;
-    const locale = useLocale() as Languages;
+    const locale = await getLocale() as Languages;
 
     if (!fullPost) {
         return null;
@@ -50,7 +46,6 @@ export default function Page() {
                 <PostDate happenedAt={ fullPost.happenedAt }/>
             </div>
         </div> }
-        onClose={ () => redirectTo('/') }
     >
         <PostCard post={ fullPost } lang={ locale } short={ false } fullImage/>
     </Modal>;

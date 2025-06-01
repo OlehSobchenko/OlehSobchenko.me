@@ -2,16 +2,9 @@ import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
-    output: 'export',
-    trailingSlash: true,
-    images: {
-        unoptimized: true
-    },
+    output: 'standalone',
 };
 
-const withNextIntl = createNextIntlPlugin({
-    locales: ['uk', 'en'],
-    defaultLocale: 'uk'
-});
+const withNextIntl = createNextIntlPlugin();
 
 export default withNextIntl(nextConfig);
