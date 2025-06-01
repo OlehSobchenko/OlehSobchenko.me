@@ -1,11 +1,16 @@
+'use client';
+
 import portrait from '@/img/main-photo.svg';
 import PersonInfo from '@/components/specific/PersonInfo';
 import ScrollDown from '@/components/specific/ScrollDown';
 import MainContentActions from '@/components/MainContentActions';
 import PostsContainer from '@/components/posts/PostsContainer';
 
-export default async function MainContent() {
-    return <div className="relative" id="main-content">
+export default function MainContent() {
+    return <div
+        id="main-content"
+        className="relative max-w-[1920px] ml-auto mr-auto"
+    >
         <div
             id="main-background"
             className={ 'lg:bg-[75%_calc(100%+2px)] bg-[center_calc(100%+2px)] h-screen bg-no-repeat lg:bg-size-[65vh] bg-size-[50vh] bg-position-y-[calc(100% + 2px)] lg:bg-position-x-[75%] bg-position-x-[50%]' }

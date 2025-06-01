@@ -1,6 +1,6 @@
 'use client';
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
-import redirectTo from '@/utils/redirectTo';
+import { useRouter } from 'next/navigation';
 
 export interface ModalProps {
     open: boolean;
@@ -10,7 +10,8 @@ export interface ModalProps {
 }
 
 export default function Modal(props: PropsWithChildren<ModalProps>) {
-    const { open, onClose = () => redirectTo('/'), title, children } = props;
+    const router = useRouter();
+    const { open, onClose = () => router.push('/'), title, children } = props;
 
     useEffect(() => {
         if (open) {

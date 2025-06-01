@@ -6,8 +6,8 @@ import getLocalized from '@/utils/getLocalized';
 const PostImage: React.FC<{
     image?: Post['image'];
     lang: Languages;
-    fullImage: boolean;
-}> = ({ image, lang, fullImage }) => {
+    short: boolean;
+}> = ({ image, lang, short }) => {
     if (!image || (
         !image.data && !image.link
     )) {
@@ -23,13 +23,13 @@ const PostImage: React.FC<{
         return null;
     }
 
-    if (!fullImage) {
+    if (short) {
         return <div className="lg:m-0 ml-[-32px] mr-[-32px] relative pt-4 pb-4">
             <img src={ imgSrc } alt="" className="w-full"/>
         </div>;
     }
 
-    return <div className="relative mt-4 mb-4">
+    return <div className="relative mt-4 mb-4 flex justify-center">
         <img src={ imgSrc } alt="" className="absolute top-0 left-0 w-full [height:calc(100%-32px)] object-cover blur-[20px] scale-x-[1.1] z-[1] mt-4"/>
         <img src={ imgSrc } alt="" className="relative z-[2] max-w-full max-h-full object-contain"/>
     </div>;

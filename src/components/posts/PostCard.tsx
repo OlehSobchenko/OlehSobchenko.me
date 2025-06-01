@@ -25,7 +25,7 @@ interface PostCardProps {
 }
 
 const PostCard: React.FC<PostCardProps> = props => {
-    const { post, lang, short = true, fullImage = false, onOpenFull } = props;
+    const { post, lang, short = true, onOpenFull } = props;
 
     const maxDescriptionLength = 200;
 
@@ -67,9 +67,9 @@ const PostCard: React.FC<PostCardProps> = props => {
             <PostImage
                 image={ post.image }
                 lang={ lang }
-                fullImage={ fullImage }
+                short={ short }
             />
-            <PostVideo video={ post.video } lang={ lang }/>
+            <PostVideo video={ post.video } lang={ lang } short={ short }/>
         </div>
 
         <div className="mx-main-spacing md:mx-main-spacing-lg">

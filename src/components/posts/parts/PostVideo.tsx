@@ -28,7 +28,8 @@ const getVideoContent = (
 const PostVideo: React.FC<{
     video?: Post['video'];
     lang: Languages;
-}> = ({ video, lang }) => {
+    short: boolean;
+}> = ({ video, lang, short }) => {
     if (!video || (!video.link && !video.data)) {
         return null;
     }
@@ -39,7 +40,13 @@ const PostVideo: React.FC<{
         return null;
     }
 
-    return <div className="py-4 lg:m-0 ml-[-34px] mr-[-34px]">
+    return <div
+        className={
+            short
+                ? 'py-4 lg:m-0 ml-[-34px] mr-[-34px]'
+                : 'py-4 lg:m-0 lg:ml-[-64px] lg:mr-[-64px] ml-[-34px] mr-[-34px]'
+        }
+    >
         <div className="video-wrapper relative pb-[56.25%] h-0">
             { content }
         </div>

@@ -4,29 +4,6 @@ import useOpen from '@/utils/hooks/useOpen';
 import Modal from '@/components/base/Modal';
 import { useTranslations } from 'next-intl';
 
-// .standard-input {
-//   background-color: transparent;
-//   border: none;
-//   border-bottom: 4px solid var(--main-color);
-//   padding: 10px 12px;
-//   height: 32px;
-//   font-weight: 700;
-//   font-family: "Roboto Condensed", Roboto, serif;
-//   font-size: 32px;
-//   color: var(--main-color);
-// }
-//
-// .standard-input::placeholder {
-//   font-weight: 700;
-//   font-family: "Roboto Condensed", Roboto, serif;
-//   font-size: 32px;
-//   color: var(--input-placeholder-color);
-// }
-//
-// .standard-input:focus {
-//   outline: none;
-// }
-
 export default function PostsSearch() {
     const { open, close, opened } = useOpen();
     const t = useTranslations('PostsSearch');
