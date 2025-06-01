@@ -10,3 +10,8 @@ export const languages: Localization = {
 };
 
 export const locales = <Languages[]>Object.keys(languages);
+
+// This is used for static export with Next.js app router
+export const getLocaleStaticParams = () => {
+    return locales.map(locale => ({ locale }));
+};

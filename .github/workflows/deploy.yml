@@ -55,9 +55,13 @@ jobs:
       - name: Build with Next.js
         run: npm run build
         env:
-          PAGES_BASE_PATH: ${{ steps.setup_pages.outputs.base_path }}
           NODE_ENV: production
-          NODE_ENV: production
+
+      - name: List build output
+        run: ls -la ./out
+
+      - name: List directories in output
+        run: find ./out -type d | sort
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
