@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
     },
 };
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin({
+    locales: ['uk', 'en'],
+    defaultLocale: 'uk'
+});
 
 export default withNextIntl(nextConfig);

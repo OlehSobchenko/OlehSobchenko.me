@@ -1,5 +1,3 @@
-'use client';
-
 import Modal from '@/components/base/Modal';
 import redirectTo from '@/actions/redirectTo';
 import { useParams } from 'next/navigation';
@@ -14,6 +12,12 @@ import PostDate from '@/components/posts/parts/PostDate';
 import PostHeaderIcon from '@/components/posts/parts/PostHeaderIcon';
 import React from 'react';
 import { Post } from '@/components/posts/types';
+
+export function generateStaticParams() {
+  return posts.map(post => ({ id: post.path || post.id }));
+}
+
+    'use client';
 
 export default function Page() {
     const { id } = useParams<{ id?: string; }>();
