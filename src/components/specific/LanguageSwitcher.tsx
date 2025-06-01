@@ -1,18 +1,17 @@
 'use client';
 
 import Modal from '@/components/base/Modal';
-import { useLocale } from 'use-intl';
-import { languages } from '@/i18n/config';
+import { Languages, languages } from '@/i18n/config';
 import { useTranslations } from 'next-intl';
 import useOpen from '@/utils/hooks/useOpen';
-import changeLocale from '@/utils/changeLocale';
+import { useLocaleContext } from '@/components/providers/LocaleProvider';
 
 export default function LanguageSwitcher() {
     const { open, close, opened } = useOpen();
-    const locale = useLocale();
+    const { setLocale, locale } = useLocaleContext();
     const t = useTranslations('LanguageSwitcher');
 
-    const handleChangeLanguage = (language: string) => changeLocale(language);
+    const handleChangeLanguage = (language: Languages) => setLocale(language);
 
     return <>
         <div className="cursor-pointer lg:p-2 p-1" onClick={ open }>
@@ -36,7 +35,9 @@ export default function LanguageSwitcher() {
                 { Object.entries(languages).map(([langCode, langName]) => <div
                     key={ langCode }
                     className="flex items-center gap-x-2 cursor-pointer text-3xl"
-                    onClick={ () => handleChangeLanguage(langCode) }
+                    onClick={
+                        () => handleChangeLanguage(langCode as Languages)
+                    }
                 >
                     <div>{ langName }</div>
                     { locale === langCode && <svg

@@ -1,3 +1,4 @@
+'use client';
 import PostsGrid from '@/components/posts/PostsGrid';
 import { useTranslations } from 'next-intl';
 
