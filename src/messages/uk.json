@@ -1,0 +1,31 @@
+{
+  "main": {
+    "title": "Олег Собченко",
+    "description": "Хочу щоб всі були злі, веселі і добре почувалися"
+  },
+  "PersonInfo": {
+    "firstName": "Олег",
+    "lastName": "Собченко",
+
+    "quote": "Хочу щоб всі були злі, \nвеселі і добре почувалися"
+  },
+  "LanguageSwitcher": {
+    "title": "Мова"
+  },
+  "Biography": {
+    "title": "Біографія"
+  },
+  "PostsSearch": {
+    "search": "Пошук...",
+    "results": "Результати"
+  },
+  "PostLink": {
+    "title": "Відкрити посилання"
+  },
+  "PostOpenFull": {
+    "title": "Читати повністю"
+  },
+  "PostsContainer": {
+    "title": "Життєпис"
+  }
+}

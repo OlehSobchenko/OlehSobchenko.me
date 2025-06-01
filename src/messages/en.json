@@ -1,0 +1,30 @@
+{
+  "main": {
+    "title": "Oleh Sobchenko",
+    "description": "I want everyone to be angry, cheerful, and feel good"
+  },
+  "PersonInfo": {
+    "firstName": "Oleh",
+    "lastName": "Sobchenko",
+    "quote": "I want everyone to be angry, \ncheerful, and feel good"
+  },
+  "LanguageSwitcher": {
+    "title": "Language"
+  },
+  "Biography": {
+    "title": "Biography"
+  },
+  "PostsSearch": {
+    "search": "Search...",
+    "results": "Results"
+  },
+  "PostLink": {
+    "title": "Open link"
+  },
+  "PostOpenFull": {
+    "title": "Open full post"
+  },
+  "PostsContainer": {
+    "title": "Story of life"
+  }
+}
