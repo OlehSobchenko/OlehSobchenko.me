@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { PropsWithChildren } from 'react';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { LocaleProvider } from '@/components/providers/LocaleProvider';
+import { PostsProvider } from '@/components/providers/PostsProvider';
 
 const robotoCondensed = Roboto_Condensed({
     subsets: ['latin', 'cyrillic'],
@@ -38,7 +39,9 @@ export default async function RootLayout(
         >
             <ThemeProvider>
                 <LocaleProvider>
-                    { children }
+                    <PostsProvider>
+                        { children }
+                    </PostsProvider>
                 </LocaleProvider>
             </ThemeProvider>
         </body>

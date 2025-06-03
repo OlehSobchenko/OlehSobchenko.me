@@ -34,7 +34,6 @@ export const ProgressBar = () => {
             const minutes = Math.floor(time / 60);
             const seconds = Math.floor(time % 60);
 
-            // Convert to string and pad with leading zeros if necessary
             const formatMinutes = minutes.toString().padStart(2, '0');
             const formatSeconds = seconds.toString().padStart(2, '0');
 
@@ -66,8 +65,8 @@ export const ProgressBar = () => {
             />
         </Slider.Root>
         <div className="flex justify-between">
-            <span className="p-3">{ formatTime(timeProgress) }</span>
-            <span className="p-3">{ formatTime(duration) }</span>
+            <span className="p-3 pt-5 pb-1">{ formatTime(timeProgress) }</span>
+            <span className="p-3 pt-5 pb-1">{ formatTime(duration) }</span>
         </div>
     </div>;
 };

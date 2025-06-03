@@ -40,8 +40,8 @@ export type Post = {
   typeId?: string;
   type?: Type;
   category?: Category;
-  createdAt?: string;
-  happenedAt?: string;
+  createdAt: string;
+  happenedAt: string;
   shortDescription?: Localization;
   description?: Localization;
   quote?: Localization;

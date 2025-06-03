@@ -13,9 +13,10 @@ export const Controls = () => {
         duration,
         setTimeProgress,
         progressBarRef,
-        // setCurrentTrack,
+        setCurrentTrack,
         playing,
         setPlaying,
+        tracks,
     } = useAudioPlayerContext();
 
     const playAnimationRef = useRef<number | null>(null);
@@ -78,44 +79,49 @@ export const Controls = () => {
         }
     };
 
-    const skipForward = () => {
-        if (audioRef.current) {
-            audioRef.current.currentTime += 15;
-            updateProgress();
-        }
-    };
-
-    const skipBackward = () => {
-        if (audioRef.current) {
-            audioRef.current.currentTime -= 15;
-            updateProgress();
-        }
-    };
-
     const handlePrevious = useCallback(() => {
-        // setTrackIndex((prev) => {
-        //     const newIndex = isShuffle
-        //         ? Math.floor(Math.random() * tracks.length)
-        //         : prev === 0
-        //             ? tracks.length - 1
-        //             : prev - 1;
-        //     setCurrentTrack(tracks[newIndex]);
-        //
-        //     return newIndex;
-        // });
-    }, []);
+        setCurrentTrack(prev => {
+            const trackIndex = prev
+                ? tracks.findIndex(
+                    track => track.src === prev?.src,
+                )
+                : -1
+            ;
+
+            if (trackIndex === -1) {
+                return prev;
+            }
+
+            const newIndex = trackIndex === 0
+                ? tracks.length - 1
+                : trackIndex - 1
+            ;
+
+            return tracks[newIndex];
+        });
+    }, [setCurrentTrack, tracks]);
 
     const handleNext = useCallback(() => {
-        // setTrackIndex((prev) => {
-        //     const newIndex = isShuffle
-        //         ? Math.floor(Math.random() * tracks.length)
-        //         : prev >= tracks.length - 1
-        //             ? 0
-        //             : prev + 1;
-        //     setCurrentTrack(tracks[newIndex]);
-        //     return newIndex;
-        // });
-    }, []);
+        setCurrentTrack(prev => {
+            const trackIndex = prev
+                ? tracks.findIndex(
+                    track => track.src === prev?.src,
+                )
+                : -1
+            ;
+
+            if (trackIndex === -1) {
+                return prev;
+            }
+
+            const newIndex = trackIndex === tracks.length - 1
+                ? 0
+                : trackIndex + 1
+            ;
+
+            return tracks[newIndex];
+        });
+    }, [setCurrentTrack, tracks]);
 
     return <div className="flex gap-4 items-center">
         <audio
@@ -125,22 +131,9 @@ export const Controls = () => {
         />
         <button onClick={ handlePrevious } className="cursor-pointer">
             <svg
+                className="md:w-8 md:h-8 w-7 h-7"
                 xmlns="http://www.w3.org/2000/svg"
-                height="32px"
                 viewBox="0 -960 960 960"
-                width="32px"
-            >
-                <path
-                    d="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"
-                />
-            </svg>
-        </button>
-        <button onClick={ skipBackward } className="cursor-pointer">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="32px"
-                viewBox="0 -960 960 960"
-                width="32px"
             >
                 <path
                     d="M860-240 500-480l360-240v480Zm-400 0L100-480l360-240v480Zm-80-240Zm400 0Zm-400 90v-180l-136 90 136 90Zm400 0v-180l-136 90 136 90Z"
@@ -153,38 +146,24 @@ export const Controls = () => {
         >
             { playing
                 ? <svg
+                    className="md:w-16 md:h-16 w-12 h-12"
                     xmlns="http://www.w3.org/2000/svg"
-                    height="56px"
                     viewBox="0 -960 960 960"
-                    width="56px"
                 >
                     <path
                         d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"
                     />
                 </svg>
                 : <svg
+                    className="md:w-16 md:h-16 w-12 h-12"
                     xmlns="http://www.w3.org/2000/svg"
-                    height="56px"
                     viewBox="0 -960 960 960"
-                    width="56px"
                 >
                     <path
                         d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"
                     />
                 </svg>
             }
-        </button>
-        <button onClick={ skipForward } className="cursor-pointer">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="32px"
-                viewBox="0 -960 960 960"
-                width="32px"
-            >
-                <path
-                    d="M100-240v-480l360 240-360 240Zm400 0v-480l360 240-360 240ZM180-480Zm400 0Zm-400 90 136-90-136-90v180Zm400 0 136-90-136-90v180Z"
-                />
-            </svg>
         </button>
         <button onClick={ handleNext } className="cursor-pointer">
             <svg
@@ -194,7 +173,7 @@ export const Controls = () => {
                 width="32px"
             >
                 <path
-                    d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Zm80-240Zm0 90 136-90-136-90v180Z"
+                    d="M100-240v-480l360 240-360 240Zm400 0v-480l360 240-360 240ZM180-480Zm400 0Zm-400 90 136-90-136-90v180Zm400 0 136-90-136-90v180Z"
                 />
             </svg>
         </button>
