@@ -26,5 +26,10 @@
   },
   "PostsContainer": {
     "title": "Story of life"
+  },
+  "PostsFilterContainer": {
+    "types": "Types",
+    "categories": "Categories",
+    "dates": "Dates"
   }
 }

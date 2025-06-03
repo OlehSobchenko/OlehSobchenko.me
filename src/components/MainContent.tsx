@@ -7,10 +7,7 @@ import MainContentActions from '@/components/MainContentActions';
 import PostsContainer from '@/components/posts/PostsContainer';
 
 export default function MainContent() {
-    return <div
-        id="main-content"
-        className="relative max-w-[1920px] ml-auto mr-auto"
-    >
+    return <div id="main-content" className="relative">
         <div
             id="main-background"
             className={ 'lg:bg-[75%_calc(100%+2px)] bg-[center_calc(100%+2px)] h-screen bg-no-repeat lg:bg-size-[65vh] bg-size-[50vh] bg-position-y-[calc(100% + 2px)] lg:bg-position-x-[75%] bg-position-x-[50%]' }
@@ -18,15 +15,19 @@ export default function MainContent() {
                 backgroundImage: `linear-gradient(to bottom, var(--gradient-background-color-start) 80%, var(--gradient-background-color-end)), url("${ portrait.src }")`,
             } }
         >
-            <div className="h-screen lg:pt-16 lg:pl-16 lg:pr-16 pt-8 pl-8 pb-8">
-                <div
-                    className="flex h-full lg:items-center lg:pl-16">
-                    <PersonInfo/>
+            <div className="relative max-w-[1920px] ml-auto mr-auto">
+                <MainContentActions/>
+                <div className="h-screen lg:pt-16 lg:pl-16 lg:pr-16 pt-8 pl-8 pb-8">
+                    <div
+                        className="flex h-full lg:items-center lg:pl-16">
+                        <PersonInfo/>
+                    </div>
                 </div>
             </div>
         </div>
-        <MainContentActions/>
-        <ScrollDown/>
-        <PostsContainer/>
+        <div className="max-w-[1920px] ml-auto mr-auto">
+            <ScrollDown/>
+            <PostsContainer/>
+        </div>
     </div>;
 }

@@ -27,5 +27,10 @@
   },
   "PostsContainer": {
     "title": "Життєпис"
+  },
+  "PostsFilterContainer": {
+    "types": "Типи дописів",
+    "categories": "Категорії",
+    "dates": "Дати"
   }
 }

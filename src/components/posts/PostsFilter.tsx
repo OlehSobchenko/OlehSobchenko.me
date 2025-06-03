@@ -8,9 +8,9 @@ export interface PostsFilterProps {
 export default function PostsFilter({ title }: PostsFilterProps) {
     const [openFilter, setOpenFilter] = useState(false);
 
-    return <div className="uppercase">
+    return <div className="uppercase lg:pb-16 pb-8">
         <div
-            className="flex justify-between items-center gap-x-4 lg:pb-16 pb-8"
+            className="flex justify-between items-center gap-x-4 lg:pb-8 pb-4"
         >
             { title }
             <div

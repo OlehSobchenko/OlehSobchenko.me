@@ -1,9 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import {
+    useAudioPlayerContext,
+} from '@/components/providers/AudioPlayerProvider';
+import { AudioPlayer } from '@/components/audio/AudioPlayer';
+import { useEffect, useState } from 'react';
 
 export default function AudioControl() {
-    const [playing, setPlaying] = useState(false);
+    const { playing, setPlaying } = useAudioPlayerContext();
+    const [openDrawer, setOpenDrawer] = useState(false);
+
+    useEffect(() => {
+        if (!openDrawer && playing) {
+            setOpenDrawer(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [playing]);
+
+    useEffect(() => {
+        if (!openDrawer) {
+            setPlaying(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [openDrawer]);
 
     const handlePlay = () => {
         setPlaying(prev => !prev);
@@ -13,7 +32,7 @@ export default function AudioControl() {
         <div
             className={
                 `cursor-pointer mt-8 lg:fixed lg:right-16 lg:bottom-16 ${
-                    playing ? 'lg:hidden' : '' }`
+                    openDrawer ? 'lg:hidden' : '' }`
             }
             onClick={ handlePlay }
         >
@@ -34,5 +53,6 @@ export default function AudioControl() {
                 }
             </svg>
         </div>
+        { openDrawer && <AudioPlayer onClose={ () => setOpenDrawer(false) }/> }
     </>;
 }

@@ -12,7 +12,7 @@ export default function PersonInfo() {
             <div className="flex items-baseline justify-between">
                 <PersonName>{ t('firstName') }</PersonName>
                 <div className="person-dates">
-                    1973 - 2023
+                    1973 – 2023
                 </div>
             </div>
             <PersonName>{ t('lastName') }</PersonName>
