@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import { uk } from 'date-fns/locale/uk';
+import DatePicker from 'react-datepicker';
+
 import { useLocale } from 'use-intl';
 import Accordion from '@/components/base/Accordion';
 import OutlinedButton from '@/components/base/OutlinedButton';
@@ -8,8 +8,6 @@ import { Languages } from '@/i18n/config';
 import classNames from '@/utils/classNames';
 import { useTranslations } from 'next-intl';
 import { usePostsContext } from '@/components/providers/PostsProvider';
-
-registerLocale('uk', uk);
 
 export interface SelectableButtonsFilterProps {
     title: ReactNode;

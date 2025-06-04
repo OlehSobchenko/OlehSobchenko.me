@@ -1,11 +1,18 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Languages, defaultLocale } from '@/i18n/config';
+import { Languages, defaultLocale, locales } from '@/i18n/config';
 import { NextIntlClientProvider } from 'next-intl';
 import en from '@/messages/en.json';
 import uk from '@/messages/uk.json';
 import { LOCALE_COOKIE_NAME } from '@/i18n/store';
+import * as dateFnsLocales from 'date-fns/locale/uk';
+import { registerLocale } from 'react-datepicker';
+
+
+for (const locale of locales) {
+    registerLocale(locale, (dateFnsLocales as any)[locale]);
+}
 
 type LocaleContextType = {
     locale: Languages;
