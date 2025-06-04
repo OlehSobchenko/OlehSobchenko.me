@@ -47,6 +47,20 @@ export async function generateMetadata(): Promise<Metadata> {
             'Собченко',
             'Олег Собченко',
         ],
+        openGraph: {
+            type: 'website',
+            url: 'https://olehsobchenko.me',
+            title: t('title'),
+            description: t('description'),
+            siteName: t('title'),
+            images: [
+                {
+                    url: 'https://olehsobchenko.me/android-chrome-512x512.png',
+                }, {
+                    url: 'https://olehsobchenko.me/main-photo.svg',
+                },
+            ],
+        },
     };
 }
 
@@ -71,15 +85,6 @@ export default async function RootLayout(
                 color="#000000"
             />
             <meta name="msapplication-TileColor" content="#000000"/>
-            <meta property="og:title" content={ t('title') }/>
-            <meta property="og:description" content={ t('description') }/>
-            <meta property="og:type" content="website"/>
-            <meta property="og:url" content="https://olehsobchenko.me"/>
-            <meta
-                property="og:image"
-                content="https://olehsobchenko.me/android-chrome-512x512.png"
-            />
-            <meta property="og:image:alt" content="/favicon.ico"/>
         </head>
         <body
             className={
