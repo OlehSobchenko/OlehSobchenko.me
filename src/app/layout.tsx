@@ -89,7 +89,7 @@ export default async function RootLayout(
             />
             <meta
                 property="og:image"
-                content="https://olehsobchenko.me/favicon.ico"
+                content="https://olehsobchenko.me/favicon-512x512.ico"
             />
             <meta property="og:type" content="website"/>
             <meta name="theme-color" content="#000000"/>
