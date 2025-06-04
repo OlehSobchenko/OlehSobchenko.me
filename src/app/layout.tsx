@@ -85,10 +85,6 @@ export default async function RootLayout(
             <meta property="og:site_name" content={ t('title') }/>
             <meta
                 property="og:image"
-                content="https://olehsobchenko.me/main-photo.svg"
-            />
-            <meta
-                property="og:image"
                 content="https://olehsobchenko.me/favicon-512x512.ico"
             />
             <meta property="og:type" content="website"/>
