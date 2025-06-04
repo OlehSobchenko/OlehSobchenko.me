@@ -85,11 +85,11 @@ export default async function RootLayout(
             <meta property="og:site_name" content={ t('title') }/>
             <meta
                 property="og:image"
-                content="https://olehsobchenko.me/android-chrome-192x192.png"
+                content="https://olehsobchenko.me/main-photo.svg"
             />
             <meta
                 property="og:image"
-                content="https://olehsobchenko.me/main-photo.svg"
+                content="https://olehsobchenko.me/favicon.ico"
             />
             <meta property="og:type" content="website"/>
             <meta name="theme-color" content="#000000"/>
