@@ -85,7 +85,7 @@ export default async function RootLayout(
             <meta property="og:site_name" content={ t('title') }/>
             <meta
                 property="og:image"
-                content="https://olehsobchenko.me/android-chrome-512x512.png"
+                content="https://olehsobchenko.me/android-chrome-192x192.png"
             />
             <meta
                 property="og:image"
