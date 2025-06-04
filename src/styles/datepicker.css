@@ -110,3 +110,17 @@
 .react-datepicker__navigation--previous {
     left: 14px;
 }
+
+@media (max-width: 480px) {
+    .react-datepicker__day {
+        font-size: 20px;
+    }
+
+    .react-datepicker__day-name {
+        font-size: 12px;
+    }
+
+    .react-datepicker__week-number {
+        font-size: 12px;
+    }
+}

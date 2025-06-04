@@ -76,7 +76,22 @@ export default async function RootLayout(
                 name="viewport"
                 content="width=device-width, initial-scale=1"
             />
-            <link rel="manifest" href="site.webmanifest"/>
+            <meta property="og:title" content={ t('title') }/>
+            <meta
+                property="og:description"
+                content={ t('description') }
+            />
+            <meta property="og:url" content="https://olehsobchenko.me"/>
+            <meta property="og:site_name" content={ t('title') }/>
+            <meta
+                property="og:image"
+                content="https://olehsobchenko.me/android-chrome-512x512.png"
+            />
+            <meta
+                property="og:image"
+                content="https://olehsobchenko.me/main-photo.svg"
+            />
+            <meta property="og:type" content="website"/>
             <meta name="theme-color" content="#000000"/>
             <link rel="manifest" href="/site.webmanifest"/>
             <link
@@ -92,13 +107,13 @@ export default async function RootLayout(
             }
             suppressHydrationWarning
         >
-            <ThemeProvider>
-                <LocaleProvider>
-                    <PostsProvider>
-                        { children }
-                    </PostsProvider>
-                </LocaleProvider>
-            </ThemeProvider>
+        <ThemeProvider>
+            <LocaleProvider>
+                <PostsProvider>
+                    { children }
+                </PostsProvider>
+            </LocaleProvider>
+        </ThemeProvider>
         </body>
     </html>;
 }
