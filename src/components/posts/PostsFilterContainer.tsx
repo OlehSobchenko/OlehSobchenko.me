@@ -54,12 +54,16 @@ type Filers = 'categories' | 'types';
 
 const SELECTABLE_FILTERS = ['categories', 'types'] as const;
 
+function getElementOrNull<T>(array?: T[] | null, index: number = 0): T | null {
+    return (array || [])[index] || null;
+}
+
 export default function PostsFilterContainer() {
     const { filter, ...rest } = usePostsContext();
     const locale = useLocale() as Languages;
     const t = useTranslations('PostsFilterContainer');
-    const startDate = (filter.options.dates || [])[0] || null;
-    const endDate = (filter.options.dates || [])[1] || null;
+    const startDate = getElementOrNull(filter.options.dates);
+    const endDate = getElementOrNull(filter.options.dates, 1);
 
     const onDatesChange = (dates: [Date | null, Date | null]) => {
         filter.set(prev => ({ ...prev, dates }));
@@ -91,7 +95,7 @@ export default function PostsFilterContainer() {
         />) }
         <Accordion title={ t('dates') }>
             <DatePicker
-                selected={ (filter.options.dates || [])[0] || null }
+                selected={ startDate }
                 onChange={ onDatesChange }
                 startDate={ startDate }
                 endDate={ endDate }

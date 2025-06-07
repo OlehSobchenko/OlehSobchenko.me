@@ -13,14 +13,15 @@ import {
 import { Category, Post, Type } from '@/components/posts/types';
 
 export interface FilterOptions {
-    categories?: string[];
-    types?: string[];
-    dates?: [Date | null, Date | null];
+    categories: string[];
+    types: string[];
+    dates: [Date | null, Date | null];
 }
 
 export interface FilterUtils {
     options: FilterOptions;
     set: Dispatch<SetStateAction<FilterOptions>>;
+    empty: boolean;
 }
 
 export interface PostsContextType {
@@ -56,7 +57,11 @@ export const PostsProvider = (
     const [categories, setCategories] = useState<Type[]>([]);
     const [types, setTypes] = useState<Category[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
+    const [filterOptions, setFilterOptions] = useState<FilterOptions>({
+        dates: [null, null],
+        types: [],
+        categories: [],
+    });
     const [size, setSize] = useState<number>(6);
 
     useEffect(() => {
@@ -156,6 +161,11 @@ export const PostsProvider = (
             filter: {
                 options: filterOptions,
                 set: setFilterOptions,
+                empty: Object.values(filterOptions).every(
+                    i => !i.length || Array.isArray(i)
+                        ? i.every((ii: unknown) => !ii)
+                        : false,
+                ),
             },
         } }
     >
