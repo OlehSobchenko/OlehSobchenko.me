@@ -19,16 +19,21 @@ collections:
     label: Дописи
     folder: content/posts
     create: true
-    slug: "{{slug}}"
+    slug: "{{path}}"
     format: json
     i18n: true
     editor:
       preview: false
     fields:
+      - label: ID
+        name: id
+        widget: uuid
+        i18n: duplicate
+        required: true
       - label: "Шлях (допис буде доступний за цим шляхом у посиланні)"
         name: path
         widget: string
-        default: "{{slug}}"
+        hint: "Намагайтеся створити якомога коротший шлях, надавайте перевагу використанню транслітерованого шляху латиницею"
       - label: Заголовок
         name: title
         widget: string
@@ -41,12 +46,15 @@ collections:
     label: Категорії
     folder: content/categories
     create: true
-    slug: "{{slug}}"
+    slug: "{{id}}"
+    format: json
+    i18n: true
     fields:
       - label: ID
         name: id
-        widget: string
-        default: {{slug}}
+        widget: uuid
+        i18n: duplicate
+        required: true
       - label: Назва
         name: name
         widget: string
@@ -55,12 +63,15 @@ collections:
     label: Типи дописів
     folder: content/types
     create: true
-    slug: "{{slug}}"
+    slug: "{{id}}"
+    format: json
+    i18n: true
     fields:
       - label: ID
         name: id
-        widget: string
-        default: {{slug}}
+        widget: uuid
+        i18n: duplicate
+        required: true
       - label: Назва
         name: name
         widget: string

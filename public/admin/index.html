@@ -28,7 +28,21 @@
     </style>
 </head>
 <body>
-<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+<script>
+    window.CMS_MANUAL_INIT = true;
+</script>
+<script src="https://unpkg.com/netlify-cms-widget-uuid-v4@^1.0.12/dist/index.js"></script>
+<script src="https://unpkg.com/react@^18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@^18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/decap-cms-app/dist/decap-cms-app.js"></script>
 <script src="https://unpkg.com/decap-cms-locales@3.3.0/dist/decap-cms-locales.js"></script>
+<script type="text/javascript">
+    DecapCmsApp.registerWidget(
+        'uuid',
+        uuidWidget.UuidControl,
+        uuidWidget.UuidPreview,
+    );
+    DecapCmsApp.init();
+</script>
 </body>
 </html>
