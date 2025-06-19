@@ -2,8 +2,10 @@
 import MainContent from '@/components/MainContent';
 import { useEffect, useState } from 'react';
 import PostModal from '@/components/posts/PostModal';
+import { useRouter } from 'next/navigation';
 
 export default function Custom404() {
+    const router = useRouter();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -18,6 +20,14 @@ export default function Custom404() {
 
     if (path == 'post' && id) {
         return <PostModal id={ id }/>;
+    }
+
+    if (path == 'admin') {
+        router.push('/admin/index.html');
+
+        return <div className="w-full h-screen justify-center items-center flex">
+            <p>Redirecting...</p>
+        </div>;
     }
 
     return <MainContent/>;

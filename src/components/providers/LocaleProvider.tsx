@@ -9,7 +9,6 @@ import { LOCALE_COOKIE_NAME } from '@/i18n/store';
 import * as dateFnsLocales from 'date-fns/locale/uk';
 import { registerLocale } from 'react-datepicker';
 
-
 for (const locale of locales) {
     registerLocale(locale, (dateFnsLocales as any)[locale]);
 }
@@ -27,7 +26,7 @@ const LocaleContext = createContext<LocaleContextType>({
 const defineBrowserLanguage = (
     locales: string[] | readonly string[],
 ): Languages | undefined => {
-    const langCodes = locales.map(locale => locale.split('-')[0]);
+    const langCodes = locales.map((locale: string) => locale.split('-')[0]);
 
     return langCodes.find(c => locales.includes(c)) as Languages | undefined;
 };
@@ -42,13 +41,10 @@ export const LocaleProvider = ({ children }: { children: React.ReactNode }) => {
             .find(row => row.startsWith(`${ LOCALE_COOKIE_NAME }=`))
             ?.split('=')[1] as Languages;
         const browserLocale = defineBrowserLanguage(navigator.languages);
+        const chosenLocale = savedLocale || browserLocale;
 
-        if (savedLocale) {
-            setLocaleState(savedLocale);
-        }
-
-        if (!savedLocale && browserLocale) {
-            setLocaleState(browserLocale);
+        if (chosenLocale) {
+            setLocaleState(chosenLocale);
         }
 
         setMounted(true);

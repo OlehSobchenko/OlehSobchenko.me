@@ -2,6 +2,7 @@
   "name": "olehsobchenko",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://olehsobchenko.me",
   "keywords": [
     "Oleh",
     "Sobchenko",
@@ -17,14 +18,13 @@
     "lint": "next lint",
     "export": "next export"
   },
-  "homepage": "https://olehsobchenko.me",
   "dependencies": {
     "@radix-ui/react-slider": "^1.3.5",
     "htmlparser2": "^10.0.0",
-    "next": "^15.3.2",
+    "next": "^15.3.4",
     "next-intl": "^4.1.0",
     "next-themes": "^0.4.6",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.6",
     "react": "^19.1.0",
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.1.0",
@@ -32,17 +32,17 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.14.0",
-    "@tailwindcss/postcss": "^4.1.7",
-    "@types/node": "^22.15.19",
-    "@types/react": "^19.1.4",
-    "@types/react-dom": "^19.1.5",
-    "@typescript-eslint/eslint-plugin": "^8.14.0",
-    "@typescript-eslint/parser": "^8.14.0",
-    "eslint": "^9.27.0",
-    "eslint-config-next": "^15.3.2",
-    "eslint-plugin-react": "^7.37.2",
-    "tailwindcss": "^4.1.7",
+    "@eslint/js": "^9.29.0",
+    "@tailwindcss/postcss": "^4.1.10",
+    "@types/node": "^24.0.3",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@typescript-eslint/eslint-plugin": "^8.34.1",
+    "@typescript-eslint/parser": "^8.34.1",
+    "eslint": "^9.29.0",
+    "eslint-config-next": "^15.3.4",
+    "eslint-plugin-react": "^7.37.5",
+    "tailwindcss": "^4.1.10",
     "typescript": "^5.8.3"
   }
 }
