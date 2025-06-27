@@ -5,7 +5,7 @@ import CMS from 'decap-cms-app';
 import { Widget as IdWidget } from '@ncwidgets/id';
 
 export default function DecapCMS() {
-    const repoName = process.env.NEXT_PUBLIC_REPO_NAME;
+    const repoName = process.env.NEXT_PUBLIC_REPOSITORY;
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -14,8 +14,6 @@ export default function DecapCMS() {
 
             return;
         }
-
-        console.log(repoName);
 
         if (!window.CMS) {
             window.CMS_MANUAL_INIT = true;
@@ -26,7 +24,9 @@ export default function DecapCMS() {
                     backend: {
                         name: 'github',
                         branch: 'main',
-                        repo: 'SerhiyGreench/OlehSobchenko.me-Content',
+                        repo: repoName
+                            ? repoName + '-Content'
+                            : 'SerhiyGreench/OlehSobchenko.me-Content',
                     },
                     locale: 'uk',
                     i18n: {

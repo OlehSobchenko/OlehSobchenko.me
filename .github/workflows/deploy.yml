@@ -28,13 +28,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set repo name env variable
-        run: |
-            echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)" >> $GITHUB_ENV
-
       - name: Create .env file
         run: |
-            echo "NEXT_PUBLIC_REPO_NAME=$REPO_NAME" > .env
+            echo "NEXT_PUBLIC_REPOSITORY=$GITHUB_REPOSITORY" > .env
 
       - name: Install Node.js
         uses: actions/setup-node@v4
