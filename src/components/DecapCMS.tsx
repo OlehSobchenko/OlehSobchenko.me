@@ -3,14 +3,10 @@
 import { useEffect, useState } from 'react';
 import CMS from 'decap-cms-app';
 import { Widget as IdWidget } from '@ncwidgets/id';
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig();
 
 export default function DecapCMS() {
+    const repoName = process.env.NEXT_PUBLIC_REPO_NAME;
     const [mounted, setMounted] = useState(false);
-
-    console.log(publicRuntimeConfig.repoName);
 
     useEffect(() => {
         if (!mounted) {
@@ -18,6 +14,8 @@ export default function DecapCMS() {
 
             return;
         }
+
+        console.log(repoName);
 
         if (!window.CMS) {
             window.CMS_MANUAL_INIT = true;

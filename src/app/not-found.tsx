@@ -2,10 +2,8 @@
 import MainContent from '@/components/MainContent';
 import { useEffect, useState } from 'react';
 import PostModal from '@/components/posts/PostModal';
-import { useRouter } from 'next/navigation';
 
 export default function Custom404() {
-    const router = useRouter();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
