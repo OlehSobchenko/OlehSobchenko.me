@@ -7,10 +7,12 @@ import { Languages } from '@/i18n/config';
 import openInNewTab from '@/utils/openInNewTab';
 import Masonry from 'react-masonry-css';
 import { usePostsContext } from '@/components/providers/PostsProvider';
+import { useRouter } from 'next/navigation';
 
 export default function PostsGrid() {
     const locale = useLocale();
     const { posts } = usePostsContext();
+    const router = useRouter();
 
     return <Masonry
         breakpointCols={ {
@@ -25,7 +27,21 @@ export default function PostsGrid() {
             post={ post }
             lang={ locale as Languages }
             short
-            onOpenFull={ () => openInNewTab('/post/' + post.path || post.id) }
+            onOpenFull={ () => {
+                const isPWA = window.matchMedia(
+                        '(display-mode: standalone)',
+                    ).matches
+                    || (window.navigator as any).standalone === true;
+                const path = '/post/' + post.path || post.id;
+
+                if (isPWA) {
+                    router.push(path);
+
+                    return;
+                }
+
+                openInNewTab(path);
+            } }
         />) }
     </Masonry>;
 };

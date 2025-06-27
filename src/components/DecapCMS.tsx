@@ -3,8 +3,11 @@
 import { useEffect, useState } from 'react';
 import CMS from 'decap-cms-app';
 import { Widget as IdWidget } from '@ncwidgets/id';
+import { useLocale } from 'next-intl';
+import { locales } from '@/i18n/config';
 
 export default function DecapCMS() {
+    const locale = useLocale();
     const repoName = process.env.NEXT_PUBLIC_REPOSITORY;
     const [mounted, setMounted] = useState(false);
 
@@ -14,8 +17,6 @@ export default function DecapCMS() {
 
             return;
         }
-
-        console.log({ repoName });
 
         if (!window.CMS) {
             window.CMS_MANUAL_INIT = true;
@@ -30,10 +31,10 @@ export default function DecapCMS() {
                             ? repoName + '-Content'
                             : 'SerhiyGreench/OlehSobchenko.me-Content',
                     },
-                    locale: 'uk',
+                    locale,
                     i18n: {
                         structure: 'single_file',
-                        locales: ['uk', 'en'],
+                        locales,
                     },
                     media_folder: 'uploads',
                     public_folder: 'uploads',
@@ -134,6 +135,15 @@ export default function DecapCMS() {
                             i18n: true,
                             fields: [
                                 {
+                                    label: 'ID',
+                                    name: 'id',
+                                    widget: 'ncw-id',
+                                    i18n: 'duplicate',
+                                    required: true,
+                                    index_file: 'index.json',
+                                    meta: true,
+                                },
+                                {
                                     label: 'Назва',
                                     name: 'name',
                                     widget: 'string',
@@ -150,6 +160,15 @@ export default function DecapCMS() {
                             format: 'json',
                             i18n: true,
                             fields: [
+                                {
+                                    label: 'ID',
+                                    name: 'id',
+                                    widget: 'ncw-id',
+                                    i18n: 'duplicate',
+                                    required: true,
+                                    index_file: 'index.json',
+                                    meta: true,
+                                },
                                 {
                                     label: 'Назва',
                                     name: 'name',
