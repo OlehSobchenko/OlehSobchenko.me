@@ -19,7 +19,12 @@
     "export": "next export"
   },
   "dependencies": {
+    "@ncwidgets/id": "^0.9.0",
     "@radix-ui/react-slider": "^1.3.5",
+    "ajv": "^8.17.1",
+    "ajv-errors": "^3.0.0",
+    "ajv-keywords": "^5.1.0",
+    "decap-cms-app": "^3.7.1",
     "htmlparser2": "^10.0.0",
     "next": "^15.3.4",
     "next-intl": "^4.1.0",

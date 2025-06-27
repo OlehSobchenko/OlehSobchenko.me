@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
 
         return config;
     },
+    publicRuntimeConfig: {
+        repoName: process.env.NEXT_PUBLIC_REPO_NAME,
+    },
 };
 
 const withNextIntl = createNextIntlPlugin();

@@ -22,13 +22,5 @@ export default function Custom404() {
         return <PostModal id={ id }/>;
     }
 
-    if (path == 'admin') {
-        router.push('/admin/index.html');
-
-        return <div className="w-full h-screen justify-center items-center flex">
-            <p>Redirecting...</p>
-        </div>;
-    }
-
     return <MainContent/>;
 }
