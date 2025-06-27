@@ -15,6 +15,8 @@ export default function DecapCMS() {
             return;
         }
 
+        console.log({ repoName });
+
         if (!window.CMS) {
             window.CMS_MANUAL_INIT = true;
 
@@ -160,6 +162,7 @@ export default function DecapCMS() {
                 },
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mounted]);
 
     if (!mounted) {
