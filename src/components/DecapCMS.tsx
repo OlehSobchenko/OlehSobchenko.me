@@ -1,40 +1,64 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CMS from 'decap-cms-app';
 import { useLocale } from 'next-intl';
 import { locales } from '@/i18n/config';
 import { customAlphabet } from 'nanoid';
 import OutlinedButton from '@/components/base/OutlinedButton';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import { CmsWidgetControlProps } from 'decap-cms-core';
 
 const nanoid = customAlphabet('1234567890abcdef', 10);
 
-function UuidControl(props: any) {
+export function Control(props: CmsWidgetControlProps) {
     const {
         forID,
+        classNameWrapper,
+        setActiveStyle,
+        setInactiveStyle,
         value,
         onChange,
-        classNameWrapper,
-    } = props;
+        field,
+    } = props as any;
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    return (
-        <div style={{ display: 'flex' }}>
-            <input
-                type="hidden"
-                id={ forID }
-                className={ classNameWrapper }
-                value={ value || nanoid() }
-                onChange={ e => onChange(e.target.value.trim()) }
-            />
-            <div>{ value || nanoid() }</div>
-            <button
-                onClick={() => onChange(nanoid()) }
-                style={{ marginLeft: '1em' }}
-            >
-                Regenerate ID
-            </button>
-        </div >
-    );
+    useEffect(() => {
+        if (!value) {
+            generateId();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value]);
+
+    useEffect(() => {
+        if (!field.get('hidden')) {
+            return;
+        }
+
+        const container = inputRef.current?.parentElement;
+
+        if (container) {
+            container.style.display = 'none';
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const generateId = () => {
+        const id = nanoid();
+
+        onChange(id);
+    };
+
+    return <input
+        type="text"
+        className={ classNameWrapper }
+        value={ value as unknown as string || '' }
+        id={ forID }
+        onFocus={ setActiveStyle }
+        onBlur={ setInactiveStyle }
+        disabled
+        ref={ inputRef }
+    />;
 }
 
 export function UuidPreview({ value }) {
@@ -61,15 +85,13 @@ export default function DecapCMS() {
         if (!window.CMS && submitted) {
             window.CMS_MANUAL_INIT = true;
 
-            CMS.registerWidget('uuid', UuidControl, UuidPreview);
+            CMS.registerWidget('uuid', Control);
             CMS.init({
                 config: {
                     backend: {
                         name: 'github',
                         branch: 'main',
-                        repo: repoName
-                            ? repoName + '-Content'
-                            : 'SerhiyGreench/OlehSobchenko.me-Content',
+                        repo: repoName + '-Content',
                     },
                     locale,
                     i18n: {
@@ -96,6 +118,7 @@ export default function DecapCMS() {
                                     name: 'id',
                                     widget: 'uuid',
                                     required: true,
+                                    i18n: 'duplicate',
                                     index_file: 'index.json',
                                     meta: true,
                                 },
@@ -104,6 +127,7 @@ export default function DecapCMS() {
                                     name: 'path',
                                     widget: 'string',
                                     hint: 'Намагайтеся створити якомога коротший шлях, надавайте перевагу використанню транслітерованого шляху латиницею',
+                                    i18n: 'duplicate',
                                 },
                                 {
                                     label: 'Заголовок',
@@ -188,6 +212,7 @@ export default function DecapCMS() {
                                     required: true,
                                     index_file: 'index.json',
                                     meta: true,
+                                    i18n: 'duplicate',
                                 },
                                 {
                                     label: 'Назва',
@@ -213,6 +238,7 @@ export default function DecapCMS() {
                                     required: true,
                                     index_file: 'index.json',
                                     meta: true,
+                                    i18n: 'duplicate',
                                 },
                                 {
                                     label: 'Назва',
@@ -275,5 +301,7 @@ export default function DecapCMS() {
         </div>;
     }
 
-    return <div id="nc-root" />;
+    return <ErrorBoundary errorComponent={ () => <div>CMS Failed</div> }>
+        <div id="nc-root"/>
+    </ErrorBoundary>;
 }
