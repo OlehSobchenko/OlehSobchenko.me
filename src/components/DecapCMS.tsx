@@ -96,39 +96,16 @@ const entityIndexing = async (input: EntityIndexingInput) => {
         return;
     }
 
-    console.log({
-        input,
-    });
-
     const files = await getAllFilesWithContent(
         `https://api.github.com/repos/${ input.repo }/contents/${
             input.contentFolder }/${ input.entity }`,
         input.token,
     );
-
-    console.log({
-        files,
-    });
     const index = input.convertor(files);
-    console.log({
-        index,
-    });
     const indexContent = JSON.stringify(index);
-    console.log({
-        indexContent,
-    });
     const indexPath = `${ CONTENT_FOLDER }/${ input.entity }_index.json`;
-    console.log({
-        indexPath,
-    });
     const base64Content = Buffer.from(indexContent).toString('base64');
-    console.log({
-        base64Content,
-    });
     const fileUrl = `https://api.github.com/repos/${ input.repo }/contents/${ indexPath }`;
-    console.log({
-        fileUrl,
-    });
     const shaResponse = await fetch(
         fileUrl,
         {
@@ -138,14 +115,7 @@ const entityIndexing = async (input: EntityIndexingInput) => {
             },
         },
     );
-    console.log({
-        shaResponse,
-    });
     const sha = shaResponse?.ok ? (await shaResponse.json())?.sha : undefined;
-
-    console.log({
-        sha,
-    });
 
     await fetch(
         `https://api.github.com/repos/${ input.repo }/contents/${ indexPath }`,
