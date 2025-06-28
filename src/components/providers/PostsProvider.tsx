@@ -50,6 +50,30 @@ export const PostsContext = createContext<
     PostsContextType | undefined
 >(undefined);
 
+export const getIndexedPosts = async (repo: string) => {
+    return getEntries(repo, 'posts');
+};
+
+export const getTypes = async (repo: string) => {
+    return getEntries(repo, 'types');
+};
+
+export const getCategories = async (repo: string) => {
+    return getEntries(repo, 'categories');
+};
+
+const getEntries = async (
+    repo: string,
+    entity: string,
+) => {
+    const response = await fetch(
+        `https://raw.githubusercontent.com/${
+            repo }/main/content/${ entity }_index.json`,
+    );
+
+    return response.ok ? await response.json() : null;
+};
+
 export const PostsProvider = (
     { children }: PropsWithChildren,
 ) => {
@@ -63,10 +87,20 @@ export const PostsProvider = (
         categories: [],
     });
     const [size, setSize] = useState<number>(6);
+    const repoName = process.env.NEXT_PUBLIC_REPOSITORY || '';
+    const contentRepoName = repoName + '-Content';
 
     useEffect(() => {
         (async () => {
             try {
+                const all = await Promise.all([
+                    getIndexedPosts(contentRepoName),
+                    getTypes(contentRepoName),
+                    getCategories(contentRepoName),
+                ]);
+
+                console.info(all);
+
                 const [
                     { default: loadedPosts },
                     { default: loadedTypes },
@@ -76,7 +110,6 @@ export const PostsProvider = (
                     import('@/data/types.json'),
                     import('@/data/categories.json'),
                 ]);
-
                 const fullPosts = loadedPosts.map(post => ({
                     ...post,
                     type: loadedTypes.find(type => type.id === post.typeId),
@@ -94,6 +127,7 @@ export const PostsProvider = (
 
             setLoading(false);
         })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const loadPosts = useCallback(() => {

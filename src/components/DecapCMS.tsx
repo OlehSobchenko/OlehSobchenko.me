@@ -9,7 +9,7 @@ import OutlinedButton from '@/components/base/OutlinedButton';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { CmsBackend, CmsWidgetControlProps } from 'decap-cms-core';
 
-const nanoid = customAlphabet('1234567890abcdef', 10);
+const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 8);
 const CONTENT_FOLDER = 'content';
 
 export function Control(props: CmsWidgetControlProps) {
@@ -81,20 +81,161 @@ async function getAllFilesWithContent(
     }));
 }
 
+export interface EntityIndexingInput {
+    token: string;
+    repo: string;
+    contentFolder: string;
+    entity: string,
+    convertor: (files: any[]) => any,
+    onStart?: () => void;
+    onFinish?: () => void;
+}
+
+const entityIndexing = async (input: EntityIndexingInput) => {
+    if (!input.token) {
+        return;
+    }
+
+    console.log({
+        input,
+    });
+
+    const files = await getAllFilesWithContent(
+        `https://api.github.com/repos/${ input.repo }/contents/${
+            input.contentFolder }/${ input.entity }`,
+        input.token,
+    );
+
+    console.log({
+        files,
+    });
+    const index = input.convertor(files);
+    console.log({
+        index,
+    });
+    const indexContent = JSON.stringify(index);
+    console.log({
+        indexContent,
+    });
+    const indexPath = `${ CONTENT_FOLDER }/${ input.entity }_index.json`;
+    console.log({
+        indexPath,
+    });
+    const base64Content = Buffer.from(indexContent).toString('base64');
+    console.log({
+        base64Content,
+    });
+    const fileUrl = `https://api.github.com/repos/${ input.repo }/contents/${ indexPath }`;
+    console.log({
+        fileUrl,
+    });
+    const shaResponse = await fetch(
+        fileUrl,
+        {
+            headers: {
+                Authorization: `Bearer ${ input.token }`,
+                Accept: 'application/vnd.github+json',
+            },
+        },
+    );
+    console.log({
+        shaResponse,
+    });
+    const sha = shaResponse?.ok ? (await shaResponse.json())?.sha : undefined;
+
+    console.log({
+        sha,
+    });
+
+    await fetch(
+        `https://api.github.com/repos/${ input.repo }/contents/${ indexPath }`,
+        {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${ input.token }`,
+                'Content-Type': 'application/json',
+                Accept: 'application/vnd.github+json',
+            },
+            body: JSON.stringify({
+                message: 'Indexing Entities',
+                content: base64Content,
+                sha,
+            }),
+        },
+    );
+};
+
+const getGithubToken = () => {
+    const user = localStorage.getItem('decap-cms-user');
+
+    return user ? JSON.parse(user).token : '';
+};
+
+const entitiesIndexing = async (
+    input: Pick<EntityIndexingInput, 'token' | 'contentFolder' | 'repo'>,
+) => {
+    // await Promise.all([
+    await entityIndexing({
+            ...input,
+            entity: 'posts',
+            convertor: files => Object.fromEntries(files.map(data => ([
+                data.id, `${ data.categoryId }/${ data.typeId }/${ data.createdAt }/${
+                    data.happenedAt }`,
+            ]))),
+        });
+        await entityIndexing({
+            ...input,
+            entity: 'categories',
+            convertor: files => files.map(file => ({
+                id: file.id,
+                name: Object.fromEntries(
+                    Object.keys(file.locales).map(
+                        locale => [locale, file.locales[locale].name],
+                    ),
+                ),
+            })),
+        });
+        await entityIndexing({
+            ...input,
+            entity: 'types',
+            convertor: files => files.map(file => ({
+                id: file.id,
+                name: Object.fromEntries(
+                    Object.keys(file.locales).map(
+                        locale => [locale, file.locales[locale].name],
+                    ),
+                ),
+            })),
+        });
+    // ]);
+};
+
 export default function DecapCMS() {
     const locale = useLocale();
-    const repoName = process.env.NEXT_PUBLIC_REPOSITORY;
+    const repoName = process.env.NEXT_PUBLIC_REPOSITORY || '';
     const contentRepoName = repoName + '-Content';
     const [mounted, setMounted] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [indexing, setIndexing] = useState(false);
+
+    const processIndexing = () => {
+        setIndexing(true);
+        entitiesIndexing({
+            token: getGithubToken(),
+            repo: contentRepoName,
+            contentFolder: CONTENT_FOLDER,
+        })
+            .then(() => setIndexing(false))
+            .catch(() => setIndexing(false))
+        ;
+    };
 
     useEffect(() => {
         if (!mounted) {
-            setMounted(true);
-
             const authorized = !!localStorage.getItem('decap-cms-user');
 
             setSubmitted(authorized);
+            setMounted(true);
 
             return;
         }
@@ -104,50 +245,18 @@ export default function DecapCMS() {
             window.CMS = CMS;
 
             CMS.registerWidget('uuid', Control);
-            // CMS.registerEventListener({
-            //     name: 'postSave',
-            //     handler: async args => {
-            //         const backend = window.CMS.getBackend('github');
-            //
-            //         console.log(backend.init());
-            //
-            //         const user = localStorage.getItem('decap-cms-user');
-            //         const token = user ? JSON.parse(user).token : '';
-            //
-            //         if (!token) {
-            //             return;
-            //         }
-            //
-            //         const files = await getAllFilesWithContent(
-            //             `https://api.github.com/repos/${ contentRepoName }/contents/${ CONTENT_FOLDER }/posts`,
-            //             token,
-            //         );
-            //
-            //         const index = files.map(data => {
-            //             const localized: any = Object.values(data)[0];
-            //
-            //             return {
-            //                 id: localized.id,
-            //                 categoryId: localized.categoryId,
-            //                 typeId: localized.typeId,
-            //             };
-            //         });
-            //
-            //         const indexContent = JSON.stringify(index, null, 2);
-            //         const indexPath = `${ CONTENT_FOLDER }/index.json`;
-            //
-            //         const file = {
-            //             path: indexPath,
-            //             raw: indexContent,
-            //             content: indexContent,
-            //         };
-            //
-            //         await backend.persistFiles({
-            //             files: [file],
-            //             commitMessage: 'Update index.json',
-            //         });
-            //     },
-            // });
+            CMS.registerEventListener({
+                name: 'postSave',
+                handler: async () => {
+                    processIndexing();
+                },
+            });
+            CMS.registerEventListener({
+                name: 'postUnpublish',
+                handler: async () => {
+                    processIndexing();
+                },
+            });
             CMS.init({
                 config: {
                     backend: {
@@ -172,6 +281,7 @@ export default function DecapCMS() {
                             create: true,
                             folder: `${ CONTENT_FOLDER }/posts`,
                             slug: '{{id}}',
+                            summary: '{{locales.uk.title}} (ID: {{id}})',
                             editor: {
                                 preview: false,
                             },
@@ -185,19 +295,13 @@ export default function DecapCMS() {
                                     meta: false,
                                 },
                                 {
-                                    label: 'Шлях',
-                                    name: 'path',
-                                    widget: 'string',
-                                    hint: 'Намагайтеся створити якомога коротший шлях, надавайте перевагу використанню транслітерованого шляху латиницею',
-                                },
-                                {
                                     label: 'Категорія',
                                     name: 'categoryId',
                                     widget: 'relation',
                                     collection: 'categories',
                                     value_field: 'id',
-                                    display_fields: ['name'],
-                                    search_fields: ['name'],
+                                    display_fields: ['locales.uk.name'],
+                                    search_fields: ['locales.uk.name'],
                                     required: false,
                                 },
                                 {
@@ -206,8 +310,8 @@ export default function DecapCMS() {
                                     widget: 'relation',
                                     collection: 'types',
                                     value_field: 'id',
-                                    display_fields: ['name'],
-                                    search_fields: ['name'],
+                                    display_fields: ['locales.uk.name'],
+                                    search_fields: ['locales.uk.name'],
                                     required: false,
                                 },
                                 {
@@ -331,7 +435,10 @@ export default function DecapCMS() {
                             create: true,
                             slug: '{{id}}',
                             format: 'json',
-                            i18n: true,
+                            editor: {
+                                preview: false,
+                            },
+                            summary: '{{locales.uk.name}}',
                             fields: [
                                 {
                                     label: 'ID',
@@ -340,13 +447,39 @@ export default function DecapCMS() {
                                     required: true,
                                     index_file: 'index.json',
                                     meta: false,
-                                    i18n: 'duplicate',
                                 },
                                 {
-                                    label: 'Назва',
-                                    name: 'name',
-                                    widget: 'string',
-                                    i18n: true,
+                                    label: 'Локалізований вміст',
+                                    name: 'locales',
+                                    widget: 'object',
+                                    fields: [
+                                        {
+                                            label: 'Українська',
+                                            name: 'uk',
+                                            widget: 'object',
+                                            fields: [
+                                                {
+                                                    label: 'Назва',
+                                                    name: 'name',
+                                                    widget: 'string',
+                                                    i18n: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            label: 'English',
+                                            name: 'en',
+                                            widget: 'object',
+                                            fields: [
+                                                {
+                                                    label: 'Назва',
+                                                    name: 'name',
+                                                    widget: 'string',
+                                                    i18n: true,
+                                                },
+                                            ],
+                                        },
+                                    ],
                                 },
                             ],
                         },
@@ -356,8 +489,11 @@ export default function DecapCMS() {
                             folder: `${ CONTENT_FOLDER }/types`,
                             create: true,
                             slug: '{{id}}',
+                            summary: '{{locales.uk.name}}',
                             format: 'json',
-                            i18n: true,
+                            editor: {
+                                preview: false,
+                            },
                             fields: [
                                 {
                                     label: 'ID',
@@ -366,13 +502,39 @@ export default function DecapCMS() {
                                     required: true,
                                     index_file: 'index.json',
                                     meta: false,
-                                    i18n: 'duplicate',
                                 },
                                 {
-                                    label: 'Назва',
-                                    name: 'name',
-                                    widget: 'string',
-                                    i18n: true,
+                                    label: 'Локалізований вміст',
+                                    name: 'locales',
+                                    widget: 'object',
+                                    fields: [
+                                        {
+                                            label: 'Українська',
+                                            name: 'uk',
+                                            widget: 'object',
+                                            fields: [
+                                                {
+                                                    label: 'Назва',
+                                                    name: 'name',
+                                                    widget: 'string',
+                                                    i18n: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            label: 'English',
+                                            name: 'en',
+                                            widget: 'object',
+                                            fields: [
+                                                {
+                                                    label: 'Назва',
+                                                    name: 'name',
+                                                    widget: 'string',
+                                                    i18n: true,
+                                                },
+                                            ],
+                                        },
+                                    ],
                                 },
                             ],
                         },
@@ -440,16 +602,17 @@ export default function DecapCMS() {
                 }
             >
                 <div>
-                    <div>
-                        Для коректного відображення дописів у стрічці.
-                        Натисніть <strong>Індексувати</strong>, якщо допис не
-                        відображається на сторінці з дописами
-                    </div>
+                    Натисніть <strong>Індексувати</strong>, наприклад, якщо
+                    допис не відображається у стрічці головній сторінці
                 </div>
                 <div className="flex justify-end flex-1">
-                    <OutlinedButton className="border-4!">
+                    { !indexing && <OutlinedButton
+                        className="border-4!"
+                        onClick={ processIndexing }
+                    >
                         <div className="font-black">ІНДЕКСУВАТИ</div>
-                    </OutlinedButton>
+                    </OutlinedButton> }
+                    { indexing && <div>Ідексування...</div> }
                 </div>
             </div>
         </div>
