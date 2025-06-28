@@ -211,3 +211,45 @@ blockquote:before {
 .posts-column div:last-child .should-be-hidden {
     display: none;
 }
+
+[class*="AppMainContainer"],
+[class*="EditorContainer"],
+[class*="ToolbarContainer"] {
+    min-width: unset !important;
+}
+
+[class*="ToolbarContainer"] {
+    height: unset !important;
+    align-items: center;
+    min-height: 66px;
+}
+
+[class*="BackCollection"] {
+    display: none !important;
+}
+
+[class*="ToolbarSectionMain-toolbarSection"] {
+    flex: 1;
+    > div {
+        /*display: none !important;*/
+        flex-wrap: wrap;
+        row-gap: 6px;
+        padding: 12px 0;
+    }
+}
+
+[class*="ToolbarSectionBackLink-toolbarSection"] {
+    flex: 0;
+}
+
+[class*="BackArrow"] {
+    padding-bottom: 5px;
+}
+
+[class*="EditorControlBar"] > div {
+    flex-wrap: wrap;
+}
+
+[class*="DateTimeControl"] {
+    flex-wrap: wrap;
+}
