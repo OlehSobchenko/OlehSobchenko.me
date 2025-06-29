@@ -31,13 +31,13 @@ export default function AudioControl() {
     return <>
         <div
             className={
-                `cursor-pointer mt-8 lg:fixed lg:right-16 lg:bottom-16 ${
-                    openDrawer ? 'lg:hidden' : '' }`
+                `cursor-pointer mt-8 fixed lg:right-16 lg:bottom-16 sm:right-8 sm:bottom-8 right-6 bottom-6 ${
+                    openDrawer ? 'hidden' : '' }`
             }
             onClick={ handlePlay }
         >
             <svg
-                className="lg:w-20 lg:h-20 w-12 h-12"
+                className="lg:w-20 lg:h-20 sm:w-16 sm:h-16 w-12 h-12"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 -960 960 960"
             >

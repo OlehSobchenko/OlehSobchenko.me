@@ -11,6 +11,7 @@ import {
     useCallback,
 } from 'react';
 import { Category, Post, Type } from '@/components/posts/types';
+import config from '@/config';
 
 export interface FilterOptions {
     categories: string[];
@@ -87,16 +88,14 @@ export const PostsProvider = (
         categories: [],
     });
     const [size, setSize] = useState<number>(6);
-    const repoName = process.env.NEXT_PUBLIC_REPOSITORY || '';
-    const contentRepoName = repoName + '-Content';
 
     useEffect(() => {
         (async () => {
             try {
                 const all = await Promise.all([
-                    getIndexedPosts(contentRepoName),
-                    getTypes(contentRepoName),
-                    getCategories(contentRepoName),
+                    getIndexedPosts(config.contentRepo),
+                    getTypes(config.contentRepo),
+                    getCategories(config.contentRepo),
                 ]);
 
                 console.info(all);
@@ -127,7 +126,6 @@ export const PostsProvider = (
 
             setLoading(false);
         })();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const loadPosts = useCallback(() => {

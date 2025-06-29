@@ -3,12 +3,24 @@ import { useTranslations } from 'next-intl';
 import Modal from '@/components/base/Modal';
 import useOpen from '@/utils/hooks/useOpen';
 import { useLocale } from 'use-intl';
-import biography from '@/data/biography.json';
+import Markdown from 'react-markdown';
+import { useEffect, useState } from 'react';
+import config from '@/config';
+import { Localization } from '@/i18n/config';
+
+const biographyUrl = `https://raw.githubusercontent.com/${
+    config.contentRepo }/refs/heads/main/${
+    config.contentFolder }/biography.json`;
 
 export default function Biography() {
     const { open, close, opened } = useOpen();
     const locale = useLocale();
     const t = useTranslations('Biography');
+    const [biography, setBiography] = useState<Partial<Localization>>({});
+
+    useEffect(() => {
+        fetch(biographyUrl).then(r => r.json()).then(setBiography);
+    }, []);
 
     return <>
         <OutlinedButton
@@ -33,10 +45,11 @@ export default function Biography() {
             title={ t('title') }
             onClose={ close }
         >
-            <div
-                className="article"
-                dangerouslySetInnerHTML={{ __html: (biography as any)[locale] }}
-            />
+            <div className="article">
+                { biography[locale] && <Markdown>
+                    { biography[locale] }
+                </Markdown> }
+            </div>
         </Modal>
     </>;
 }

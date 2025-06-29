@@ -106,6 +106,27 @@ blockquote:before {
     h6 {
         font-size: 36px;
     }
+
+    li {
+        position: relative;
+        font-size: 26px;
+        padding-left: 1.25em;
+        list-style: none;
+    }
+
+    li::before {
+        content: '';
+        position: absolute;
+        top: 0.75em;
+        left: 0;
+        transform: translateY(-50%);
+        width: 1em;
+        height: 1em;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='40px' viewBox='0 -960 960 960' width='40px' %3E%3Cpath d='m561-214.67-74-72.66L628.67-429H132v-104.67h496.67l-142.34-143 74-72 268.34 267.34L561-214.67Z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -137,6 +158,10 @@ blockquote:before {
 
         h6 {
             font-size: 20px;
+        }
+
+        li {
+            font-size: 18px;
         }
     }
 }
@@ -175,8 +200,10 @@ blockquote:before {
     }
 
     @media (max-width: 480px) {
+        display: block;
         font-size: clamp(16px, 12vw, 56px);
         line-height: clamp(16px, 10vw, 56px);
+        height: calc(clamp(16px, 10vw, 56px));
     }
 }
 
@@ -231,7 +258,6 @@ blockquote:before {
 [class*="ToolbarSectionMain-toolbarSection"] {
     flex: 1;
     > div {
-        /*display: none !important;*/
         flex-wrap: wrap;
         row-gap: 6px;
         padding: 12px 0;

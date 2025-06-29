@@ -8,15 +8,14 @@ const PostImage: React.FC<{
     lang: Languages;
     short: boolean;
 }> = ({ image, lang, short }) => {
-    if (!image || (
-        !image.data && !image.link
-    )) {
+    if (!image || (!image.data && !image.link)) {
         return null;
     }
 
     const imgSrc = image.data || (
-        image.link ? getLocalized(image.link.localization, lang)
-            || image.link.common : undefined
+        image.link
+            ? getLocalized(image.link.localization, lang) || image.link.common
+            : undefined
     );
 
     if (!imgSrc) {
@@ -30,8 +29,8 @@ const PostImage: React.FC<{
     }
 
     return <div className="relative mt-4 mb-4 flex justify-center">
-        <img src={ imgSrc } alt="" className="absolute top-0 left-0 w-full [height:calc(100%-32px)] object-cover blur-[20px] scale-x-[1.1] z-[1] mt-4"/>
-        <img src={ imgSrc } alt="" className="relative z-[2] max-w-full max-h-full object-contain"/>
+        <img src={ imgSrc } alt="" className="absolute top-0 left-0 w-full [height:calc(100%-32px)] object-cover blur-[20px] scale-x-[1.1] z-[1]"/>
+        <img src={ imgSrc } alt="" className="relative z-[2] max-w-full max-h-full object-contain bottom-4"/>
     </div>;
 };
 

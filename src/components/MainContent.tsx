@@ -15,8 +15,8 @@ export default function MainContent() {
                 backgroundImage: `linear-gradient(to bottom, var(--gradient-background-color-start) 80%, var(--gradient-background-color-end)), url("${ portrait.src }")`,
             } }
         >
+            <MainContentActions/>
             <div className="relative max-w-[1920px] ml-auto mr-auto">
-                <MainContentActions/>
                 <div className="h-screen lg:pt-16 lg:pl-16 lg:pr-16 pt-8 pl-8 pb-8">
                     <div
                         className="flex h-full lg:items-center lg:pl-16">
