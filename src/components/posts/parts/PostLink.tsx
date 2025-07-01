@@ -1,25 +1,17 @@
-import React from 'react';
-import { LinkItem } from '@/components/posts/types';
-import { Languages } from '@/i18n/config';
 import { useTranslations } from 'next-intl';
-import getLocalized from '@/utils/getLocalized';
+import useOpenLink from '@/utils/hooks/useOpenLink';
 
-export const PostLink: React.FC<{
-    link?: LinkItem;
-    lang: Languages
-}> = props => {
+export const PostLink = ({ link }: { link?: string }) => {
     const t = useTranslations('PostLink');
-    const { link, lang } = props;
+    const openLink = useOpenLink();
 
     if (!link) {
         return null;
     }
 
-    const url = getLocalized(link.localization, lang) || link.common;
-
     return <div
         className="flex items-center justify-between text-lg pt-2.5 cursor-pointer"
-        onClick={ () => window.open(url, '_blank')?.focus() }
+        onClick={ openLink(link, true) }
     >
         <div className="uppercase">{ t('title') }</div>
         <div>

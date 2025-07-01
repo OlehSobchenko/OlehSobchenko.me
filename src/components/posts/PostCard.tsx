@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Post } from '@/components/posts/types';
-import getLocalized from '@/utils/getLocalized';
+import { Post } from '@/types';
 import { Languages } from '@/i18n/config';
+import getLocalized from '@/utils/getLocalized';
 import PostHeaderIcon from '@/components/posts/parts/PostHeaderIcon';
 import PostHeaderTitle from '@/components/posts/parts/PostHeaderTitle';
 import PostDate from '@/components/posts/parts/PostDate';
@@ -15,6 +15,7 @@ import PostAudio from '@/components/posts/parts/PostAudio';
 import PostQuote from '@/components/posts/parts/PostQuote';
 import PostLink from '@/components/posts/parts/PostLink';
 import PostOpenFull from '@/components/posts/parts/PostOpenFull';
+import config from '@/config';
 
 interface PostCardProps {
     post: Post;
@@ -26,8 +27,7 @@ interface PostCardProps {
 
 const PostCard: React.FC<PostCardProps> = props => {
     const { post, lang, short = true, onOpenFull } = props;
-
-    const maxDescriptionLength = 200;
+    const maxDescriptionLength = config.maxDescriptionLength;
 
     const handlePostClick = () => {
         if (onOpenFull) {
@@ -37,9 +37,9 @@ const PostCard: React.FC<PostCardProps> = props => {
         }
     };
 
-    const description = getLocalized(post.description, lang);
-    const isDescriptionTruncated = short && post.description
-        && (description?.length || 0) > maxDescriptionLength;
+    const localized = getLocalized(lang, post.locales) || {};
+    const isDescriptionTruncated = short && localized.description
+        && (localized.description?.length || 0) > maxDescriptionLength;
 
     return <div
         className="article w-full mb-5 pb-5"
@@ -66,27 +66,25 @@ const PostCard: React.FC<PostCardProps> = props => {
         <div className="post-media md:mx-main-spacing-lg">
             <PostImage
                 image={ post.image }
-                lang={ lang }
                 short={ short }
             />
-            <PostVideo video={ post.video } lang={ lang } short={ short }/>
+            <PostVideo video={ post.video } short={ short }/>
         </div>
 
         <div className="mx-main-spacing md:mx-main-spacing-lg">
-            <PostTitle title={ post.title } lang={ lang }/>
+            <PostTitle title={ localized.title }/>
             <PostDescription
-                shortDescription={ post.shortDescription }
-                description={ post.description }
-                lang={ lang }
+                shortDescription={ localized.shortDescription }
+                description={ localized.description }
                 isShort={ short }
                 maxDescriptionLength={ maxDescriptionLength }
             />
-            <PostQuote quote={ post.quote } lang={ lang }/>
-            <PostAudio audio={ post.audio } lang={ lang }/>
+            <PostQuote quote={ localized.quote }/>
+            <PostAudio audio={ post.audio }/>
             { isDescriptionTruncated && <PostOpenFull
                 onOpenFull={ handlePostClick }
             /> }
-            <PostLink link={ post.link } lang={ lang }/>
+            <PostLink link={ post.link }/>
         </div>
         { short && <div
             className="should-be-hidden mt-7.5 border-b-8 border-main-color opacity-10 mx-0 md:mx-main-spacing-lg lg:mr-0 lg:ml-0 mr-[-36px] ml-[-36px]"

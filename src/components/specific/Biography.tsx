@@ -6,17 +6,15 @@ import { useLocale } from 'use-intl';
 import Markdown from 'react-markdown';
 import { useEffect, useState } from 'react';
 import config from '@/config';
-import { Localization } from '@/i18n/config';
+import { Localized } from '@/i18n/config';
 
-const biographyUrl = `https://raw.githubusercontent.com/${
-    config.contentRepo }/refs/heads/main/${
-    config.contentFolder }/biography.json`;
+const biographyUrl = config.contentUrl + 'biography.json';
 
 export default function Biography() {
     const { open, close, opened } = useOpen();
     const locale = useLocale();
     const t = useTranslations('Biography');
-    const [biography, setBiography] = useState<Partial<Localization>>({});
+    const [biography, setBiography] = useState<Partial<Localized>>({});
 
     useEffect(() => {
         fetch(biographyUrl).then(r => r.json()).then(setBiography);

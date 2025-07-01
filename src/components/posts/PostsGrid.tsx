@@ -4,15 +4,14 @@ import React from 'react';
 import PostCard from '@/components/posts/PostCard';
 import { useLocale } from 'next-intl';
 import { Languages } from '@/i18n/config';
-import openInNewTab from '@/utils/openInNewTab';
 import Masonry from 'react-masonry-css';
 import { usePostsContext } from '@/components/providers/PostsProvider';
-import { useRouter } from 'next/navigation';
+import useOpenLink from '@/utils/hooks/useOpenLink';
 
 export default function PostsGrid() {
     const locale = useLocale();
     const { posts } = usePostsContext();
-    const router = useRouter();
+    const openLink = useOpenLink();
 
     return <Masonry
         breakpointCols={ {
@@ -27,21 +26,7 @@ export default function PostsGrid() {
             post={ post }
             lang={ locale as Languages }
             short
-            onOpenFull={ () => {
-                const isPWA = window.matchMedia(
-                        '(display-mode: standalone)',
-                    ).matches
-                    || (window.navigator as any).standalone === true;
-                const path = '/post/' + post.path || post.id;
-
-                if (isPWA) {
-                    router.push(path);
-
-                    return;
-                }
-
-                openInNewTab(path);
-            } }
+            onOpenFull={ openLink(`/post/${ post.id }`) }
         />) }
     </Masonry>;
 };

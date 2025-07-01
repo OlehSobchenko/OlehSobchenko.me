@@ -1,13 +1,9 @@
-import { Languages, Localization } from '@/i18n/config';
+import { Languages, Localized } from '@/i18n/config';
 
-export default function getLocalized(
-    item: Localization | string | null | undefined,
+export default function getLocalized<T>(
     lang: Languages,
-): string | null {
-    if (typeof item === 'string') {
-        return item;
-    }
-
+    item?: Localized<T>,
+): T | null {
     if (item && item[lang]) {
         return item[lang];
     }

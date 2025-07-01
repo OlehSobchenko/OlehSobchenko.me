@@ -27,9 +27,7 @@ export const AudioPlayer = ({ onClose }: { onClose?: () => void }) => {
                 <div className="flex-1/3">
                     <TrackInfo/>
                 </div>
-                <div
-                    className="flex flex-2/3"
-                >
+                <div className="flex flex-2/3">
                     <div className="flex sm:flex-1/2 flex-1 justify-center">
                         <Controls/>
                     </div>
@@ -65,7 +63,7 @@ export const AudioPlayer = ({ onClose }: { onClose?: () => void }) => {
                                     />
                                 </svg>
                             </button> }
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>

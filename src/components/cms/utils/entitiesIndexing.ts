@@ -94,6 +94,7 @@ const entitiesIndexing = async () => {
                     locale => [locale, file.locales[locale].name],
                 ),
             ),
+            icon: file.icon,
         })),
     });
 };

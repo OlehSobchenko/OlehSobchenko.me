@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '@/components/base/Modal';
 import PostCard from '@/components/posts/PostCard';
 import { Languages } from '@/i18n/config';
@@ -8,7 +8,10 @@ import PostHeaderTitle from '@/components/posts/parts/PostHeaderTitle';
 import PostDate from '@/components/posts/parts/PostDate';
 import PostHeaderIcon from '@/components/posts/parts/PostHeaderIcon';
 import { useLocale } from 'use-intl';
-import getPost from '@/utils/getPost';
+import getPost from '@/utils/data/getPost';
+import { Post } from '@/types';
+import getIndexedEntries from '@/utils/data/getIndexedEntries';
+import enrichPost from '@/utils/data/enrichPost';
 
 export interface PostModalProps {
     id: string;
@@ -16,7 +19,25 @@ export interface PostModalProps {
 
 export default function PostModal(props: PostModalProps) {
     const locale = useLocale() as Languages;
-    const post = getPost(String(props.id));
+    const [post, setPost] = useState<Post | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            const [
+                rawPost,
+                loadedTypes = [],
+                loadedCategories = [],
+            ] = await Promise.all([
+                getPost(String(props.id)),
+                getIndexedEntries('types'),
+                getIndexedEntries('categories'),
+            ]);
+
+            if (rawPost) {
+                setPost(enrichPost(rawPost, loadedTypes, loadedCategories));
+            }
+        })();
+    }, [props.id]);
 
     if (!post) {
         return null;

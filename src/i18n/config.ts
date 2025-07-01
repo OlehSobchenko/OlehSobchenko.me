@@ -1,10 +1,10 @@
 export type Languages = 'uk' | 'en';
 
-export type Localization = Record<Languages, string>;
+export type Localized<T = string> = Record<Languages, T>;
 
 export const defaultLocale: Languages = 'uk';
 
-export const languages: Localization = {
+export const languages: Localized = {
     uk: 'Українська',
     en: 'English',
 };

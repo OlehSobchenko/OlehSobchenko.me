@@ -1,5 +1,5 @@
 import React from 'react';
-import { Category, Type } from '@/components/posts/types';
+import { Category, Type } from '@/types';
 import { Languages } from '@/i18n/config';
 import getLocalized from '@/utils/getLocalized';
 
@@ -16,7 +16,7 @@ const PostHeaderTitle: React.FC<{
         className="flex max-w-full text-lg leading-tight overflow-hidden text-ellipsis whitespace-nowrap md:text-xl md:leading-xl"
     >
         { type && <span className="uppercase">
-          { getLocalized(type.name, lang) }
+          { getLocalized(lang, type.name) }
         </span> }
         { category && type && <div
             style={{
@@ -25,7 +25,7 @@ const PostHeaderTitle: React.FC<{
             }}
         /> }
         { category && <span className="uppercase">
-          { getLocalized(category.name, lang) }
+          { getLocalized(lang, category.name) }
         </span> }
     </div>;
 };

@@ -1,19 +1,15 @@
-import React from 'react';
-import { Languages, Localization } from '@/i18n/config';
-import getLocalized from '@/utils/getLocalized';
-import truncateHTML from '@/utils/truncateHTML';
+import truncateContent from '@/utils/truncateContent';
+import Markdown from 'react-markdown';
 
-const PostDescription: React.FC<{
-    shortDescription?: Localization;
-    description?: Localization;
-    lang: Languages;
+const PostDescription = (props: {
+    shortDescription?: string;
+    description?: string;
     isShort: boolean;
     maxDescriptionLength: number;
-}> = props => {
+}) => {
     const {
         shortDescription,
         description,
-        lang,
         isShort,
         maxDescriptionLength,
     } = props;
@@ -22,25 +18,27 @@ const PostDescription: React.FC<{
         return null;
     }
 
-    const fullHtml = description ? getLocalized(description, lang) : '';
+    const fullHtml = description || '';
     const data = isShort && fullHtml
-        ? truncateHTML(fullHtml, maxDescriptionLength)
+        ? truncateContent(fullHtml, maxDescriptionLength)
         : {
-            html: fullHtml,
+            output: fullHtml,
             truncated: false,
         }
     ;
 
     return <div className="py-2.5 text-lg leading-6">
-        { shortDescription && <span
-            dangerouslySetInnerHTML={ {
-                __html: getLocalized(shortDescription, lang) || '',
-            } }
-        /> }
+        { shortDescription && <Markdown
+            components={{ p: 'span' }}
+        >
+            { shortDescription }
+        </Markdown> }
         { shortDescription && description && <>&nbsp;</> }
-        { description && <span
-            dangerouslySetInnerHTML={ { __html: data.html || '' } }
-        /> }
+        { description && <Markdown
+            components={{ p: 'span' }}
+        >
+            { data.output }
+        </Markdown> }
         { data.truncated }
     </div>;
 };

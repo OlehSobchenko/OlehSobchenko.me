@@ -1,12 +1,11 @@
-import React from 'react';
-import { Post } from '@/components/posts/types';
-import { Languages } from '@/i18n/config';
-import getLocalized from '@/utils/getLocalized';
+import { useState } from 'react';
 
-const PostAudio: React.FC<{
-    audio?: Post['audio'];
-    lang: Languages;
-}> = ({ audio, lang }) => {
+const PostAudio = ({ audio }: { audio?: string }) => {
+    const [metadata] = useState<{
+        title: string;
+        artist: string;
+    } | null>(null);
+
     if (!audio) {
         return null;
     }
@@ -20,18 +19,12 @@ const PostAudio: React.FC<{
                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
             </svg>
         </div>
-        { (
-            audio.name || audio.description
-        ) && <div
-            className="flex flex-col justify-between gap-0.5"
-        >
-            { audio.name && <div
-                className="text-lg">
-                { getLocalized(audio.name, lang)?.toUpperCase() }
+        { metadata && <div className="flex flex-col justify-between gap-0.5">
+            { metadata.artist && <div className="text-lg uppercase">
+                { metadata.artist }
             </div> }
-            { audio.description && <div
-                className="text-base">
-                { getLocalized(audio.description, lang) }
+            { metadata.title && <div className="text-base">
+                { metadata.title }
             </div> }
         </div> }
     </div>;

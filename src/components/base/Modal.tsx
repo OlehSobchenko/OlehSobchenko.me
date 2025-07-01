@@ -49,7 +49,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
                 </button>
             </div>
             <div
-                className="modal-content lg:pl-16 pl-6 lg:pr-16 pr-6 lg:pb-16 pb-12 lg:mt-6 mt-4 overflow-y-auto h-full"
+                className="modal-content lg:pl-16 pl-6 lg:pr-16 pr-6 lg:pb-16 pb-12 lg:mt-6 mt-4 h-full overflow-x-auto"
             >
                 { children }
             </div>

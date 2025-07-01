@@ -1,22 +1,14 @@
 import React from 'react';
-import { Post } from '@/components/posts/types';
-import { Languages } from '@/i18n/config';
-import getLocalized from '@/utils/getLocalized';
 
-const PostImage: React.FC<{
-    image?: Post['image'];
-    lang: Languages;
+const PostImage = ({ image, short }: {
+    image?: string;
     short: boolean;
-}> = ({ image, lang, short }) => {
-    if (!image || (!image.data && !image.link)) {
+}) => {
+    if (!image) {
         return null;
     }
 
-    const imgSrc = image.data || (
-        image.link
-            ? getLocalized(image.link.localization, lang) || image.link.common
-            : undefined
-    );
+    const imgSrc = image;
 
     if (!imgSrc) {
         return null;

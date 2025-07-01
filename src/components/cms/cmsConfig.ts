@@ -13,6 +13,7 @@ const getLocalizedContentField = (
     label: 'Локалізований вміст',
     name: 'locales',
     widget: 'object',
+    collapsed: true,
     fields: Object.entries(languages).map(([name, label]) => ({
         label: `${ label } (${ name.toUpperCase() })`,
         name,
@@ -67,7 +68,6 @@ const getCmsConfig = (
                     value_field: 'id',
                     display_fields: [`locales.${ input.locale }.name`],
                     search_fields: [`locales.${ input.locale }.name`],
-                    required: false,
                 },
                 {
                     label: 'Тип',
@@ -77,19 +77,20 @@ const getCmsConfig = (
                     value_field: 'id',
                     display_fields: [`locales.${ input.locale }.name`],
                     search_fields: [`locales.${ input.locale }.name`],
-                    required: false,
                 },
                 {
                     label: 'Дата створення',
                     name: 'createdAt',
                     widget: 'datetime',
                     default: '{{now}}',
-                    required: false,
+                    required: true,
                 },
                 {
                     label: 'Дата події',
                     name: 'happenedAt',
                     widget: 'datetime',
+                    default: '{{now}}',
+                    required: true,
                 },
                 {
                     label: 'Зображення',
@@ -113,8 +114,23 @@ const getCmsConfig = (
                 {
                     label: 'Video',
                     name: 'video',
-                    widget: 'file',
+                    widget: 'object',
+                    collapsed: true,
                     required: false,
+                    fields: [
+                        {
+                            label: 'Посилання',
+                            name: 'link',
+                            widget: 'file',
+                            required: false,
+                        },
+                        {
+                            label: 'Код вставки',
+                            name: 'embed',
+                            widget: 'text',
+                            required: false,
+                        },
+                    ],
                 },
                 {
                     label: 'Audio',
@@ -203,7 +219,7 @@ const getCmsConfig = (
                 {
                     label: 'Іконка',
                     name: 'icon',
-                    widget: 'string',
+                    widget: 'text',
                     required: true,
                 },
                 getLocalizedContentField([

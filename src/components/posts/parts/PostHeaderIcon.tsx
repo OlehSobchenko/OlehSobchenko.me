@@ -1,5 +1,5 @@
 import React from 'react';
-import { Type } from '@/components/posts/types';
+import { Type } from '@/types';
 
 const PostHeaderIcon: React.FC<{ type?: Type }> = ({ type }) => {
     if (!type?.icon) {

@@ -1,42 +1,26 @@
-import React from 'react';
-import { Post } from '@/components/posts/types';
-import { Languages } from '@/i18n/config';
-import getLocalized from '@/utils/getLocalized';
-
-const getVideoContent = (
-    video: NonNullable<Post['video']>,
-    lang: Languages,
-) => {
-    if (video.link && !video.data) {
-        const videoSrc = getLocalized(video.link.localization, lang)
-            || video.link.common;
-
-        return <video
-            src={ videoSrc }
-            controls
-            className="absolute top-0 left-0 w-full h-full"
-        />;
+const getVideoContent = (video: {
+    link?: string;
+    embed?: string;
+}) => {
+    if (video.embed) {
+        return <div dangerouslySetInnerHTML={ { __html: video.embed } }/>;
     }
 
-    if (video.data) {
-        return <div dangerouslySetInnerHTML={ { __html: video.data } }/>;
-    }
-
-    return null;
+    return <video
+        src={ video.link }
+        controls
+        className="absolute top-0 left-0 w-full h-full"
+    />;
 };
 
-const PostVideo: React.FC<{
-    video?: Post['video'];
-    lang: Languages;
+const PostVideo = ({ video, short }: {
+    video?: {
+        link?: string;
+        embed?: string;
+    };
     short: boolean;
-}> = ({ video, lang, short }) => {
-    if (!video || (!video.link && !video.data)) {
-        return null;
-    }
-
-    const content = getVideoContent(video, lang);
-
-    if (!content) {
+}) => {
+    if (!video || (!video.link && !video.embed)) {
         return null;
     }
 
@@ -48,7 +32,7 @@ const PostVideo: React.FC<{
         }
     >
         <div className="video-wrapper relative pb-[56.25%] h-0">
-            { content }
+            { getVideoContent(video) }
         </div>
     </div>;
 };
