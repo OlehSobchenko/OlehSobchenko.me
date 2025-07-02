@@ -18,7 +18,6 @@ export default function UniqueIdControl(props: CmsWidgetControlProps) {
         if (!value) {
             generateId();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     useEffect(() => {
@@ -31,7 +30,6 @@ export default function UniqueIdControl(props: CmsWidgetControlProps) {
         if (container) {
             container.style.display = 'none';
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const generateId = () => {

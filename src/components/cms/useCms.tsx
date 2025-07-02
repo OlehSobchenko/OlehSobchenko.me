@@ -39,7 +39,6 @@ export default function useCms(
                 config: getCmsConfig({ locale, repo: config.contentRepo }),
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mounted, authorized]);
 
     const authorize = (

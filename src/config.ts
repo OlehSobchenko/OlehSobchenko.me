@@ -3,10 +3,10 @@ const contentRepoName = repoName + '-Content';
 const contentFolder = 'content';
 const uploadsFolder = 'uploads';
 const dataBaseUrl = `https://raw.githubusercontent.com/${
-    contentRepoName }/main/`;
+    contentRepoName }/refs/heads/main/`;
 
 const config = {
-    postsBatch: 6,
+    postsBatch: 10,
     repo: repoName,
     contentRepo: contentRepoName,
     idAlphabet: '1234567890abcdefghijklmnopqrstuvwxyz',

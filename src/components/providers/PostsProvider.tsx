@@ -183,6 +183,10 @@ export const PostsProvider = (
         more: number,
         refetch: boolean = false,
     ) => {
+        if (!refetch && (posts.length >= postsIndex.length)) {
+            return;
+        }
+
         (async () => {
             setLoadingPosts(true);
 
@@ -214,7 +218,6 @@ export const PostsProvider = (
         if (!loadingBase && !posts.length) {
             loadPosts(config.postsBatch);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadingBase]);
 
     useEffect(() => {
@@ -223,7 +226,6 @@ export const PostsProvider = (
         }
 
         loadPosts(config.postsBatch, true);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter.options]);
 
     const loadMore = (more = config.postsBatch) => {

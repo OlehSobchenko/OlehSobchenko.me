@@ -14,14 +14,12 @@ export default function AudioControl() {
         if (!openDrawer && playing) {
             setOpenDrawer(true);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playing]);
 
     useEffect(() => {
         if (!openDrawer) {
             setPlaying(false);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [openDrawer]);
 
     const handlePlay = () => {
