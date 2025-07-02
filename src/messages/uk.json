@@ -24,12 +24,15 @@
   "PostOpenFull": {
     "title": "Читати повністю"
   },
-  "PostsContainer": {
+  "PostsTitle": {
     "title": "Життєпис"
   },
-  "PostsFilterContainer": {
+  "PostsFilter": {
     "types": "Типи дописів",
     "categories": "Категорії",
     "dates": "Дати"
+  },
+  "PostsContainer": {
+    "clearFilter": "Очистити фільтр"
   }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import portrait from '@/img/main-photo.svg';
+import portrait from '@/images/main-photo.svg';
 import PersonInfo from '@/components/specific/PersonInfo';
 import ScrollDown from '@/components/specific/ScrollDown';
 import MainContentActions from '@/components/MainContentActions';

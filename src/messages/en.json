@@ -24,12 +24,15 @@
   "PostOpenFull": {
     "title": "Open full post"
   },
-  "PostsContainer": {
+  "PostsTitle": {
     "title": "Story of life"
   },
-  "PostsFilterContainer": {
+  "PostsFilter": {
     "types": "Types",
     "categories": "Categories",
     "dates": "Dates"
+  },
+  "PostsContainer": {
+    "clearFilter": "Clear filter"
   }
 }

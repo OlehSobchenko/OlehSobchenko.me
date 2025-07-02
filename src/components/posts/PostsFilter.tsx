@@ -1,37 +1,127 @@
-import { ReactNode, useState } from 'react';
-import PostsFilterContainer from '@/components/posts/PostsFilterContainer';
+import { ReactNode } from 'react';
+import DatePicker from 'react-datepicker';
 
-export interface PostsFilterProps {
-    title: string | ReactNode;
+import { useLocale } from 'use-intl';
+import Accordion from '@/components/base/Accordion';
+import OutlinedButton from '@/components/base/OutlinedButton';
+import { Languages } from '@/i18n/config';
+import classNames from '@/utils/classNames';
+import { useTranslations } from 'next-intl';
+import { usePostsContext } from '@/components/providers/PostsProvider';
+
+export interface SelectableButtonsFilterProps {
+    title: ReactNode;
+    items: {
+        id: string;
+        name: Record<Languages, string>;
+    }[];
+    selected: string[];
+    onChange: (id: string) => void;
+    onRemove: (id: string) => void;
 }
 
-export default function PostsFilter({ title }: PostsFilterProps) {
-    const [openFilter, setOpenFilter] = useState(false);
+export function SelectableButtonsFilter(props: SelectableButtonsFilterProps) {
+    const { items, title, selected, onChange, onRemove } = props;
+    const locale = useLocale() as Languages;
 
-    return <div className="uppercase lg:pb-16 pb-8">
-        <div
-            className="flex justify-between items-center gap-x-4 lg:pb-8 pb-4"
-        >
-            { title }
-            <div
-                className="cursor-pointer select-none"
-                onClick={ () => setOpenFilter(prev => !prev) }
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="56px"
-                    viewBox="0 -960 960 960"
-                    width="56px"
+    return <Accordion title={ title }>
+        <div className="flex flex-wrap gap-4 mb-4">
+            { items.map(item => {
+                const isSelected = selected.includes(item.id);
+
+                return <OutlinedButton
+                    key={ item.id }
+                    className={ classNames(
+                        'uppercase lg:text-4xl text-2xl pr-3 pl-3 pt-1 pb-1',
+                        isSelected
+                            ? 'bg-(--main-color) text-(--bg-color) border-(--main-color)'
+                            : ''
+                        ,
+                    ) }
+                    onClick={ () => isSelected
+                        ? onRemove(item.id)
+                        : onChange(item.id)
+                    }
                 >
-                    { openFilter && <path
-                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
-                    /> }
-                    { !openFilter && <path
-                        d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z"
-                    /> }
-                </svg>
-            </div>
+                    { item.name[locale] }
+                </OutlinedButton>;
+            }) }
         </div>
-        { openFilter && <PostsFilterContainer/> }
+    </Accordion>;
+}
+
+type Filers = 'categories' | 'types';
+
+const SELECTABLE_FILTERS = ['categories', 'types'] as const;
+
+function getElementOrNull<T>(array?: T[] | null, index: number = 0): T | null {
+    return (array || [])[index] || null;
+}
+
+export default function PostsFilter() {
+    const { filter, ...rest } = usePostsContext();
+    const locale = useLocale() as Languages;
+    const t = useTranslations('PostsFilter');
+    const startDate = getElementOrNull(filter.options.dates);
+    const endDate = getElementOrNull(filter.options.dates, 1);
+
+    const onDatesChange = (dates: [Date | null, Date | null]) => {
+        const shouldRemove = filter.options.dates[0] && dates[0] && !dates[1]
+            && dates[0]?.getTime() === filter.options.dates[0]?.getTime()
+            && (filter.options.dates[0]?.getTime() ===
+            filter.options.dates[1]?.getTime());
+
+        if (shouldRemove) {
+            filter.set(prev => ({ ...prev, dates: [null, null] }));
+
+            return;
+        }
+
+        filter.set(prev => ({ ...prev, dates }));
+    };
+
+    const handleSelectableFilterChange = (name: Filers) => {
+        return (id: string) => filter.set(
+            prev => ({ ...prev, [name]: [...(prev[name] || []), id] }),
+        );
+    };
+
+    const handleSelectableFilterRemove = (name: Filers) => {
+        return (id: string) => filter.set(
+            prev => ({
+                ...prev,
+                [name]: prev[name]?.filter(item => item !== id),
+            }),
+        );
+    };
+
+    return <div className="flex flex-col gap-4">
+        { SELECTABLE_FILTERS.map(name => <SelectableButtonsFilter
+            key={ name }
+            title={ t(name) }
+            items={ rest[name] }
+            selected={ filter.options[name] || [] }
+            onChange={ handleSelectableFilterChange(name) }
+            onRemove={ handleSelectableFilterRemove(name) }
+        />) }
+        <div className="pb-4">
+            <Accordion title={ t('dates') }>
+                <DatePicker
+                    selected={ startDate }
+                    onChange={ onDatesChange }
+                    startDate={ startDate }
+                    endDate={ endDate }
+                    selectsRange
+                    inline
+                    locale={ locale }
+                    showWeekNumbers
+
+                    // showYearDropdown
+                    // showMonthDropdown
+                    // yearDropdownItemNumber={ 100 }
+                    // scrollableYearDropdown
+                />
+            </Accordion>
+        </div>
     </div>;
 }
