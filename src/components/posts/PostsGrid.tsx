@@ -9,6 +9,7 @@ import { usePostsContext } from '@/components/providers/PostsProvider';
 import useOpenLink from '@/utils/hooks/useOpenLink';
 import useIntersectionObserverCallback
     from '@/utils/hooks/useIntersectionObserverCallback';
+import SpinLoader from '@/components/base/SpinLoader';
 
 function LastComponent({ loadMore }: { loadMore: () => void }) {
     const { ref } = useIntersectionObserverCallback({
@@ -29,9 +30,7 @@ export default function PostsGrid() {
         return <div
             className="w-full h-screen flex items-center justify-center"
         >
-            <div
-                className="w-20 h-20 border-6 border-(--bg-color) border-t-(--main-color) rounded-full animate-spin"
-            />
+            <SpinLoader className="w-20 h-20"/>
         </div>;
     }
 
@@ -55,9 +54,7 @@ export default function PostsGrid() {
         { loading.posts && <div
             className="w-full h-1/3 flex items-center justify-center"
         >
-            <div
-                className="w-20 h-20 border-6 border-(--bg-color) border-t-(--main-color) rounded-full animate-spin"
-            />
+            <SpinLoader className="w-20 h-20"/>
         </div> }
         <LastComponent loadMore={ loadMore }/>
     </>;

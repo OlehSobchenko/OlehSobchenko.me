@@ -42,7 +42,7 @@ const PostCard: React.FC<PostCardProps> = props => {
         && (localized.description?.length || 0) > maxDescriptionLength;
 
     return <div
-        className="article w-full mb-5 pb-5"
+        className={ `article w-full mb-5 ${ short ? 'pb-5' : 'pb-10' }` }
         data-post-id={ post.id }
         onClick={ handlePostClick }
         style={ onOpenFull ? { cursor: 'pointer' } : {} }

@@ -39,7 +39,7 @@ export default function Biography() {
             title={ t('title') }
             onClose={ close }
         >
-            <div className="article">
+            <div className="article pb-10">
                 { biography[locale] && <Markdown>
                     { biography[locale] }
                 </Markdown> }

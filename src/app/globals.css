@@ -224,10 +224,10 @@ blockquote:before {
 }
 
 .modal-content {
-    height: calc(var(--with-address-bar-height) - var(--spacing) * 16);
+    height: calc(var(--with-address-bar-height) - var(--spacing) * 22);
 
     @media (min-width: 1024px) {
-        height: calc(var(--with-address-bar-height) - var(--spacing) * 32);
+        height: calc(var(--with-address-bar-height) - var(--spacing) * 38);
     }
 }
 
