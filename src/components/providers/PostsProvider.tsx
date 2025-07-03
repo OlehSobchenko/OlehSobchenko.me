@@ -172,7 +172,7 @@ export const PostsProvider = (
         loading: loadingBase,
     } = usePostsBase();
     const [posts, setPosts] = useState<Post[]>([]);
-    const [loadingPosts, setLoadingPosts] = useState<boolean>(true);
+    const [loadingPosts, setLoadingPosts] = useState<boolean>(false);
     const filter = usePostsFilter();
     const filteredPostsIndex = useMemo(
         () => filterPostsIndex(filter.options, postsIndex),
@@ -183,7 +183,7 @@ export const PostsProvider = (
         more: number,
         refetch: boolean = false,
     ) => {
-        if (!refetch && (posts.length >= postsIndex.length)) {
+        if (loadingPosts || (!refetch && (posts.length >= postsIndex.length))) {
             return;
         }
 
@@ -202,10 +202,13 @@ export const PostsProvider = (
                     categories,
                 ));
 
-                setPosts(previous => (refetch
-                    ? enrichedPosts
-                    : [...previous, ...enrichedPosts]
-                ));
+                setPosts(previous => {
+                    if (refetch) {
+                        return previous;
+                    }
+
+                    return [...previous, ...enrichedPosts];
+                });
             } catch (e) {
                 console.error(e);
             }
