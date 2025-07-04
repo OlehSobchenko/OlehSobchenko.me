@@ -4,24 +4,20 @@ import {
     createContext,
     useContext,
     useState,
+    useRef,
+    useEffect,
+    PropsWithChildren,
     Dispatch,
     SetStateAction,
     RefObject,
-    useRef,
-    PropsWithChildren,
 } from 'react';
-import forest from '@/data/forest.mp3';
-
-export interface Track {
-    title: string;
-    src: string;
-    author: string;
-    thumbnail?: string;
-}
+import { Audio } from '@/types';
+import enrichAudio from '@/utils/data/enrichAudio';
+import getIndexedEntries from '@/utils/data/getIndexedEntries';
 
 interface AudioPlayerContextType {
-    currentTrack: Track | null;
-    setCurrentTrack: Dispatch<SetStateAction<Track | null>>;
+    currentTrack: Audio | null;
+    setCurrentTrack: Dispatch<SetStateAction<Audio | null>>;
     timeProgress: number;
     setTimeProgress: Dispatch<SetStateAction<number>>;
     duration: number;
@@ -30,8 +26,8 @@ interface AudioPlayerContextType {
     progressBarRef: RefObject<HTMLInputElement | null>;
     playing: boolean;
     setPlaying: Dispatch<SetStateAction<boolean>>;
-    tracks: Track[];
-    setTracks: Dispatch<SetStateAction<Track[]>>;
+    tracks: Audio[];
+    setTracks: Dispatch<SetStateAction<Audio[]>>;
     showTracks: boolean;
     setShowTracks: Dispatch<SetStateAction<boolean>>;
 }
@@ -43,25 +39,34 @@ export const AudioPlayerContext = createContext<
 export const AudioPlayerProvider = (
     { children }: PropsWithChildren,
 ) => {
-    const [currentTrack, setCurrentTrack] = useState<Track | null>({
-        title: 'Forest Lullaby',
-        src: forest,
-        author: 'Composer',
-    });
+    const [currentTrack, setCurrentTrack] = useState<Audio | null>(null);
     const [timeProgress, setTimeProgress] = useState<number>(0);
     const [duration, setDuration] = useState<number>(0);
     const [playing, setPlaying] = useState<boolean>(false);
     const [showTracks, setShowTracks] = useState<boolean>(false);
-    const [tracks, setTracks] = useState<Track[]>([
-        {
-            title: 'Forest Lullaby',
-            src: forest,
-            author: 'Composer',
-        },
-    ]);
+    const [tracks, setTracks] = useState<Audio[]>([]);
 
     const audioRef = useRef<HTMLAudioElement>(null);
     const progressBarRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        getIndexedEntries<Audio[]>('audios').then(loadedTracks => {
+            if (!loadedTracks?.length) {
+                return;
+            }
+
+            const enrichedTracks = loadedTracks.map(enrichAudio);
+
+            setTracks(enrichedTracks as Audio[]);
+
+            const track = enrichedTracks.find(t => t?.prioritized)
+                || enrichedTracks[0];
+
+            if (track) {
+                setCurrentTrack(track);
+            }
+        });
+    }, []);
 
     return <AudioPlayerContext.Provider
         value={ {

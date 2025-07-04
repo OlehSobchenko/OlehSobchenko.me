@@ -10,12 +10,14 @@ const config = {
     repo: repoName,
     contentRepo: contentRepoName,
     idAlphabet: '1234567890abcdefghijklmnopqrstuvwxyz',
+    idSize: 6,
     contentFolder,
     uploadsFolder,
     dataBaseUrl,
     contentUrl: `${ dataBaseUrl }${ contentFolder }/`,
     uploadsUrl: `${ dataBaseUrl }${ uploadsFolder }/`,
     maxDescriptionLength: 200,
+    postsIndexSeparator: '|',
 };
 
 export default config;

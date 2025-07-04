@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Category, PostIndex, Type } from '@/types';
 import getIndexedEntries from '@/utils/data/getIndexedEntries';
+import config from '@/config';
 
 export interface PostsBaseUtils {
     categories: Type[];
@@ -35,7 +36,8 @@ export default function usePostsBase(): PostsBaseUtils {
                         typeId,
                         createdAt,
                         happenedAt,
-                    ] = String(content).split('/');
+                        audioId,
+                    ] = String(content).split(config.postsIndexSeparator);
 
                     return {
                         id,
@@ -43,6 +45,7 @@ export default function usePostsBase(): PostsBaseUtils {
                         typeId,
                         createdAt,
                         happenedAt,
+                        audioId,
                     };
                 }).toSorted((a, b) => {
                     return new Date(b.happenedAt).getTime() -

@@ -38,6 +38,7 @@ export interface PostsContextType {
         base: boolean;
         posts: boolean;
     };
+    hasMore: boolean;
     loadMore: () => void;
     filter: PostsFilterUtils;
 }
@@ -52,8 +53,7 @@ const applyDatesFilter = (
         return true;
     }
 
-    const happenedAt = new Date(post.happenedAt);
-    const time = happenedAt.getTime();
+    const time = new Date(post.happenedAt).getTime();
 
     if (start && start.getTime() > time) {
         return false;
@@ -62,17 +62,11 @@ const applyDatesFilter = (
     return !(end && end.getTime() < time);
 };
 
-const isEmptyFilter = (filterOptions: FilterOptions): boolean => {
-    if (filterOptions.dates.some(date => date !== null)) {
-        return false;
-    }
-
-    if (filterOptions.types.length > 0) {
-        return false;
-    }
-
-    return filterOptions.categories.length <= 0;
-};
+const isEmptyFilter = (filterOptions: FilterOptions): boolean => (
+    filterOptions.dates.every(date => date === null) &&
+    filterOptions.types.length === 0 &&
+    filterOptions.categories.length === 0
+);
 
 const filterPostsIndex = (
     filterOptions: FilterOptions,
@@ -82,16 +76,13 @@ const filterPostsIndex = (
         return posts;
     }
 
-    const hasTypeFilter = filterOptions.types.length > 0;
-    const hasCategoryFilter = filterOptions.categories.length > 0;
-    const hasDateFilter = filterOptions.dates.some(date => date !== null);
-
     return posts.filter(post => {
-        if (hasDateFilter) {
-            if (!applyDatesFilter(post, filterOptions.dates)) {
-                return false;
-            }
+        if (!applyDatesFilter(post, filterOptions.dates)) {
+            return false;
         }
+
+        const hasTypeFilter = filterOptions.types.length > 0;
+        const hasCategoryFilter = filterOptions.categories.length > 0;
 
         if (hasTypeFilter || hasCategoryFilter) {
             const typeMatches = hasTypeFilter && post.typeId
@@ -99,9 +90,7 @@ const filterPostsIndex = (
             const categoryMatches = hasCategoryFilter && post.categoryId
                 && filterOptions.categories.includes(post.categoryId);
 
-            if (!typeMatches && !categoryMatches) {
-                return false;
-            }
+            return typeMatches || categoryMatches;
         }
 
         return true;
@@ -115,7 +104,6 @@ const usePostsFilter = (): PostsFilterUtils => {
         categories: [],
     };
     const [filterOptions, setFilterOptions] = useState(defaultFilterOptions);
-
     const emptyFilter = useMemo(
         () => isEmptyFilter(filterOptions),
         [filterOptions],
@@ -129,125 +117,146 @@ const usePostsFilter = (): PostsFilterUtils => {
     };
 };
 
-const getPostsByIds = async (ids: string[]) => {
-    const posts = await Promise.all(ids.map(getPost));
-
-    return posts.filter(p => p) as Post[];
-};
-
-const getMissingPostsIds = (
-    postsIndex: PostIndex[],
-    postsLength: number,
-    size: number,
-): string[] => {
-    const startIndex = postsLength;
-    const endIndex = Math.min(startIndex + size, postsIndex.length);
-
-    if (startIndex >= postsIndex.length) {
+const getPostsByIndices = async (indices: PostIndex[]): Promise<Post[]> => {
+    if (indices.length === 0) {
         return [];
     }
 
-    return postsIndex.slice(startIndex, endIndex).map(({ id }) => id);
-};
+    const posts = await Promise.all(indices.map(i => getPost(i.id, i.audioId)));
 
-const getMissingPosts = async (
-    postsIndex: PostIndex[],
-    postsLength: number,
-    size: number,
-) => {
-    return getPostsByIds(getMissingPostsIds(postsIndex, postsLength, size));
+    return posts.filter((p): p is Post => p !== null);
 };
 
 export const PostsContext = createContext<PostsContextType | undefined>(
     undefined,
 );
 
-export const PostsProvider = (
-    { children }: PropsWithChildren,
-) => {
+export const PostsProvider = ({ children }: PropsWithChildren) => {
     const {
         categories,
         types,
         postsIndex,
         loading: loadingBase,
     } = usePostsBase();
-    const [posts, setPosts] = useState<Post[]>([]);
-    const [loadingPosts, setLoadingPosts] = useState<boolean>(false);
     const filter = usePostsFilter();
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isFetchingMore, setIsFetchingMore] = useState<boolean>(false);
+    const [hasMore, setHasMore] = useState<boolean>(true);
+
     const filteredPostsIndex = useMemo(
         () => filterPostsIndex(filter.options, postsIndex),
         [filter.options, postsIndex],
     );
 
-    const loadPosts = useCallback((
-        more: number,
-        refetch: boolean = false,
-    ) => {
-        if (loadingPosts || (!refetch && (posts.length >= postsIndex.length))) {
+    useEffect(() => {
+        if (loadingBase) {
             return;
         }
 
-        (async () => {
-            setLoadingPosts(true);
+        const loadInitialPosts = async () => {
+            setIsLoading(true);
+            setPosts([]);
+
+            const postsIndices = filteredPostsIndex
+                .slice(0, config.postsBatch);
 
             try {
-                const newPosts = await getMissingPosts(
-                    filteredPostsIndex,
-                    refetch ? 0 : posts.length,
-                    more,
-                );
+                const newPosts = await getPostsByIndices(postsIndices);
                 const enrichedPosts = newPosts.map(post => enrichPost(
                     post,
                     types,
                     categories,
                 ));
 
-                setPosts(previous => {
-                    if (refetch) {
-                        return previous;
-                    }
-
-                    return [...previous, ...enrichedPosts];
-                });
+                setPosts(enrichedPosts);
+                setHasMore(enrichedPosts.length >= config.postsBatch);
             } catch (e) {
-                console.error(e);
+                console.error('Failed to load initial posts:', e);
+                setHasMore(false);
+            } finally {
+                setIsLoading(false);
             }
+        };
 
-            setLoadingPosts(false);
-        })();
-    }, [filteredPostsIndex, posts.length, types, categories]);
+        loadInitialPosts().then();
+    }, [filteredPostsIndex, loadingBase, types, categories]);
 
-    useEffect(() => {
-        if (!loadingBase && !posts.length) {
-            loadPosts(config.postsBatch);
-        }
-    }, [loadingBase]);
-
-    useEffect(() => {
-        if (!postsIndex.length) {
+    const loadMore = useCallback(async () => {
+        if (isLoading || isFetchingMore || !hasMore) {
             return;
         }
 
-        loadPosts(config.postsBatch, true);
-    }, [filter.options]);
+        setIsFetchingMore(true);
 
-    const loadMore = (more = config.postsBatch) => {
-        loadPosts(more);
-    };
+        try {
+            const nextPostsIndices = filteredPostsIndex
+                .slice(posts.length, posts.length + config.postsBatch);
 
-    return <PostsContext.Provider
-        value={ {
-            categories,
-            types,
-            posts,
-            loading: {
-                base: loadingBase,
-                posts: loadingPosts,
-            },
-            loadMore,
-            filter,
-        } }
-    >
+            if (nextPostsIndices.length === 0) {
+                setHasMore(false);
+
+                return;
+            }
+
+            const newPosts = await getPostsByIndices(nextPostsIndices);
+            const enrichedPosts = newPosts.map(post => enrichPost(
+                post,
+                types,
+                categories,
+            ));
+
+            if (enrichedPosts.length < config.postsBatch) {
+                setHasMore(false);
+            }
+
+            setPosts(prevPosts => {
+                const existingIds = new Set(prevPosts.map(p => p.id));
+                const uniqueNewPosts = enrichedPosts.filter(
+                    p => !existingIds.has(p.id),
+                );
+
+                return [...prevPosts, ...uniqueNewPosts];
+            });
+        } catch (e) {
+            console.error('Failed to load more posts:', e);
+        } finally {
+            setIsFetchingMore(false);
+        }
+    }, [
+        isLoading,
+        isFetchingMore,
+        hasMore,
+        posts.length,
+        filteredPostsIndex,
+        types,
+        categories,
+    ]);
+
+    const contextValue = useMemo(() => ({
+        categories,
+        types,
+        posts,
+        loading: {
+            base: loadingBase,
+            posts: isLoading || isFetchingMore,
+        },
+        hasMore,
+        loadMore,
+        filter,
+    }), [
+        categories,
+        types,
+        posts,
+        loadingBase,
+        isLoading,
+        isFetchingMore,
+        hasMore,
+        loadMore,
+        filter,
+    ]);
+
+    return <PostsContext.Provider value={ contextValue }>
         { children }
     </PostsContext.Provider>;
 };
@@ -256,9 +265,7 @@ export const usePostsContext = (): PostsContextType => {
     const context = useContext(PostsContext);
 
     if (context === undefined) {
-        throw new Error(
-            'usePostsContext must be used within an PostsProvider',
-        );
+        throw new Error('usePostsContext must be used within a PostsProvider');
     }
 
     return context;

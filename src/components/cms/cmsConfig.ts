@@ -89,7 +89,6 @@ const getCmsConfig = (
                     label: 'Дата події',
                     name: 'happenedAt',
                     widget: 'datetime',
-                    default: '{{now}}',
                     required: true,
                 },
                 {
@@ -133,10 +132,21 @@ const getCmsConfig = (
                     ],
                 },
                 {
-                    label: 'Audio',
-                    name: 'audio',
-                    widget: 'file',
-                    required: false,
+                    label: 'Аудіо',
+                    name: 'audioId',
+                    widget: 'relation',
+                    collection: 'audios',
+                    value_field: 'id',
+                    display_fields: [
+                        `{{locales.${ input.locale }.name}} - `,
+                        `locales.${ input.locale }.description`,
+                        `(Шлях: {{link}})`,
+                    ],
+                    search_fields: [
+                        `locales.${ input.locale }.name`,
+                        `locales.${ input.locale }.description`,
+                        `link`,
+                    ],
                 },
                 getLocalizedContentField([
                     {
@@ -162,6 +172,57 @@ const getCmsConfig = (
                         name: 'description',
                         widget: 'markdown',
                         required: false,
+                    },
+                ]),
+            ],
+        },
+        {
+            name: 'audios',
+            label: 'Аудіофайли',
+            folder: `${ config.contentFolder }/audios`,
+            create: true,
+            slug: '{{id}}',
+            format: 'json',
+            editor: {
+                preview: false,
+            },
+            summary: `{{locales.${ input.locale }.name}} - {{locales.${
+                input.locale }.description}} (Шлях: {{link}})`,
+            fields: [
+                {
+                    label: 'ID',
+                    name: 'id',
+                    widget: 'uuid',
+                    required: true,
+                    index_file: 'index.json',
+                    meta: false,
+                },
+                {
+                    label: 'Аудіофайл',
+                    name: 'link',
+                    widget: 'file',
+                    required: true,
+                },
+                {
+                    label: 'Найпріоритетніший',
+                    name: 'prioritized',
+                    widget: 'boolean',
+                    default: false,
+                },
+                getLocalizedContentField([
+                    {
+                        label: 'Назва',
+                        name: 'name',
+                        widget: 'string',
+                        i18n: true,
+                        required: true,
+                    },
+                    {
+                        label: 'Опис',
+                        name: 'description',
+                        widget: 'string',
+                        i18n: true,
+                        required: true,
                     },
                 ]),
             ],

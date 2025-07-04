@@ -2,9 +2,6 @@ import ThemeSwitcher from '@/components/specific/ThemeSwitcher';
 import LanguageSwitcher from '@/components/specific/LanguageSwitcher';
 import PostsSearch from '@/components/specific/PostsSearch';
 import AudioControl from '@/components/specific/AudioControl';
-import {
-    AudioPlayerProvider,
-} from '@/components/providers/AudioPlayerProvider';
 
 export default function MainContentActions() {
     return <div
@@ -17,8 +14,6 @@ export default function MainContentActions() {
             <ThemeSwitcher/>
             <LanguageSwitcher/>
         </div>
-        <AudioPlayerProvider>
-            <AudioControl/>
-        </AudioPlayerProvider>
+        <AudioControl/>
     </div>;
 }

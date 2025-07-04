@@ -8,7 +8,7 @@ export interface EntityIndexingInput {
     repo: string;
     contentFolder: string;
     entity: string,
-    convertor: (files: any[]) => any,
+    convertor?: (files: any[]) => any,
     onStart?: () => void;
     onFinish?: () => void;
 }
@@ -23,7 +23,10 @@ const entityIndexing = async (input: EntityIndexingInput) => {
             input.contentFolder }/${ input.entity }`,
         input.token,
     );
-    const index = input.convertor(files);
+    const index = input.convertor
+        ? input.convertor(files)
+        : files
+    ;
     const indexContent = JSON.stringify(index);
     const indexPath = `${ config.contentFolder }/${ input.entity }_index.json`;
     const base64Content = Buffer.from(indexContent).toString('base64');
@@ -57,46 +60,68 @@ const entityIndexing = async (input: EntityIndexingInput) => {
     );
 };
 
-const entitiesIndexing = async () => {
+type Entities = 'posts' | 'categories' | 'types' | 'audios';
+
+const entitiesIndexing = async (
+    indexedEntities?: Entities[],
+) => {
     const input = {
         token: getGithubToken(),
         contentFolder: config.contentFolder,
         repo: config.contentRepo,
     } as Pick<EntityIndexingInput, 'token' | 'contentFolder' | 'repo'>;
 
-    await entityIndexing({
-        ...input,
-        entity: 'posts',
-        convertor: files => Object.fromEntries(files.map(data => ([
-            data.id, `${ data.categoryId }/${ data.typeId }/${ data.createdAt }/${
-                data.happenedAt }`,
-        ]))),
-    });
-    await entityIndexing({
-        ...input,
-        entity: 'categories',
-        convertor: files => files.map(file => ({
-            id: file.id,
-            name: Object.fromEntries(
-                Object.keys(file.locales).map(
-                    locale => [locale, file.locales[locale].name],
+    if (!indexedEntities || indexedEntities.includes('posts')) {
+        await entityIndexing({
+            ...input,
+            entity: 'posts',
+            convertor: files => Object.fromEntries(files.map(data => ([
+                data.id,
+                [
+                    data.categoryId,
+                    data.typeId,
+                    data.createdAt,
+                    data.happenedAt,
+                    data.audioId,
+                ].join(config.postsIndexSeparator),
+            ]))),
+        });
+    }
+
+    if (!indexedEntities || indexedEntities.includes('categories')) {
+        await entityIndexing({
+            ...input,
+            entity: 'categories',
+            convertor: files => files.map(file => ({
+                id: file.id,
+                name: Object.fromEntries(
+                    Object.keys(file.locales).map(
+                        locale => [locale, file.locales[locale].name],
+                    ),
                 ),
-            ),
-        })),
-    });
-    await entityIndexing({
-        ...input,
-        entity: 'types',
-        convertor: files => files.map(file => ({
-            id: file.id,
-            name: Object.fromEntries(
-                Object.keys(file.locales).map(
-                    locale => [locale, file.locales[locale].name],
+            })),
+        });
+    }
+
+    if (!indexedEntities || indexedEntities.includes('types')) {
+        await entityIndexing({
+            ...input,
+            entity: 'types',
+            convertor: files => files.map(file => ({
+                id: file.id,
+                name: Object.fromEntries(
+                    Object.keys(file.locales).map(
+                        locale => [locale, file.locales[locale].name],
+                    ),
                 ),
-            ),
-            icon: file.icon,
-        })),
-    });
+                icon: file.icon,
+            })),
+        });
+    }
+
+    if (!indexedEntities || indexedEntities.includes('audios')) {
+        await entityIndexing({ ...input, entity: 'audios' });
+    }
 };
 
 export default entitiesIndexing;

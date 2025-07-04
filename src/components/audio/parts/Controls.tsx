@@ -83,7 +83,7 @@ export const Controls = () => {
         setCurrentTrack(prev => {
             const trackIndex = prev
                 ? tracks.findIndex(
-                    track => track.src === prev?.src,
+                    track => track.id === prev?.id,
                 )
                 : -1
             ;
@@ -105,7 +105,7 @@ export const Controls = () => {
         setCurrentTrack(prev => {
             const trackIndex = prev
                 ? tracks.findIndex(
-                    track => track.src === prev?.src,
+                    track => track.id === prev?.id,
                 )
                 : -1
             ;
@@ -125,7 +125,7 @@ export const Controls = () => {
 
     return <div className="flex gap-4 items-center">
         <audio
-            src={ currentTrack?.src }
+            src={ currentTrack?.link }
             ref={ audioRef }
             onLoadedMetadata={ onLoadedMetadata }
         />

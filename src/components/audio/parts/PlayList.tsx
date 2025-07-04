@@ -1,11 +1,14 @@
 'use client';
 
 import {
-    Track,
     useAudioPlayerContext,
 } from '@/components/providers/AudioPlayerProvider';
+import { Audio } from '@/types';
+import { useLocale } from 'use-intl';
+import { Languages } from '@/i18n/config';
 
 export const PlayList = () => {
+    const locale = useLocale() as Languages;
     const {
         currentTrack,
         setCurrentTrack,
@@ -13,12 +16,12 @@ export const PlayList = () => {
         tracks,
     } = useAudioPlayerContext();
 
-    const handleClick = (track: Track) => {
+    const handleClick = (track: Audio) => {
         setCurrentTrack(track);
         setPlaying(true);
     };
 
-    return <ul className="max-h-72 overflow-y-auto">
+    return <ul className="max-h-80 overflow-y-auto">
         { tracks.map((track, index) => (
             <li
                 key={ index }
@@ -60,12 +63,16 @@ export const PlayList = () => {
                             </div> }
                     </div>
                     <div>
-                        <p className="font-bold text-sm">{ track.title }</p>
-                        <p className="text-sm text-gray-400">{ track.author }</p>
+                        <p className="font-bold text-sm">
+                            { (track.locales || {})[locale]?.name }
+                        </p>
+                        <p className="text-sm text-gray-400">
+                            { (track.locales || {})[locale]?.description }
+                        </p>
                     </div>
                 </div>
                 <div>
-                    { track?.src === currentTrack?.src && <div className="p-3">
+                    { track?.id === currentTrack?.id && <div className="p-3">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             height="24px"

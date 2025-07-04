@@ -32,11 +32,7 @@ export default function UniqueIdControl(props: CmsWidgetControlProps) {
         }
     }, []);
 
-    const generateId = () => {
-        const id = uniqueId();
-
-        onChange(id);
-    };
+    const generateId = () => onChange(uniqueId());
 
     return <input
         type="text"

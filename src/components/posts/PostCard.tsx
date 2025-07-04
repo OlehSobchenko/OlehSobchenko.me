@@ -80,7 +80,7 @@ const PostCard: React.FC<PostCardProps> = props => {
                 maxDescriptionLength={ maxDescriptionLength }
             />
             <PostQuote quote={ localized.quote }/>
-            <PostAudio audio={ post.audio }/>
+            <PostAudio audio={ post.audio } lang={ lang }/>
             { isDescriptionTruncated && <PostOpenFull
                 onOpenFull={ handlePostClick }
             /> }

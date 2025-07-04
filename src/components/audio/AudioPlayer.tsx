@@ -15,7 +15,7 @@ export const AudioPlayer = ({ onClose }: { onClose?: () => void }) => {
         { showTracks && <div
             className="transition-max-height duration-300 ease-in-out overflow-hidden"
         >
-            <div className="bg-(--bg-color) max-h-72 overflow-y-auto pb-3">
+            <div className="bg-(--bg-color) overflow-y-auto pb-3">
                 <PlayList/>
             </div>
         </div> }

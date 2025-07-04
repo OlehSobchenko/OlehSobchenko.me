@@ -1,9 +1,43 @@
-const getVideoContent = (video: {
-    link?: string;
-    embed?: string;
-}) => {
+'use client';
+import React from 'react';
+import parse, {
+    HTMLReactParserOptions,
+    attributesToProps,
+} from 'html-react-parser';
+import PersistentIframe from '@/components/base/PersistentIframe';
+
+interface HtmlParserProps {
+    htmlString: string;
+}
+
+function HtmlParser({ htmlString }: HtmlParserProps) {
+    const options: HTMLReactParserOptions = {
+        replace: (domNode: any) => {
+            if (domNode) {
+                const reactProps = attributesToProps(domNode.attribs);
+
+                if (domNode.name === 'iframe') {
+                    return <PersistentIframe {...reactProps} />;
+                }
+            }
+
+            return domNode;
+        },
+    };
+
+    return <>{ parse(htmlString, options) }</>;
+}
+
+const VideoContent = (
+    { video }: {
+        video: {
+            link?: string;
+            embed?: string;
+        };
+    },
+) => {
     if (video.embed) {
-        return <div dangerouslySetInnerHTML={ { __html: video.embed } }/>;
+        return <div><HtmlParser htmlString={ video.embed }/></div>;
     }
 
     return <video
@@ -32,7 +66,7 @@ const PostVideo = ({ video, short }: {
         }
     >
         <div className="video-wrapper relative pb-[56.25%] h-0">
-            { getVideoContent(video) }
+            <VideoContent video={ video }/>
         </div>
     </div>;
 };

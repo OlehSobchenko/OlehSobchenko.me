@@ -1,14 +1,6 @@
 import { Category, Post, Type } from '@/types';
-import isAbsolutePath from '@/utils/isAbsolutePath';
-import config from '@/config';
-
-const normalizeUrl = (input?: string): string | undefined => {
-    return input
-        ? isAbsolutePath(input)
-            ? input
-            : `${ config.dataBaseUrl }${ input }`
-        : input;
-};
+import normalizeUrl from '@/utils/data/normalizeUrl';
+import enrichAudio from '@/utils/data/enrichAudio';
 
 export default function enrichPost(
     post: Post,
@@ -18,7 +10,7 @@ export default function enrichPost(
     return {
         ...post,
         link: normalizeUrl(post.link),
-        audio: normalizeUrl(post.audio),
+        audio: enrichAudio(post.audio),
         image: normalizeUrl(post.image),
         video: post.video
             ? {

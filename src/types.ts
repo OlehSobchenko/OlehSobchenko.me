@@ -15,8 +15,25 @@ export type PostIndex = {
     id: string;
     categoryId?: string;
     typeId?: string;
+    audioId?: string;
     createdAt: string;
     happenedAt: string;
+};
+
+export type Audio = {
+    id: string;
+    link?: string;
+    thumbnail?: string;
+    prioritized?: boolean;
+    locales?: Localized<{
+        name?: string;
+        description?: string;
+    }>;
+};
+
+export type Video = {
+    link?: string;
+    embed?: string;
 };
 
 export type Post = {
@@ -29,11 +46,8 @@ export type Post = {
     happenedAt: string;
     link?: string;
     image?: string;
-    video?: {
-        link?: string;
-        embed?: string;
-    };
-    audio?: string;
+    video?: Video;
+    audio?: Audio;
     locales?: Localized<{
         title?: string;
         shortDescription?: string;
