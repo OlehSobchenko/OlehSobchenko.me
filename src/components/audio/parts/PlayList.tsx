@@ -4,7 +4,7 @@ import {
     useAudioPlayerContext,
 } from '@/components/providers/AudioPlayerProvider';
 import { Audio } from '@/types';
-import { useLocale } from 'use-intl';
+import { useLocale } from 'next-intl';
 import { Languages } from '@/i18n/config';
 
 export const PlayList = () => {
@@ -63,7 +63,7 @@ export const PlayList = () => {
                             </div> }
                     </div>
                     <div>
-                        <p className="font-bold text-sm">
+                        <p className="font-black text-md">
                             { (track.locales || {})[locale]?.name }
                         </p>
                         <p className="text-sm text-gray-400">

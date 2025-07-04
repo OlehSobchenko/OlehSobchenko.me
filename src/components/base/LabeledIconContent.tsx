@@ -7,18 +7,16 @@ export interface LabeledIconContentProps {
 export default function LabeledIconContent(
     props: PropsWithChildren<LabeledIconContentProps>,
 ) {
-    return <>
+    return <div className="flex sm:min-h-10 min-h-8 justify-center items-center gap-2">
         <span className="uppercase sm:pl-1.5">
             { props.children }
         </span>
         { props.iconContent && <svg
-            className="sm:block hidden"
+            className="sm:block hidden lg:w-10 lg:h-10 w-8 h-8 pb-0.5"
             xmlns="http://www.w3.org/2000/svg"
-            height="40px"
             viewBox="0 -960 960 960"
-            width="40px"
         >
             { props.iconContent }
         </svg> }
-    </>;
+    </div>;
 }

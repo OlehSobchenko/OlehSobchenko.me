@@ -29,7 +29,6 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
     return <div
         className="fixed inset-0 z-[10000] bg-[var(--bg-color)] flex flex-col w-full mx-auto"
     >
-        {/* Header with max-width constraint - Fixed height */}
         <div className="flex-shrink-0 max-w-[1024px] ml-auto mr-auto w-full">
             <div
                 className="lg:pt-16 pt-6 lg:pl-16 pl-6 lg:pr-16 pr-6 lg:px-32 px-6 flex justify-between items-center"
@@ -51,8 +50,6 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
                 </button>
             </div>
         </div>
-
-        {/* Full-width scrollable content container - Takes remaining space */}
         <div className="flex-1 w-full overflow-y-auto lg:mt-6 mt-4">
             <div className="max-w-[1024px] ml-auto mr-auto">
                 <div className="modal-content lg:pl-16 pl-6 lg:pr-16 pr-6">

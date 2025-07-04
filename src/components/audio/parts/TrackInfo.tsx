@@ -3,23 +3,22 @@
 import {
     useAudioPlayerContext,
 } from '@/components/providers/AudioPlayerProvider';
-import { useLocale } from 'use-intl';
+import { useLocale } from 'next-intl';
 
 export const TrackInfo = () => {
     const locale = useLocale();
     const { currentTrack } = useAudioPlayerContext();
     const metadata = (currentTrack?.locales || {})[locale];
 
-    return <div className="flex items-center gap-4 max-w-full">
-        <div className="max-sm:flex gap-x-1.5">
+    return <div className="flex items-center gap-4 max-sm:w-full">
+        <div className="max-sm:flex max-sm:flex-col max-sm:items-center max-sm:w-full">
             <p
-                className="font-bold lg:max-w-64 md:text-xl text-lg"
+                className="max-sm:text-center font-bold max-sm:text-2xl lg:max-w-64 md:text-2xl text-lg leading-6"
             >
                 { metadata?.name }
             </p>
-            <div className="sm:hidden block text-lg"> | </div>
             <p
-                className="md:text-md text-lg text-gray-400"
+                className="max-sm:text-center md:text-md text-lg text-gray-400"
             >
                 { metadata?.description }
             </p>

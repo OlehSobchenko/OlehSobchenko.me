@@ -35,7 +35,7 @@ export default function AudioControl() {
             onClick={ handlePlay }
         >
             <svg
-                className="lg:w-20 lg:h-20 sm:w-16 sm:h-16 w-12 h-12"
+                className="lg:w-20 lg:h-20 w-18 h-18"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 -960 960 960"
             >

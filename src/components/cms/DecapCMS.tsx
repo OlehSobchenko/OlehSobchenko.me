@@ -31,7 +31,7 @@ export default function DecapCMS() {
     return <ErrorBoundary errorComponent={ () => <div>CMS Failed</div> }>
         <div className="min-h-screen flex flex-col justify-between">
             <div>
-                <div id="nc-root"/>
+                <div id="nc-root" className="pb-56"/>
             </div>
             <Indexing indexing={ indexing } onClick={ processIndexing }/>
         </div>

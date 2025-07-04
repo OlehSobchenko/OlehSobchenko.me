@@ -1,12 +1,10 @@
 import { ReactNode } from 'react';
 import DatePicker from 'react-datepicker';
-
-import { useLocale } from 'use-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Accordion from '@/components/base/Accordion';
 import OutlinedButton from '@/components/base/OutlinedButton';
 import { Languages } from '@/i18n/config';
 import classNames from '@/utils/classNames';
-import { useTranslations } from 'next-intl';
 import { usePostsContext } from '@/components/providers/PostsProvider';
 
 export interface SelectableButtonsFilterProps {
@@ -95,7 +93,7 @@ export default function PostsFilter() {
         );
     };
 
-    return <div className="flex flex-col gap-4">
+    return <div className="flex flex-col gap-3">
         { SELECTABLE_FILTERS.map(name => <SelectableButtonsFilter
             key={ name }
             title={ t(name) }

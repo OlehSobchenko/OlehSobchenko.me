@@ -46,16 +46,16 @@ export default function Indexing(props: {
 
     return <div
         className={
-            'sticky bottom-0 flex justify-between items-center md:gap-8 gap-4 w-screen p-6 min-h-20 bg-[#EFF0F4] md:flex-row flex-col'
+            'fixed bottom-0 flex justify-between items-center md:gap-8 gap-4 w-screen p-6 min-h-20 bg-[#EFF0F4] md:flex-row flex-col z-[10000]'
         }
     >
         <div>
             <div>
-                Натисніть <strong>Індексувати</strong>, наприклад, якщо
-                допис не відображається у стрічці головної сторінки
+                Натисніть <strong>Індексувати</strong> за наявності проблеми з
+                відображенням дописів
             </div>
-            <div className="text-red-400">
-                <strong>Не закривайте сторінку</strong> до того, як закінчиться
+            <div className="text-red-400 text-sm">
+                <strong>Не закривайте сторінку</strong> допоки не закінчиться
                 індексування
             </div>
         </div>
@@ -64,7 +64,7 @@ export default function Indexing(props: {
                 className="border-4!"
                 onClick={ props.onClick }
             >
-                <div className="font-black">ІНДЕКСУВАТИ</div>
+                <div className="font-black uppercase">Індексувати</div>
             </OutlinedButton> }
             { props.indexing && <div className="flex gap-2 items-center">
                 <div

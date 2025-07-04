@@ -7,7 +7,7 @@ import { Languages } from '@/i18n/config';
 import PostHeaderTitle from '@/components/posts/parts/PostHeaderTitle';
 import PostDate from '@/components/posts/parts/PostDate';
 import PostHeaderIcon from '@/components/posts/parts/PostHeaderIcon';
-import { useLocale } from 'use-intl';
+import { useLocale } from 'next-intl';
 import getPost from '@/utils/data/getPost';
 import { Post } from '@/types';
 import getIndexedEntries from '@/utils/data/getIndexedEntries';

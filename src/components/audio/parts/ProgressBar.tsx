@@ -65,8 +65,8 @@ export const ProgressBar = () => {
             />
         </Slider.Root>
         <div className="flex justify-between">
-            <span className="p-3 pt-5 pb-1">{ formatTime(timeProgress) }</span>
-            <span className="p-3 pt-5 pb-1">{ formatTime(duration) }</span>
+            <span className="p-6 pt-5 pb-1">{ formatTime(timeProgress) }</span>
+            <span className="p-6 pt-5 pb-1">{ formatTime(duration) }</span>
         </div>
     </div>;
 };

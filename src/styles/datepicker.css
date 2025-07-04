@@ -79,10 +79,10 @@
 .react-datepicker__day--in-range,
 .react-datepicker__day--range-start,
 .react-datepicker__day--range-end {
-    background-color: var(--main-color) !important;
-    color: var(--bg-color);
-    border-top: 2px solid var(--main-color);
-    border-bottom: 2px solid var(--main-color);
+    background-color: #9E9E9E !important;
+    color: var(--main-color);
+    border-top: 2px solid #9E9E9E;
+    border-bottom: 2px solid #9E9E9E;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -90,14 +90,16 @@
 .react-datepicker__day--in-selecting-range,
 .react-datepicker__day--selected,
 .react-datepicker__day--keyboard-selected {
-    background-color: #9E9E9E !important;
-    border: 2px solid #9E9E9E;
+    background-color: var(--main-color) !important;
+    color: var(--bg-color);
+    border: 2px solid var(--main-color);
     margin-top: 0;
     margin-bottom: 0;
 }
 
 .react-datepicker__navigation-icon::before,
 .react-datepicker__navigation-icon:hover::before {
+    border-color: var(--main-color) !important;
     color: var(--main-color);
     height: 16px;
     width: 16px;

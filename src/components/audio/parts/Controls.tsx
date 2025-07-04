@@ -131,7 +131,7 @@ export const Controls = () => {
         />
         <button onClick={ handlePrevious } className="cursor-pointer">
             <svg
-                className="md:w-8 md:h-8 w-7 h-7"
+                className="md:w-8 md:h-8 w-7 h-7 max-sm:w-8 max-sm:h-8"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 -960 960 960"
             >
@@ -146,7 +146,7 @@ export const Controls = () => {
         >
             { playing
                 ? <svg
-                    className="md:w-16 md:h-16 w-12 h-12"
+                    className="md:w-16 md:h-16 w-12 h-12 max-sm:w-16 max-sm:h-16"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 -960 960 960"
                 >
@@ -155,7 +155,7 @@ export const Controls = () => {
                     />
                 </svg>
                 : <svg
-                    className="md:w-16 md:h-16 w-12 h-12"
+                    className="md:w-16 md:h-16 w-12 h-12 max-sm:w-16 max-sm:h-16"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 -960 960 960"
                 >
@@ -167,10 +167,9 @@ export const Controls = () => {
         </button>
         <button onClick={ handleNext } className="cursor-pointer">
             <svg
+                className="md:w-8 md:h-8 w-7 h-7 max-sm:w-8 max-sm:h-8"
                 xmlns="http://www.w3.org/2000/svg"
-                height="32px"
                 viewBox="0 -960 960 960"
-                width="32px"
             >
                 <path
                     d="M100-240v-480l360 240-360 240Zm400 0v-480l360 240-360 240ZM180-480Zm400 0Zm-400 90 136-90-136-90v180Zm400 0 136-90-136-90v180Z"

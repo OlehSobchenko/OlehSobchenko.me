@@ -10,11 +10,11 @@ export default function PostsSearch() {
 
     return <>
         <div
-            className="cursor-pointer lg:p-2 p-1"
+            className="cursor-pointer lg:p-2 p-0.5"
             onClick={ open }
         >
             <svg
-                className="sm:w-8 sm:h-8 w-6 h-6"
+                className="sm:w-8 sm:h-8 w-[29px] h-[29px]"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 -960 960 960"
             >
