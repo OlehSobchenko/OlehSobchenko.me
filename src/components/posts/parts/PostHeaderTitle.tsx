@@ -12,7 +12,13 @@ const PostHeaderTitle: React.FC<{
         return null;
     }
 
+    const tooltip = [
+        getLocalized(lang, type?.name),
+        getLocalized(lang, category?.name),
+    ].filter(Boolean).map(i => i?.toUpperCase()).join(' | ');
+
     return <div
+        title={ tooltip }
         className="min-w-0 max-w-full text-lg leading-tight w-full md:text-xl md:leading-xl overflow-hidden text-ellipsis whitespace-nowrap"
     >
         { type && <span className="uppercase">

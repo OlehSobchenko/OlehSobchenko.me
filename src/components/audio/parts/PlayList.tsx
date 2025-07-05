@@ -34,9 +34,9 @@ export const PlayList = () => {
                 } }
                 onClick={ () => handleClick(track) }
             >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
                     <div
-                    className="w-16 h-16 flex items-center justify-center rounded-sm overflow-hidden"
+                        className="flex-shrink-0 w-16 h-16 flex items-center justify-center rounded-sm overflow-hidden"
                     >
                         { track.thumbnail
                             ? <img
@@ -62,16 +62,22 @@ export const PlayList = () => {
                                 </span>
                             </div> }
                     </div>
-                    <div>
-                        <p className="font-black text-md">
+                    <div className="min-w-0 flex-1">
+                        <p
+                            title={ (track.locales || {})[locale]?.name }
+                            className="font-bold text-lg overflow-hidden whitespace-nowrap text-ellipsis"
+                        >
                             { (track.locales || {})[locale]?.name }
                         </p>
-                        <p className="text-sm text-gray-400">
+                        <p
+                            title={ (track.locales || {})[locale]?.description }
+                            className="text-sm text-gray-400 overflow-hidden whitespace-nowrap text-ellipsis"
+                        >
                             { (track.locales || {})[locale]?.description }
                         </p>
                     </div>
                 </div>
-                <div>
+                <div className="flex-shrink-0">
                     { track?.id === currentTrack?.id && <div className="p-3">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

@@ -55,9 +55,7 @@ function PlayListWrapper() {
         return null;
     }
 
-    return <div
-        className="transition-max-height duration-300 ease-in-out overflow-hidden"
-    >
+    return <div className="overflow-hidden">
         <div className="bg-(--bg-color) overflow-y-auto pb-3">
             <PlayList/>
         </div>
