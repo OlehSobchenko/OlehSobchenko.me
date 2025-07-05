@@ -1,8 +1,12 @@
 import PostModal from '@/components/posts/PostModal';
-import ProvidersWrapper from '@/components/providers/ProvidersWrapper';
+import {
+    AudioPlayerProvider,
+} from '@/components/providers/AudioPlayerProvider';
+import AudioControl from '@/components/specific/AudioControl';
 
 export default function PostPage(props: { id: string }) {
-    return <ProvidersWrapper>
+    return <AudioPlayerProvider>
         <PostModal id={ props.id }/>
-    </ProvidersWrapper>;
+        <AudioControl showButton={ false }/>
+    </AudioPlayerProvider>;
 }

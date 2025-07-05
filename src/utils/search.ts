@@ -93,7 +93,6 @@ export default class Search {
         const allMatches = new Set<SearchItemId>();
 
         for (const token of tokens) {
-            // Find all index keys that start with the token
             for (const [indexToken, itemIds] of this.index.entries()) {
                 if (indexToken.startsWith(token) && indexToken !== token) {
                     itemIds.forEach(id => allMatches.add(id));

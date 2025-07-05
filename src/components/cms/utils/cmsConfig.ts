@@ -51,6 +51,7 @@ const getCmsConfig = (
             editor: {
                 preview: false,
             },
+            identifier_field: 'id',
             fields: [
                 {
                     label: 'ID',
@@ -189,6 +190,7 @@ const getCmsConfig = (
             },
             summary: `{{locales.${ input.locale }.name}} - {{locales.${
                 input.locale }.description}} (Шлях: {{link}})`,
+            identifier_field: 'id',
             fields: [
                 {
                     label: 'ID',
@@ -239,6 +241,7 @@ const getCmsConfig = (
                 preview: false,
             },
             summary: `{{locales.${ input.locale }.name}}`,
+            identifier_field: 'id',
             fields: [
                 {
                     label: 'ID',
@@ -269,6 +272,7 @@ const getCmsConfig = (
             editor: {
                 preview: false,
             },
+            identifier_field: 'id',
             fields: [
                 {
                     label: 'ID',

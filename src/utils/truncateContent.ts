@@ -24,20 +24,22 @@ export default function truncateContent(
         const line = lines[i];
         const originalLine = line;
 
-        // Update blockquote state
         if (line.startsWith('>')) {
             inBlockquote = true;
         } else if (inBlockquote && line.trim() === '') {
             let nextLineIsBlockquote = false;
+
             for (let j = i + 1; j < lines.length; j++) {
                 if (lines[j].startsWith('>')) {
                     nextLineIsBlockquote = true;
                     break;
                 }
+
                 if (lines[j].trim() !== '') {
                     break;
                 }
             }
+
             if (!nextLineIsBlockquote) {
                 inBlockquote = false;
             }

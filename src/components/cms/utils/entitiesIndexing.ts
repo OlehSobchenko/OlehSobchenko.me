@@ -82,8 +82,8 @@ const entitiesIndexing = async (indexedEntities?: Entities[]) => {
         repo: config.contentRepo,
     } as Pick<EntityIndexingInput, 'token' | 'contentFolder' | 'repo'>;
 
-    if (!indexedEntities || indexedEntities.includes('categories')) {
-        await entityIndexing({
+    const categories = !indexedEntities || indexedEntities.includes('categories')
+        ? await entityIndexing({
             ...input,
             entity: 'categories',
             converter: files => files.map(file => ({
@@ -94,11 +94,12 @@ const entitiesIndexing = async (indexedEntities?: Entities[]) => {
                     ),
                 ),
             })),
-        });
-    }
+        })
+        : []
+    ;
 
-    if (!indexedEntities || indexedEntities.includes('types')) {
-        await entityIndexing({
+    const types = !indexedEntities || indexedEntities.includes('types')
+        ? await entityIndexing({
             ...input,
             entity: 'types',
             converter: async files => files.map(file => ({
@@ -110,8 +111,9 @@ const entitiesIndexing = async (indexedEntities?: Entities[]) => {
                 ),
                 icon: file.icon,
             })),
-        });
-    }
+        })
+        : []
+    ;
 
     const audios: Audio[] = !indexedEntities || indexedEntities.includes('audios')
         ? await entityIndexing({ ...input, entity: 'audios' })
@@ -149,7 +151,19 @@ const entitiesIndexing = async (indexedEntities?: Entities[]) => {
                             ? audios.find(a => a.id === file.audioId)
                             : undefined
                         ;
+                        const type = file.typeId
+                            ? types.find(t => t.id === file.typeId)
+                            : undefined
+                        ;
+                        const category = file.categoryId
+                            ? categories.find(c => c.id === file.categoryId)
+                            : undefined
+                        ;
                         const localized = (file.locales || {})[locale];
+                        const localizedType = (type.locales || {})[locale];
+                        const localizedCategory = (
+                            category.locales || {}
+                        )[locale];
                         const localizedAudio = (audio?.locales || {})[locale];
                         const textArray = [
                             localized?.description,
@@ -158,6 +172,8 @@ const entitiesIndexing = async (indexedEntities?: Entities[]) => {
                             localized?.quote,
                             localizedAudio?.name,
                             localizedAudio?.description,
+                            localizedType?.name,
+                            localizedCategory?.name,
                         ].filter(Boolean);
 
                         return { id: file.id, text: textArray };

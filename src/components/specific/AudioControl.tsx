@@ -6,7 +6,11 @@ import {
 import { AudioPlayer } from '@/components/audio/AudioPlayer';
 import { useEffect, useState } from 'react';
 
-export default function AudioControl() {
+export interface AudioControlProps {
+    showButton?: boolean;
+}
+
+export default function AudioControl(props: AudioControlProps) {
     const { playing, setPlaying } = useAudioPlayerContext();
     const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -26,11 +30,13 @@ export default function AudioControl() {
         setPlaying(prev => !prev);
     };
 
+    const showButton = props.showButton ? openDrawer : false;
+
     return <>
         <div
             className={
                 `cursor-pointer mt-8 fixed lg:right-16 lg:bottom-16 sm:right-8 sm:bottom-8 right-6 bottom-6 ${
-                    openDrawer ? 'hidden' : '' }`
+                    showButton ? 'hidden' : '' }`
             }
             onClick={ handlePlay }
         >

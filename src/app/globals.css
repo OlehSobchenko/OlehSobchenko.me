@@ -93,7 +93,6 @@ blockquote:before {
     -webkit-tap-highlight-color: transparent;
 }
 
-
 ::selection {
     color: var(--bg-color);
     background-color: var(--main-color);
@@ -259,12 +258,14 @@ blockquote:before {
     }
 }
 
-.video-wrapper > div > iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.video-wrapper {
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .posts-column div:last-child .should-be-hidden {

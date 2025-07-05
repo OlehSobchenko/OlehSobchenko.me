@@ -3,11 +3,18 @@
 import useOpen from '@/utils/hooks/useOpen';
 import Modal from '@/components/base/Modal';
 import { useLocale, useTranslations } from 'next-intl';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Languages } from '@/i18n/config';
 import config from '@/config';
 import Search from '@/utils/search';
 import fetchCompressedJSON from '@/utils/data/fetchCompressedJSON';
+import { usePostsContext } from '@/components/providers/PostsProvider';
+import PostsGrid from '@/components/posts/PostsGrid';
+import { Post } from '@/types';
+import SpinLoader from '@/components/base/SpinLoader';
+import getPost from '@/utils/data/getPost';
+import enrichPost from '@/utils/data/enrichPost';
+import debounce from '@/utils/debounce';
 
 interface SearchUtils {
     search: (query: string) => string[];
@@ -16,8 +23,9 @@ interface SearchUtils {
 
 function useSearch(load?: boolean): SearchUtils {
     const locale = useLocale() as Languages;
-    const searchEngine = useRef<Search | null>(null); // Fix: Add null type
+    const searchEngine = useRef<Search | null>(null);
     const [loading, setLoading] = useState(false);
+    const shouldLoad = load !== false;
 
     const initializeSearch = useCallback(() => {
         setLoading(true);
@@ -33,13 +41,13 @@ function useSearch(load?: boolean): SearchUtils {
     }, [locale]);
 
     useEffect(() => {
-        if (load !== false && searchEngine.current === null) {
+        if (shouldLoad && searchEngine.current === null) {
             initializeSearch();
         }
-    }, [load, initializeSearch]);
+    }, [shouldLoad, initializeSearch]);
 
     useEffect(() => {
-        if (load !== false) {
+        if (shouldLoad) {
             initializeSearch();
 
             return;
@@ -59,10 +67,87 @@ function useSearch(load?: boolean): SearchUtils {
     return { search, loading };
 }
 
+interface PostsSearchResultProps {
+    ids: string[];
+    nothingFound?: ReactNode;
+}
+
+function useSearchedPosts(ids: string[]) {
+    const { types, categories } = usePostsContext();
+    const [loading, setLoading] = useState(false);
+    const [posts, setPosts] = useState<Post[]>([]);
+
+    useEffect(() => {
+        setLoading(true);
+        setPosts([]);
+
+        (async () => {
+            try {
+                for await (const postId of ids) {
+                    const post = await getPost(postId);
+
+                    if (post) {
+                        setPosts(previous => {
+                            setLoading(false);
+
+                            if (previous.find(p => p.id === post.id)) {
+                                return previous;
+                            }
+
+                            return [
+                                ...previous,
+                                enrichPost(post, types, categories),
+                            ];
+                        });
+                    }
+                }
+            } catch { /* empty */ }
+
+            setLoading(false);
+        })();
+    }, [ids, types, categories]);
+
+    return { loading, posts };
+}
+
+function PostsSearchResult({ nothingFound, ids }: PostsSearchResultProps) {
+    const { loading, posts } = useSearchedPosts(ids);
+
+    if (!ids.length) {
+        return nothingFound;
+    }
+
+    if (loading) {
+        return <div
+            className="fixed w-full h-screen flex items-center justify-center top-0 left-0"
+        >
+            <SpinLoader className="w-20 h-20"/>
+        </div>;
+    }
+
+    return <PostsGrid posts={ posts }/>;
+}
+
 export default function PostsSearch() {
     const { open, close, opened } = useOpen();
     const t = useTranslations('PostsSearch');
+    const [query, setQuery] = useState('');
     const { search } = useSearch(opened);
+
+    useEffect(() => {
+        if (!opened) {
+            setQuery('');
+        }
+    }, [opened]);
+
+    const debouncedSearch = useCallback(debounce(setQuery), []);
+
+    const handleInputChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            debouncedSearch(event.target.value);
+        },
+        [debouncedSearch],
+    );
 
     return <>
         <div
@@ -87,16 +172,15 @@ export default function PostsSearch() {
                 className="min-w-0 bg-transparent border-0 h-10 font-bold text-4xl focus:outline-hidden placeholder:font-bold placeholder:text-4xl placeholder:opacity-50"
                 type="text"
                 placeholder={ t('search') }
-                onChange={ event => {
-                    if (event.target.value.length < 2) {
-                        return;
-                    }
-
-                    console.info(search(event.target.value));
-                } }
+                onChange={ handleInputChange }
             /> }
         >
-
+            { query.length > 1 && <PostsSearchResult
+                ids={ search(query).slice(0, 50) }
+                nothingFound={ <div className="text-4xl text-neutral-500">
+                    { t('nothingFound') }
+                </div> }
+            /> }
         </Modal>
     </>;
 }

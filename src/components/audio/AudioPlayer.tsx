@@ -63,7 +63,7 @@ function PlayListWrapper() {
 }
 
 export const AudioPlayer = ({ onClose }: { onClose?: () => void }) => {
-    return <div className="fixed bottom-0 left-0 w-full">
+    return <div className="fixed bottom-0 left-0 w-full z-[10001]">
         <PlayListWrapper/>
         <div className="min-h-32 max-sm:min-h-48 flex flex-col bg-(--bg-color)">
             <ProgressBar/>

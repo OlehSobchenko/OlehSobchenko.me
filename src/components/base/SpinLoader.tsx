@@ -1,8 +1,6 @@
 import classNames from '@/utils/classNames';
 
-export default function SpinLoader(
-    { className }: { className?: string },
-) {
+export default function SpinLoader({ className }: { className?: string }) {
     return <div
         className={
             classNames(
