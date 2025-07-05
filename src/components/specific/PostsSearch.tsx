@@ -26,14 +26,12 @@ export default function PostsSearch() {
         <Modal
             open={ opened }
             onClose={ close }
-            title={ <div>
-                <input
-                    autoFocus
-                    className="bg-transparent border-0 h-10 font-bold text-4xl focus:outline-hidden placeholder:font-bold placeholder:text-4xl placeholder:opacity-50"
-                    type="text"
-                    placeholder={ t('search') }
-                />
-            </div> }
+            title={ <input
+                autoFocus
+                className="min-w-0 bg-transparent border-0 h-10 font-bold text-4xl focus:outline-hidden placeholder:font-bold placeholder:text-4xl placeholder:opacity-50"
+                type="text"
+                placeholder={ t('search') }
+            /> }
         >
             <div>
                 { t('results') }

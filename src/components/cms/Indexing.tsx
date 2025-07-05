@@ -59,9 +59,9 @@ export default function Indexing(props: {
                 індексування
             </div>
         </div>
-        <div className="flex justify-end flex-1 min-h-8">
+        <div className="flex justify-end flex-1 min-h-8 mr-2">
             { !props.indexing && <OutlinedButton
-                className="border-4!"
+                className="border-3!"
                 onClick={ props.onClick }
             >
                 <div className="font-black uppercase">Індексувати</div>

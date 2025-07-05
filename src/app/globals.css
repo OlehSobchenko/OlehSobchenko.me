@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-    --vh: 1px;
+    --vh: 1vh;
     --bg-color: #FFFFFF;
     --main-color: #000000;
     --scrollbar-thumb-color: #CCCCCC;
@@ -224,14 +224,6 @@ blockquote:before {
     }
 }
 
-.modal-content {
-    height: calc(var(--with-address-bar-height) - var(--spacing) * 23);
-
-    @media (min-width: 1024px) {
-        height: calc(var(--with-address-bar-height) - var(--spacing) * 38);
-    }
-}
-
 .video-wrapper > div > iframe {
     position: absolute;
     top: 0;
@@ -442,4 +434,11 @@ blockquote:before {
             padding-top: 50px;
         }
     }
+}
+
+#nc-root *::selection,
+#nc-root::selection {
+    color: #FFFFFF !important;
+    background-color: #798291 !important;
+    text-shadow: none;
 }

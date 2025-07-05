@@ -147,6 +147,7 @@ const getCmsConfig = (
                         `locales.${ input.locale }.description`,
                         `link`,
                     ],
+                    required: false,
                 },
                 getLocalizedContentField([
                     {
