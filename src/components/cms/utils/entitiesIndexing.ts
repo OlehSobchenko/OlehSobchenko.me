@@ -2,22 +2,24 @@ import getAllFilesWithContent
     from '@/components/cms/utils/getAllFilesWithContent';
 import config from '@/config';
 import getGithubToken from '@/components/cms/utils/getGithubToken';
+import { Audio, Post } from '@/types';
+import Search from '@/utils/search';
+import { locales } from '@/i18n/config';
+import Compression from '@/utils/compression';
 
 export interface EntityIndexingInput {
     token: string;
     repo: string;
     contentFolder: string;
     entity: string,
-    convertor?: (files: any[]) => any,
+    converter?: (files: any[]) => any,
     onStart?: () => void;
     onFinish?: () => void;
     fileSuffix?: string;
     files?: any[];
 }
 
-const entityIndexing = async (
-    input: EntityIndexingInput,
-) => {
+const entityIndexing = async (input: EntityIndexingInput) => {
     if (!input.token) {
         return [];
     }
@@ -27,11 +29,11 @@ const entityIndexing = async (
             input.contentFolder }/${ input.entity }`,
         input.token,
     );
-    const index = input.convertor
-        ? input.convertor(files)
+    const index = input.converter
+        ? await Promise.resolve(input.converter(files))
         : files
     ;
-    const indexContent = typeof index === 'string'
+    const indexContent = typeof index === 'string' || index instanceof Uint8Array
         ? index
         : JSON.stringify(index);
     const fileSuffix = input.fileSuffix || '_index.json';
@@ -45,6 +47,7 @@ const entityIndexing = async (
                 Authorization: `Bearer ${ input.token }`,
                 Accept: 'application/vnd.github+json',
             },
+            cache: 'no-cache',
         },
     );
     const sha = shaResponse?.ok ? (await shaResponse.json())?.sha : undefined;
@@ -63,6 +66,7 @@ const entityIndexing = async (
                 content: base64Content,
                 sha,
             }),
+            cache: 'no-cache',
         },
     );
 
@@ -71,37 +75,18 @@ const entityIndexing = async (
 
 type Entities = 'posts' | 'categories' | 'types' | 'audios' | 'postsSearch';
 
-const entitiesIndexing = async (
-    indexedEntities?: Entities[],
-) => {
+const entitiesIndexing = async (indexedEntities?: Entities[]) => {
     const input = {
         token: getGithubToken(),
         contentFolder: config.contentFolder,
         repo: config.contentRepo,
     } as Pick<EntityIndexingInput, 'token' | 'contentFolder' | 'repo'>;
 
-    if (!indexedEntities || indexedEntities.includes('posts')) {
-        await entityIndexing({
-            ...input,
-            entity: 'posts',
-            convertor: files => Object.fromEntries(files.map(data => ([
-                data.id,
-                [
-                    data.categoryId,
-                    data.typeId,
-                    data.createdAt,
-                    data.happenedAt,
-                    data.audioId,
-                ].join(config.postsIndexSeparator),
-            ]))),
-        });
-    }
-
     if (!indexedEntities || indexedEntities.includes('categories')) {
         await entityIndexing({
             ...input,
             entity: 'categories',
-            convertor: files => files.map(file => ({
+            converter: files => files.map(file => ({
                 id: file.id,
                 name: Object.fromEntries(
                     Object.keys(file.locales).map(
@@ -116,7 +101,7 @@ const entitiesIndexing = async (
         await entityIndexing({
             ...input,
             entity: 'types',
-            convertor: files => files.map(file => ({
+            converter: async files => files.map(file => ({
                 id: file.id,
                 name: Object.fromEntries(
                     Object.keys(file.locales).map(
@@ -128,8 +113,63 @@ const entitiesIndexing = async (
         });
     }
 
-    if (!indexedEntities || indexedEntities.includes('audios')) {
-        await entityIndexing({ ...input, entity: 'audios' });
+    const audios: Audio[] = !indexedEntities || indexedEntities.includes('audios')
+        ? await entityIndexing({ ...input, entity: 'audios' })
+        : []
+    ;
+
+    if (!indexedEntities || indexedEntities.includes('posts')) {
+        const files: Post[] = await entityIndexing({
+            ...input,
+            entity: 'posts',
+            fileSuffix: '_index.gz',
+            converter: files => Compression.compress(
+                JSON.stringify(Object.fromEntries(files.map(data => ([
+                    data.id,
+                    [
+                        data.categoryId,
+                        data.typeId,
+                        data.createdAt,
+                        data.happenedAt,
+                        data.audioId,
+                    ].join(config.postsIndexSeparator),
+                ])))),
+            ),
+        });
+
+        for await (const locale of locales) {
+            await entityIndexing({
+                ...input,
+                entity: 'posts',
+                files,
+                fileSuffix: `_search_${ locale }.gz`,
+                converter: async files => {
+                    const items = files.map(file => {
+                        const audio = file.audioId
+                            ? audios.find(a => a.id === file.audioId)
+                            : undefined
+                        ;
+                        const localized = (file.locales || {})[locale];
+                        const localizedAudio = (audio?.locales || {})[locale];
+                        const textArray = [
+                            localized?.description,
+                            localized?.shortDescription,
+                            localized?.title,
+                            localized?.quote,
+                            localizedAudio?.name,
+                            localizedAudio?.description,
+                        ].filter(Boolean);
+
+                        return { id: file.id, text: textArray };
+                    });
+                    const search = new Search({ items });
+
+                    return Compression.compress(
+                        JSON.stringify(search.serialize()),
+                    );
+                },
+            });
+        }
     }
 };
 

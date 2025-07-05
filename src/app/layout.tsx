@@ -6,6 +6,7 @@ import { Roboto_Condensed } from 'next/font/google';
 import { PropsWithChildren } from 'react';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { LocaleProvider } from '@/components/providers/LocaleProvider';
+import ThemeProvider from '@/components/providers/ThemeProvider';
 
 const robotoCondensed = Roboto_Condensed({
     subsets: ['latin', 'cyrillic'],
@@ -13,12 +14,22 @@ const robotoCondensed = Roboto_Condensed({
     display: 'swap',
 });
 
+const getPersonInfo = (
+    translations: Awaited<ReturnType<typeof getTranslations>>,
+) => {
+    return {
+        title: translations('firstName') + ' ' + translations('lastName'),
+        description: translations('quote').replace(/[\t\r\n]/g, ''),
+    };
+};
+
 export async function generateMetadata(): Promise<Metadata> {
-    const t = await getTranslations('main');
+    const t = await getTranslations('PersonInfo');
+    const personInfo = getPersonInfo(t);
 
     return {
-        title: t('title'),
-        description: t('description'),
+        title: personInfo.title,
+        description: personInfo.description,
         icons: {
             icon: [
                 { url: '/favicon.ico' },
@@ -36,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
             apple: '/apple-touch-icon.png',
         },
         manifest: '/site.webmanifest',
-        applicationName: t('title'),
+        applicationName: personInfo.title,
         keywords: [
             'Oleh',
             'Sobchenko',
@@ -48,13 +59,14 @@ export async function generateMetadata(): Promise<Metadata> {
         openGraph: {
             type: 'website',
             url: 'https://olehsobchenko.me',
-            title: t('title'),
-            description: t('description'),
-            siteName: t('title'),
+            title: personInfo.title,
+            description: personInfo.description,
+            siteName: personInfo.title,
             images: [
                 {
                     url: 'https://olehsobchenko.me/android-chrome-512x512.png',
-                }, {
+                },
+                {
                     url: 'https://olehsobchenko.me/main-photo.svg',
                 },
             ],
@@ -66,21 +78,23 @@ export default async function RootLayout(
     { children }: PropsWithChildren,
 ) {
     const locale = await getLocale();
-    const t = await getTranslations('main');
+    const t = await getTranslations('PersonInfo');
+    const personInfo = getPersonInfo(t);
 
     return <html lang={ locale } suppressHydrationWarning>
         <head>
+            <title>{ personInfo.title }</title>
             <meta
                 name="viewport"
                 content="width=device-width, initial-scale=1"
             />
-            <meta property="og:title" content={ t('title') }/>
+            <meta property="og:title" content={ personInfo.title }/>
             <meta
                 property="og:description"
-                content={ t('description') }
+                content={ personInfo.description }
             />
             <meta property="og:url" content="https://olehsobchenko.me"/>
-            <meta property="og:site_name" content={ t('title') }/>
+            <meta property="og:site_name" content={ personInfo.title }/>
             <meta
                 property="og:image"
                 content="https://olehsobchenko.me/android-chrome-512x512.png"
@@ -101,9 +115,11 @@ export default async function RootLayout(
             }
             suppressHydrationWarning
         >
-            <LocaleProvider>
-                { children }
-            </LocaleProvider>
+            <ThemeProvider>
+                <LocaleProvider>
+                    { children }
+                </LocaleProvider>
+            </ThemeProvider>
         </body>
     </html>;
 }

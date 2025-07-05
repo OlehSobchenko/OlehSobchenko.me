@@ -4,7 +4,9 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { type ThemeProviderProps } from 'next-themes';
 import { useEffect } from 'react';
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+export default function ThemeProvider(
+    { children, ...props }: ThemeProviderProps,
+) {
     useEffect(() => {
         const setVH = () => {
             const vh = window.innerHeight * 0.01;

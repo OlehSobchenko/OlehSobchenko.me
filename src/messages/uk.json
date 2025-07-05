@@ -1,8 +1,4 @@
 {
-  "main": {
-    "title": "Олег Собченко",
-    "description": "Хочу щоб всі були злі, веселі і добре почувалися"
-  },
   "PersonInfo": {
     "firstName": "Олег",
     "lastName": "Собченко",
@@ -16,7 +12,7 @@
   },
   "PostsSearch": {
     "search": "Пошук...",
-    "results": "Результати"
+    "nothingFound": "Нічого не знайдено"
   },
   "PostLink": {
     "title": "Відкрити посилання"

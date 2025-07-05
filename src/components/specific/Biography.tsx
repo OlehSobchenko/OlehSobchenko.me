@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import config from '@/config';
 import { Localized } from '@/i18n/config';
 import LabeledIconContent from '@/components/base/LabeledIconContent';
+import fetchJSON from '@/utils/data/fetchJSON';
 
 const biographyUrl = config.contentUrl + 'biography.json';
 
@@ -17,7 +18,7 @@ export default function Biography() {
     const [biography, setBiography] = useState<Partial<Localized>>({});
 
     useEffect(() => {
-        fetch(biographyUrl).then(r => r.json()).then(setBiography);
+        fetchJSON(biographyUrl).then(setBiography);
     }, []);
 
     return <>

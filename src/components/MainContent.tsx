@@ -17,7 +17,7 @@ export default function MainContent() {
         >
             <MainContentActions/>
             <div className="relative max-w-[1920px] ml-auto mr-auto">
-                <div className="h-screen lg:pt-16 lg:pl-16 lg:pr-16 pt-8 pl-8 pb-8">
+                <div className="h-screen pt-(--page-indent) pl-(--page-indent) pb-(--page-indent)">
                     <div
                         className="flex h-full lg:items-center lg:pl-16">
                         <PersonInfo/>

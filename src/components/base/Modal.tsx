@@ -29,7 +29,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
     const header = typeof title === 'string'
         ? <div
             title={ title }
-            className="uppercase lg:text-5xl text-4xl overflow-hidden whitespace-nowrap text-ellipsis mr-[30px] pt-1"
+            className="uppercase lg:text-5xl text-4xl overflow-hidden whitespace-nowrap text-ellipsis mr-2 pt-1"
         >
             { title }
         </div>

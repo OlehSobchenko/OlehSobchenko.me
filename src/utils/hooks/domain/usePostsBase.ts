@@ -20,37 +20,37 @@ export default function usePostsBase(): PostsBaseUtils {
         (async () => {
             try {
                 const [
-                    rawPostsIndex,
+                    rawPostsIndex = {},
                     loadedTypes = [],
                     loadedCategories = [],
                 ] = await Promise.all([
-                    getIndexedEntries('posts'),
+                    getIndexedEntries('posts', true),
                     getIndexedEntries('types'),
                     getIndexedEntries('categories'),
                 ]);
-                const parsedPostsIndex = Object.entries(rawPostsIndex).map((
-                    [id, content],
-                ) => {
-                    const [
-                        categoryId,
-                        typeId,
-                        createdAt,
-                        happenedAt,
-                        audioId,
-                    ] = String(content).split(config.postsIndexSeparator);
+                const parsedPostsIndex = Object.entries(rawPostsIndex || {})
+                    .map(([id, content]) => {
+                        const [
+                            categoryId,
+                            typeId,
+                            createdAt,
+                            happenedAt,
+                            audioId,
+                        ] = String(content).split(config.postsIndexSeparator);
 
-                    return {
-                        id,
-                        categoryId,
-                        typeId,
-                        createdAt,
-                        happenedAt,
-                        audioId,
-                    };
-                }).toSorted((a, b) => {
-                    return new Date(b.happenedAt).getTime() -
-                        new Date(a.happenedAt).getTime();
-                });
+                        return {
+                            id,
+                            categoryId,
+                            typeId,
+                            createdAt,
+                            happenedAt,
+                            audioId,
+                        };
+                    })
+                    .toSorted((a, b) => {
+                        return new Date(b.happenedAt).getTime() -
+                            new Date(a.happenedAt).getTime();
+                    });
 
                 setPostsIndex(parsedPostsIndex);
                 setCategories(loadedCategories);

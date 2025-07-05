@@ -2,11 +2,67 @@
 
 import useOpen from '@/utils/hooks/useOpen';
 import Modal from '@/components/base/Modal';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Languages } from '@/i18n/config';
+import config from '@/config';
+import Search from '@/utils/search';
+import fetchCompressedJSON from '@/utils/data/fetchCompressedJSON';
+
+interface SearchUtils {
+    search: (query: string) => string[];
+    loading: boolean;
+}
+
+function useSearch(load?: boolean): SearchUtils {
+    const locale = useLocale() as Languages;
+    const searchEngine = useRef<Search | null>(null); // Fix: Add null type
+    const [loading, setLoading] = useState(false);
+
+    const initializeSearch = useCallback(() => {
+        setLoading(true);
+
+        fetchCompressedJSON(config.contentUrl + `posts_search_${ locale }.gz`)
+            .then(index => {
+                searchEngine.current = new Search({ index });
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    }, [locale]);
+
+    useEffect(() => {
+        if (load !== false && searchEngine.current === null) {
+            initializeSearch();
+        }
+    }, [load, initializeSearch]);
+
+    useEffect(() => {
+        if (load !== false) {
+            initializeSearch();
+
+            return;
+        }
+
+        searchEngine.current = null;
+    }, [locale, initializeSearch]);
+
+    const search = useCallback((query: string): string[] => {
+        if (!searchEngine.current || !query || query.length < 2) {
+            return [];
+        }
+
+        return searchEngine.current.search(query);
+    }, []);
+
+    return { search, loading };
+}
 
 export default function PostsSearch() {
     const { open, close, opened } = useOpen();
     const t = useTranslations('PostsSearch');
+    const { search } = useSearch(opened);
 
     return <>
         <div
@@ -31,11 +87,16 @@ export default function PostsSearch() {
                 className="min-w-0 bg-transparent border-0 h-10 font-bold text-4xl focus:outline-hidden placeholder:font-bold placeholder:text-4xl placeholder:opacity-50"
                 type="text"
                 placeholder={ t('search') }
+                onChange={ event => {
+                    if (event.target.value.length < 2) {
+                        return;
+                    }
+
+                    console.info(search(event.target.value));
+                } }
             /> }
         >
-            <div>
-                { t('results') }
-            </div>
+
         </Modal>
     </>;
 }

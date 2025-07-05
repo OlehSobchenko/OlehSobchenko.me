@@ -4,7 +4,7 @@ import PostsTitle from '@/components/posts/PostsTitle';
 import PostsGrid from '@/components/posts/PostsGrid';
 
 export default function PostsContainer() {
-    return <div className="lg:p-16 p-8">
+    return <div className="p-(--page-indent)">
         <PostsFilterContainer title={ <PostsTitle/> }/>
         <PostsGrid/>
     </div>;

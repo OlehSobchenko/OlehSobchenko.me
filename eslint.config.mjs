@@ -89,5 +89,9 @@ export default [...compat.extends(
         }],
 
         'react/self-closing-comp': 'off',
+
+        'jsx-a11y/html-has-lang': 'off',
+        'react/no-unescaped-entities': 'off',
+        '@next/next/no-head-element': 'off',
     },
 }];

@@ -1,3 +1,5 @@
+import fetchJSON from '@/utils/data/fetchJSON';
+
 const getAllFilesWithContent = async (
     url: string,
     token: string,
@@ -7,14 +9,11 @@ const getAllFilesWithContent = async (
             Authorization: `Bearer ${ token }`,
             Accept: 'application/vnd.github+json',
         },
+        cache: 'no-cache',
     });
     const files: any[] = await res.json();
 
-    return Promise.all(files.map(async file => {
-        const rawRes = await fetch(file.download_url);
-
-        return rawRes.json();
-    }));
+    return Promise.all(files.map(async file => fetchJSON(file.download_url)));
 };
 
 export default getAllFilesWithContent;

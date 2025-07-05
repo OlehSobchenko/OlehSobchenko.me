@@ -1,8 +1,4 @@
 {
-  "main": {
-    "title": "Oleh Sobchenko",
-    "description": "I want everyone to be angry, cheerful, and feel good"
-  },
   "PersonInfo": {
     "firstName": "Oleh",
     "lastName": "Sobchenko",
@@ -16,7 +12,7 @@
   },
   "PostsSearch": {
     "search": "Search...",
-    "results": "Results"
+    "nothingFound": "Nothing found"
   },
   "PostLink": {
     "title": "Open link"

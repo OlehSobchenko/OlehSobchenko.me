@@ -2,7 +2,7 @@ import { useLocale } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import CMS from 'decap-cms-app';
 import UniqueIdControl from '@/components/cms/UniqueIdControl';
-import getCmsConfig from '@/components/cms/cmsConfig';
+import getCmsConfig from '@/components/cms/utils/cmsConfig';
 import config from '@/config';
 
 export default function useCms(
