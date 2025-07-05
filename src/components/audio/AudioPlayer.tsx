@@ -70,14 +70,16 @@ export const AudioPlayer = ({ onClose }: { onClose?: () => void }) => {
         <div className="min-h-32 max-sm:min-h-48 flex flex-col bg-(--bg-color)">
             <ProgressBar/>
             <div
-                className="flex justify-between ml-6 mr-6 sm:flex-row flex-col max-sm:gap-y-2"
+                className="flex justify-between ml-6 mr-6 sm:flex-row flex-col max-sm:gap-y-2 min-w-0"
             >
-                <div className="flex max-sm:items-center items-end flex-1/3">
-                    <div className="max-sm:block hidden">
+                <div className="flex max-sm:items-center items-end flex-1/3 min-w-0">
+                    <div className="max-sm:block hidden flex-shrink-0">
                         <PlayListButton/>
                     </div>
-                    <TrackInfo/>
-                    <div className="max-sm:block hidden">
+                    <div className="min-w-0 flex-1">
+                        <TrackInfo/>
+                    </div>
+                    <div className="max-sm:block hidden flex-shrink-0">
                         <CloseAudioPlayerButton onClose={ onClose }/>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import OutlinedButton from '@/components/base/OutlinedButton';
-import { useLocale, useTranslations,  } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Modal from '@/components/base/Modal';
 import useOpen from '@/utils/hooks/useOpen';
 import Markdown from 'react-markdown';

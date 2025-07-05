@@ -13,15 +13,18 @@ const PostHeaderTitle: React.FC<{
     }
 
     return <div
-        className="flex max-w-full text-lg leading-tight overflow-hidden text-ellipsis whitespace-nowrap md:text-xl md:leading-xl"
+        className="min-w-0 max-w-full text-lg leading-tight w-full md:text-xl md:leading-xl overflow-hidden text-ellipsis whitespace-nowrap"
     >
         { type && <span className="uppercase">
           { getLocalized(lang, type.name) }
         </span> }
-        { category && type && <div
+        { category && type && <span
+            className="inline-block"
             style={{
                 borderLeft: '2px solid var(--main-color)',
-                margin: '3px 9px 5px',
+                margin: '0 9px',
+                height: '1em',
+                verticalAlign: 'middle',
             }}
         /> }
         { category && <span className="uppercase">

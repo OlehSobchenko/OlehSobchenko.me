@@ -46,12 +46,10 @@ export default function PostModal(props: PostModalProps) {
     return <Modal
         open
         title={ <div
-            className="flex justify-between items-center mx-main-spacing post-header-wrapper gap-4"
+            className="flex justify-between items-center mx-main-spacing post-header-wrapper gap-4 min-w-0"
         >
             <PostHeaderIcon type={ post.type }/>
-            <div
-                className="pr-2.5 max-w-[calc(100%-32px)] md:max-w-[calc(100%-40px)]"
-            >
+            <div className="min-w-0 flex-1">
                 <PostHeaderTitle
                     category={ post.category }
                     type={ post.type }
