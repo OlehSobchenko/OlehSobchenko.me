@@ -1,7 +1,8 @@
 'use client';
-import MainContent from '@/components/MainContent';
+
 import { useEffect, useState } from 'react';
-import PostModal from '@/components/posts/PostModal';
+import MainPage from '@/components/pages/MainPage';
+import PostPage from '@/components/pages/PostPage';
 
 export default function Custom404() {
     const [mounted, setMounted] = useState(false);
@@ -17,8 +18,8 @@ export default function Custom404() {
     const [path, id] = window.location.pathname.split('/').filter(i => i);
 
     if (path == 'post' && id) {
-        return <PostModal id={ id }/>;
+        return <PostPage id={ id }/>;
     }
 
-    return <MainContent/>;
+    return <MainPage/>;
 }

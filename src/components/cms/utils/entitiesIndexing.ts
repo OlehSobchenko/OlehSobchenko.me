@@ -11,14 +11,18 @@ export interface EntityIndexingInput {
     convertor?: (files: any[]) => any,
     onStart?: () => void;
     onFinish?: () => void;
+    fileSuffix?: string;
+    files?: any[];
 }
 
-const entityIndexing = async (input: EntityIndexingInput) => {
+const entityIndexing = async (
+    input: EntityIndexingInput,
+) => {
     if (!input.token) {
-        return;
+        return [];
     }
 
-    const files = await getAllFilesWithContent(
+    const files = input.files ? input.files : await getAllFilesWithContent(
         `https://api.github.com/repos/${ input.repo }/contents/${
             input.contentFolder }/${ input.entity }`,
         input.token,
@@ -27,8 +31,11 @@ const entityIndexing = async (input: EntityIndexingInput) => {
         ? input.convertor(files)
         : files
     ;
-    const indexContent = JSON.stringify(index);
-    const indexPath = `${ config.contentFolder }/${ input.entity }_index.json`;
+    const indexContent = typeof index === 'string'
+        ? index
+        : JSON.stringify(index);
+    const fileSuffix = input.fileSuffix || '_index.json';
+    const indexPath = `${ config.contentFolder }/${ input.entity }${ fileSuffix }`;
     const base64Content = Buffer.from(indexContent).toString('base64');
     const fileUrl = `https://api.github.com/repos/${ input.repo }/contents/${ indexPath }`;
     const shaResponse = await fetch(
@@ -58,9 +65,11 @@ const entityIndexing = async (input: EntityIndexingInput) => {
             }),
         },
     );
+
+    return files;
 };
 
-type Entities = 'posts' | 'categories' | 'types' | 'audios';
+type Entities = 'posts' | 'categories' | 'types' | 'audios' | 'postsSearch';
 
 const entitiesIndexing = async (
     indexedEntities?: Entities[],

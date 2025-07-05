@@ -3,14 +3,9 @@ import '@/app/globals.css';
 import '@/styles/datepicker.css';
 import type { Metadata } from 'next';
 import { Roboto_Condensed } from 'next/font/google';
-import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { PropsWithChildren } from 'react';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { LocaleProvider } from '@/components/providers/LocaleProvider';
-import { PostsProvider } from '@/components/providers/PostsProvider';
-import {
-    AudioPlayerProvider,
-} from '@/components/providers/AudioPlayerProvider';
 
 const robotoCondensed = Roboto_Condensed({
     subsets: ['latin', 'cyrillic'],
@@ -106,15 +101,9 @@ export default async function RootLayout(
             }
             suppressHydrationWarning
         >
-        <ThemeProvider>
             <LocaleProvider>
-                <PostsProvider>
-                    <AudioPlayerProvider>
-                        { children }
-                    </AudioPlayerProvider>
-                </PostsProvider>
+                { children }
             </LocaleProvider>
-        </ThemeProvider>
         </body>
     </html>;
 }
