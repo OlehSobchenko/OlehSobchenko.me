@@ -148,3 +148,86 @@
         height: 12px;
     }
 }
+
+.react-datepicker__current-month {
+    display: none;
+}
+
+.react-datepicker__header__dropdown {
+    padding: 12px;
+    min-height: 28px;
+    font-size: 24px;
+    border-bottom: 4px solid var(--main-color);
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    isolation: isolate;
+
+    .react-datepicker__month-dropdown {
+        .react-datepicker__month-option {
+            border-radius: 0;
+            padding: 6px 0;
+            font-size: 20px;
+        }
+
+        .react-datepicker__month-option:hover,
+        .react-datepicker__month-option--selected_month {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+
+            span {
+                display: none;
+            }
+        }
+    }
+
+    .react-datepicker__year-dropdown {
+        .react-datepicker__year-option {
+            border-radius: 0;
+            padding: 6px 0;
+            font-size: 20px;
+        }
+
+        .react-datepicker__year-option:hover,
+        .react-datepicker__year-option--selected_year {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+
+            span {
+                display: none;
+            }
+        }
+    }
+
+    .react-datepicker__month-dropdown,
+    .react-datepicker__year-dropdown {
+        position: absolute;
+        top: auto;
+        bottom: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 999;
+
+        border-radius: 0;
+        background-color: var(--bg-color);
+        border: 4px solid var(--main-color);
+        min-width: 180px;
+        max-height: 250px;
+        overflow-y: auto;
+    }
+
+    .react-datepicker__month-read-view,
+    .react-datepicker__year-read-view {
+        visibility: visible !important;
+    }
+
+    .react-datepicker__month-read-view--down-arrow,
+    .react-datepicker__year-read-view--down-arrow {
+        display: none;
+    }
+
+    .react-datepicker__month-dropdown-container,
+    .react-datepicker__year-dropdown-container {
+        margin: 0;
+    }
+}

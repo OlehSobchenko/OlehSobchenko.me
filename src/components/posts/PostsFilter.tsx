@@ -113,11 +113,15 @@ export default function PostsFilter() {
                     inline
                     locale={ locale }
                     showWeekNumbers
-
-                    // showYearDropdown
-                    // showMonthDropdown
-                    // yearDropdownItemNumber={ 100 }
-                    // scrollableYearDropdown
+                    showYearDropdown
+                    showMonthDropdown
+                    yearDropdownItemNumber={ 50 }
+                    scrollableYearDropdown
+                    popperContainer={({children}) => (
+                        <div style={{ position: 'relative', zIndex: 9999 }}>
+                            {children}
+                        </div>
+                    )}
                 />
             </Accordion>
         </div>
