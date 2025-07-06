@@ -3,11 +3,11 @@
 import Modal from '@/components/base/Modal';
 import { Languages, languages } from '@/i18n/config';
 import { useTranslations } from 'next-intl';
-import useOpen from '@/utils/hooks/useOpen';
 import { useLocaleContext } from '@/components/providers/LocaleProvider';
+import useLocatedOpen from '@/utils/hooks/useLocatedOpen';
 
 export default function LanguageSwitcher() {
-    const { open, close, opened } = useOpen();
+    const { open, close, opened } = useLocatedOpen({ pathname: '/language' });
     const { setLocale, locale } = useLocaleContext();
     const t = useTranslations('LanguageSwitcher');
 

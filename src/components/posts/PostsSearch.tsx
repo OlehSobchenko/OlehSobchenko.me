@@ -1,6 +1,5 @@
 'use client';
 
-import useOpen from '@/utils/hooks/useOpen';
 import Modal from '@/components/base/Modal';
 import { useTranslations } from 'next-intl';
 import React, {
@@ -21,6 +20,7 @@ import getPost from '@/utils/data/getPost';
 import enrichPost from '@/utils/data/enrichPost';
 import debounce from '@/utils/debounce';
 import useLocale from '@/utils/hooks/useLocale';
+import useLocatedOpen from '@/utils/hooks/useLocatedOpen';
 
 interface SearchUtils {
     search: (query: string) => string[];
@@ -136,10 +136,19 @@ function PostsSearchResult({ nothingFound, ids }: PostsSearchResultProps) {
     </div>;
 }
 
+const setQueryString = (query: string) => {
+    const url = new URL(window.location.href);
+    const action = query ? 'set' : 'delete';
+
+    url.searchParams[action]('q', query);
+    window.history.pushState({}, '', url);
+};
+
 export default function PostsSearch() {
-    const { open, close, opened } = useOpen();
+    const { open, close, opened } = useLocatedOpen({ pathname: '/search' });
     const t = useTranslations('PostsSearch');
-    const [query, setQuery] = useState('');
+    const defaultValue = new URLSearchParams(window.location.search).get('q') || '';
+    const [query, setQuery] = useState(defaultValue);
     const { search } = useSearch(opened);
 
     useEffect(() => {
@@ -148,7 +157,10 @@ export default function PostsSearch() {
         }
     }, [opened]);
 
-    const debouncedSearch = useCallback(debounce(setQuery), []);
+    const debouncedSearch = useCallback(debounce(value => {
+        setQuery(value);
+        setQueryString(value);
+    }), []);
 
     const handleInputChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,6 +191,7 @@ export default function PostsSearch() {
             onClose={ close }
             title={ <input
                 id="posts-search-input"
+                defaultValue={ defaultValue }
                 autoFocus
                 className="min-w-0 bg-transparent border-0 h-10 font-bold text-4xl focus:outline-hidden placeholder:font-bold placeholder:text-4xl placeholder:opacity-50"
                 type="text"

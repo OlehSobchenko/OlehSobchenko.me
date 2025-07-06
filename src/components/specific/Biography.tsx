@@ -1,7 +1,6 @@
 import OutlinedButton from '@/components/base/OutlinedButton';
 import { useTranslations } from 'next-intl';
 import Modal from '@/components/base/Modal';
-import useOpen from '@/utils/hooks/useOpen';
 import Markdown from 'react-markdown';
 import { useEffect, useState } from 'react';
 import config from '@/config';
@@ -9,11 +8,12 @@ import { Localized } from '@/i18n/config';
 import LabeledIconContent from '@/components/base/LabeledIconContent';
 import fetchJSON from '@/utils/data/fetchJSON';
 import useLocale from '@/utils/hooks/useLocale';
+import useLocatedOpen from '@/utils/hooks/useLocatedOpen';
 
 const biographyUrl = config.contentUrl + 'biography.json';
 
 export default function Biography() {
-    const { open, close, opened } = useOpen();
+    const { open, close, opened } = useLocatedOpen({ pathname: '/biography' });
     const locale = useLocale();
     const t = useTranslations('Biography');
     const [biography, setBiography] = useState<Partial<Localized>>({});

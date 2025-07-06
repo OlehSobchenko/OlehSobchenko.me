@@ -6,7 +6,7 @@ export interface UseOpenUtils {
     close: () => void;
 }
 
-export default function useOpen(defaultValue = false) {
+export default function useOpen(defaultValue = false): UseOpenUtils {
     const [opened, setOpened] = useState(defaultValue);
 
     const open = () => setOpened(true);
