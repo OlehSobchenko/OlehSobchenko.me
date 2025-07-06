@@ -1,5 +1,5 @@
-
 'use client';
+
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -41,7 +41,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
     >
         <div className="flex-shrink-0 max-w-[1024px] ml-auto mr-auto w-full">
             <div
-                className="lg:pt-16 pt-6 lg:pl-16 pl-6 lg:pr-16 pr-6 lg:px-32 px-6 flex justify-between items-center gap-1"
+                className="lg:pt-16 pt-6 lg:pl-16 pl-6 lg:pr-16 pr-6 flex justify-between items-center gap-1"
             >
                 { header }
                 <button onClick={ onClose } className="cursor-pointer">

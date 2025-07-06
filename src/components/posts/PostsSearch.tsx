@@ -3,7 +3,13 @@
 import useOpen from '@/utils/hooks/useOpen';
 import Modal from '@/components/base/Modal';
 import { useLocale, useTranslations } from 'next-intl';
-import React, { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+    ReactNode,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import { Languages } from '@/i18n/config';
 import config from '@/config';
 import Search from '@/utils/search';
@@ -125,7 +131,9 @@ function PostsSearchResult({ nothingFound, ids }: PostsSearchResultProps) {
         </div>;
     }
 
-    return <PostsGrid posts={ posts }/>;
+    return <div className="pt-8 max-lg:w-[calc(100%-16px)]">
+        <PostsGrid posts={ posts } variant={ 'modal' }/>
+    </div>;
 }
 
 export default function PostsSearch() {
@@ -149,6 +157,8 @@ export default function PostsSearch() {
         [debouncedSearch],
     );
 
+    const showResults = query.length >= config.postsSearch.minQueryLength;
+
     return <>
         <div
             className="cursor-pointer lg:p-2 p-0.5"
@@ -168,6 +178,7 @@ export default function PostsSearch() {
             open={ opened }
             onClose={ close }
             title={ <input
+                id="posts-search-input"
                 autoFocus
                 className="min-w-0 bg-transparent border-0 h-10 font-bold text-4xl focus:outline-hidden placeholder:font-bold placeholder:text-4xl placeholder:opacity-50"
                 type="text"
@@ -175,9 +186,11 @@ export default function PostsSearch() {
                 onChange={ handleInputChange }
             /> }
         >
-            { query.length > 1 && <PostsSearchResult
-                ids={ search(query).slice(0, 50) }
-                nothingFound={ <div className="text-4xl text-neutral-500">
+            { showResults && <PostsSearchResult
+                ids={ search(query).slice(0, config.postsSearch.resultItems) }
+                nothingFound={ <div
+                    className="text-4xl text-neutral-500 pt-4"
+                >
                     { t('nothingFound') }
                 </div> }
             /> }

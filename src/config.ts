@@ -7,6 +7,10 @@ const dataBaseUrl = `https://raw.githubusercontent.com/${
 
 const config = {
     postsBatch: 10,
+    postsSearch: {
+        resultItems: 50,
+        minQueryLength: 2,
+    },
     repo: repoName,
     contentRepo: contentRepoName,
     idAlphabet: '1234567890abcdefghijklmnopqrstuvwxyz',

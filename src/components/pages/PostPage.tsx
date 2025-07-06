@@ -7,6 +7,6 @@ import AudioControl from '@/components/specific/AudioControl';
 export default function PostPage(props: { id: string }) {
     return <AudioPlayerProvider>
         <PostModal id={ props.id }/>
-        <AudioControl showButton={ false }/>
+        <AudioControl hideButton/>
     </AudioPlayerProvider>;
 }

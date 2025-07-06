@@ -7,7 +7,7 @@ import { AudioPlayer } from '@/components/audio/AudioPlayer';
 import { useEffect, useState } from 'react';
 
 export interface AudioControlProps {
-    showButton?: boolean;
+    hideButton?: boolean;
 }
 
 export default function AudioControl(props: AudioControlProps) {
@@ -30,13 +30,13 @@ export default function AudioControl(props: AudioControlProps) {
         setPlaying(prev => !prev);
     };
 
-    const showButton = props.showButton ? openDrawer : false;
+    const showButton = props.hideButton ? false : !openDrawer;
 
     return <>
         <div
             className={
                 `cursor-pointer mt-8 fixed lg:right-16 lg:bottom-16 sm:right-8 sm:bottom-8 right-6 bottom-6 ${
-                    showButton ? 'hidden' : '' }`
+                    showButton ? '' : 'hidden' }`
             }
             onClick={ handlePlay }
         >

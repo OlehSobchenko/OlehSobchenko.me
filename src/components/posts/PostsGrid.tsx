@@ -8,11 +8,23 @@ import { Post } from '@/types';
 
 export interface PostsGridProps {
     posts: Post[];
+    variant?: 'default' | 'modal';
 }
 
 export default function PostsGrid(props: PostsGridProps) {
+    const { posts, variant = 'default' } = props;
     const locale = useLocale();
     const openLink = useOpenLink();
+
+    const getColumnClassName = () => {
+        if (variant === 'modal') {
+            return 'posts-column bg-clip-padding ml-4 mr-4 first:ml-0 '
+                + 'last:mr-0';
+        }
+
+        return 'posts-column bg-clip-padding ml-16 mr-16 first:ml-0 last:mr-0 '
+            + 'lg:first:last:pr-16';
+    };
 
     return <Masonry
         breakpointCols={ {
@@ -20,9 +32,9 @@ export default function PostsGrid(props: PostsGridProps) {
             1024: 1,
         } }
         className="flex"
-        columnClassName="posts-column bg-clip-padding ml-16 mr-16 first:ml-0 last:mr-0 lg:first:last:pr-16"
+        columnClassName={ getColumnClassName() }
     >
-        { props.posts.map(post => <PostCard
+        { posts.map(post => <PostCard
             key={ post.id }
             post={ post }
             lang={ locale as Languages }

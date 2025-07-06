@@ -1,6 +1,6 @@
 import ThemeSwitcher from '@/components/specific/ThemeSwitcher';
 import LanguageSwitcher from '@/components/specific/LanguageSwitcher';
-import PostsSearch from '@/components/specific/PostsSearch';
+import PostsSearch from '@/components/posts/PostsSearch';
 import AudioControl from '@/components/specific/AudioControl';
 
 export default function MainContentActions() {
