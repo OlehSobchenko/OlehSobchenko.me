@@ -18,6 +18,9 @@ const config = {
     uploadsUrl: `${ dataBaseUrl }${ uploadsFolder }/`,
     maxDescriptionLength: 200,
     postsIndexSeparator: '|',
+    storageKeys: {
+        cmsUser: 'decap-cms-user',
+    },
 };
 
 export default config;

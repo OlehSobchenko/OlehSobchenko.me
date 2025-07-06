@@ -17,7 +17,7 @@ export default function Custom404() {
 
     const [path, id] = window.location.pathname.split('/').filter(i => i);
 
-    if (path == 'post' && id) {
+    if (['post', 'p'].includes(path) && id) {
         return <PostPage id={ id }/>;
     }
 

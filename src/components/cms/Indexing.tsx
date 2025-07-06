@@ -1,6 +1,8 @@
 import OutlinedButton from '@/components/base/OutlinedButton';
 import React, { useCallback, useEffect } from 'react';
 import SpinLoader from '@/components/base/SpinLoader';
+import useStoredValue from '@/utils/hooks/useStoredValue';
+import config from '@/config';
 
 interface UseBeforeUnloadOptions {
     when: boolean;
@@ -37,12 +39,21 @@ function useBeforeUnload(
 
 export default function Indexing(props: {
     indexing: boolean,
-    onClick: () => void
+    onIndexing: () => void
 }) {
+    const [user] = useStoredValue<{ token: string } | null>(
+        config.storageKeys.cmsUser,
+        null,
+    );
+
     useBeforeUnload({
         when: props.indexing,
         message: 'You have unsaved changes. Are you sure you want to leave?',
     });
+
+    if (!user?.token) {
+        return null;
+    }
 
     return <div
         className={
@@ -62,7 +73,7 @@ export default function Indexing(props: {
         <div className="flex justify-end flex-1 min-h-8 mr-2">
             { !props.indexing && <OutlinedButton
                 className="border-3!"
-                onClick={ props.onClick }
+                onClick={ props.onIndexing }
             >
                 <div className="font-black uppercase">Індексувати</div>
             </OutlinedButton> }

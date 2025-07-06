@@ -18,14 +18,22 @@ export default function DecapCMS() {
         ;
     };
 
-    const { mounted, authorized, authorize } = useCms(processIndexing);
+    const {
+        mounted,
+        authorized,
+        authorize,
+        cmsLogin,
+    } = useCms(processIndexing);
 
     if (!mounted) {
         return null;
     }
 
     if (!authorized) {
-        return <CmsLoginForm authorize={ authorize }/>;
+        return <CmsLoginForm
+            onAuthorize={ authorize }
+            onCmsLogin={ cmsLogin }
+        />;
     }
 
     return <ErrorBoundary errorComponent={ () => <div>CMS Failed</div> }>
@@ -33,7 +41,7 @@ export default function DecapCMS() {
             <div>
                 <div id="nc-root" className="pb-56"/>
             </div>
-            <Indexing indexing={ indexing } onClick={ processIndexing }/>
+            <Indexing indexing={ indexing } onIndexing={ processIndexing }/>
         </div>
     </ErrorBoundary>;
 }

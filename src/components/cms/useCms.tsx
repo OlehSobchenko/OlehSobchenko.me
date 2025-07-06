@@ -4,6 +4,7 @@ import CMS from 'decap-cms-app';
 import UniqueIdControl from '@/components/cms/UniqueIdControl';
 import getCmsConfig from '@/components/cms/utils/cmsConfig';
 import config from '@/config';
+import getCmsToken from '@/components/cms/utils/getCmsToken';
 
 export default function useCms(
     processIndexing: () => void,
@@ -15,7 +16,7 @@ export default function useCms(
 
     useEffect(() => {
         if (!mounted) {
-            setAuthorized(!!localStorage.getItem('decap-cms-user'));
+            setAuthorized(!!getCmsToken());
             setMounted(true);
 
             return;
@@ -70,5 +71,9 @@ export default function useCms(
         });
     };
 
-    return { mounted, authorized, authorize, CMSApp: CMSRef.current };
+    const cmsLogin = () => {
+        setAuthorized(true);
+    };
+
+    return { mounted, authorized, authorize, CMSApp: CMSRef.current, cmsLogin };
 }

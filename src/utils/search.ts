@@ -163,6 +163,7 @@ export default class Search {
         for (let j = 1; j <= b.length; j++) {
             for (let i = 1; i <= a.length; i++) {
                 const indicator = a[i - 1] === b[j - 1] ? 0 : 1;
+
                 matrix[j][i] = Math.min(
                     matrix[j][i - 1] + 1,
                     matrix[j - 1][i] + 1,

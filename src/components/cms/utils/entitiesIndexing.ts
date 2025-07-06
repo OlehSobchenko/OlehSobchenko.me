@@ -1,7 +1,7 @@
 import getAllFilesWithContent
     from '@/components/cms/utils/getAllFilesWithContent';
 import config from '@/config';
-import getGithubToken from '@/components/cms/utils/getGithubToken';
+import getCmsToken from '@/components/cms/utils/getCmsToken';
 import { Audio, Post } from '@/types';
 import Search from '@/utils/search';
 import { locales } from '@/i18n/config';
@@ -76,8 +76,14 @@ const entityIndexing = async (input: EntityIndexingInput) => {
 type Entities = 'posts' | 'categories' | 'types' | 'audios' | 'postsSearch';
 
 const entitiesIndexing = async (indexedEntities?: Entities[]) => {
+    const token = getCmsToken();
+
+    if (!token) {
+        return;
+    }
+
     const input = {
-        token: getGithubToken(),
+        token,
         contentFolder: config.contentFolder,
         repo: config.contentRepo,
     } as Pick<EntityIndexingInput, 'token' | 'contentFolder' | 'repo'>;
