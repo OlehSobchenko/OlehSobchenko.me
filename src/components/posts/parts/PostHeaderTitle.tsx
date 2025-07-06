@@ -1,13 +1,12 @@
-import React from 'react';
 import { Category, Type } from '@/types';
 import { Languages } from '@/i18n/config';
 import getLocalized from '@/utils/getLocalized';
 
-const PostHeaderTitle: React.FC<{
+const PostHeaderTitle = ({ category, type, lang }: {
     category?: Category;
     type?: Type;
     lang: Languages;
-}> = ({ category, type, lang }) => {
+}) => {
     if (!category && !type) {
         return null;
     }

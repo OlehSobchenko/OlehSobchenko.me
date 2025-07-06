@@ -1,10 +1,8 @@
-import { useTranslations } from 'next-intl';
-import useOpenLink from '@/utils/hooks/useOpenLink';
-
-export const PostLink = ({ link }: { link?: string }) => {
-    const t = useTranslations('PostLink');
-    const openLink = useOpenLink();
-
+export const PostLink = ({ link, text, openLink }: {
+    text: string;
+    openLink: (path: string, newTab?: boolean) => () => void;
+    link?: string;
+}) => {
     if (!link) {
         return null;
     }
@@ -13,7 +11,7 @@ export const PostLink = ({ link }: { link?: string }) => {
         className="flex items-center justify-between text-lg pt-2.5 cursor-pointer"
         onClick={ openLink(link, true) }
     >
-        <div className="uppercase">{ t('title') }</div>
+        <div className="uppercase">{ text }</div>
         <div>
             <svg
                 xmlns="http://www.w3.org/2000/svg"

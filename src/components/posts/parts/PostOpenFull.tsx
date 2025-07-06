@@ -1,16 +1,12 @@
-import React from 'react';
-import { useTranslations } from 'next-intl';
-
-const PostOpenFull: React.FC<{
-    onOpenFull: () => void
-}> = ({ onOpenFull }) => {
-    const t = useTranslations('PostOpenFull');
-
+const PostOpenFull = ({ text, onOpenFull }: {
+    text: string;
+    onOpenFull: () => void;
+}) => {
     return <div
         className="flex items-center justify-between text-lg pt-2.5 cursor-pointer"
         onClick={ onOpenFull }
     >
-        <div className="uppercase">{ t('title') }</div>
+        <div className="uppercase">{ text }</div>
         <div>
             <svg
                 xmlns="http://www.w3.org/2000/svg"

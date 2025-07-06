@@ -11,7 +11,12 @@ export interface AudioControlProps {
 }
 
 export default function AudioControl(props: AudioControlProps) {
-    const { playing, setPlaying } = useAudioPlayerContext();
+    const {
+        playing,
+        setPlaying,
+        setTimeProgress,
+        tracks,
+    } = useAudioPlayerContext();
     const [openDrawer, setOpenDrawer] = useState(false);
 
     useEffect(() => {
@@ -23,6 +28,7 @@ export default function AudioControl(props: AudioControlProps) {
     useEffect(() => {
         if (!openDrawer) {
             setPlaying(false);
+            setTimeProgress(0);
         }
     }, [openDrawer]);
 
@@ -57,6 +63,8 @@ export default function AudioControl(props: AudioControlProps) {
                 }
             </svg>
         </div>
-        { openDrawer && <AudioPlayer onClose={ () => setOpenDrawer(false) }/> }
+        { openDrawer && !!tracks.length && <AudioPlayer
+            onClose={ () => setOpenDrawer(false) }
+        /> }
     </>;
 }

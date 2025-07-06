@@ -29,6 +29,7 @@
     "decap-cms-core": "^3.7.0",
     "globals": "^16.3.0",
     "html-react-parser": "^5.2.5",
+    "masonic": "^4.1.0",
     "nanoid": "^5.1.5",
     "next": "^15.3.5",
     "next-intl": "^4.3.4",

@@ -3,7 +3,7 @@
 import {
     useAudioPlayerContext,
 } from '@/components/providers/AudioPlayerProvider';
-import { useLocale } from 'next-intl';
+import useLocale from '@/utils/hooks/useLocale';
 
 export const TrackInfo = () => {
     const locale = useLocale();

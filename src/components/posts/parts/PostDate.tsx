@@ -1,6 +1,4 @@
-import React from 'react';
-
-const PostDate: React.FC<{ happenedAt?: string }> = ({ happenedAt }) => {
+const PostDate = ({ happenedAt }: { happenedAt?: string }) => {
     if (!happenedAt) {
         return null;
     }

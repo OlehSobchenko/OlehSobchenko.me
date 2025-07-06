@@ -14,12 +14,6 @@
     "search": "Пошук...",
     "nothingFound": "Нічого не знайдено"
   },
-  "PostLink": {
-    "title": "Відкрити посилання"
-  },
-  "PostOpenFull": {
-    "title": "Читати повністю"
-  },
   "PostsTitle": {
     "title": "Життєпис"
   },
@@ -30,5 +24,9 @@
   },
   "PostsContainer": {
     "clearFilter": "Очистити фільтр"
+  },
+  "PostCard": {
+    "link": "Відкрити посилання",
+    "openFull": "Читати повністю"
   }
 }

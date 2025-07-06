@@ -2,7 +2,7 @@
 
 import useOpen from '@/utils/hooks/useOpen';
 import Modal from '@/components/base/Modal';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import React, {
     ReactNode,
     useCallback,
@@ -10,7 +10,6 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { Languages } from '@/i18n/config';
 import config from '@/config';
 import Search from '@/utils/search';
 import fetchCompressedJSON from '@/utils/data/fetchCompressedJSON';
@@ -21,6 +20,7 @@ import SpinLoader from '@/components/base/SpinLoader';
 import getPost from '@/utils/data/getPost';
 import enrichPost from '@/utils/data/enrichPost';
 import debounce from '@/utils/debounce';
+import useLocale from '@/utils/hooks/useLocale';
 
 interface SearchUtils {
     search: (query: string) => string[];
@@ -28,7 +28,7 @@ interface SearchUtils {
 }
 
 function useSearch(load?: boolean): SearchUtils {
-    const locale = useLocale() as Languages;
+    const locale = useLocale();
     const searchEngine = useRef<Search | null>(null);
     const [loading, setLoading] = useState(false);
     const shouldLoad = load !== false;

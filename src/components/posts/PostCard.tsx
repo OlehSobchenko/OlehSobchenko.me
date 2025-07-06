@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Post } from '@/types';
 import { Languages } from '@/i18n/config';
 import getLocalized from '@/utils/getLocalized';
@@ -18,34 +17,49 @@ import PostOpenFull from '@/components/posts/parts/PostOpenFull';
 import config from '@/config';
 
 interface PostCardProps {
+    id: string;
     post: Post;
-    lang: Languages;
+    locale: Languages;
+    titles: {
+        openFull: string;
+        link: string;
+    };
     short?: boolean;
-    fullImage?: boolean;
-    onOpenFull?: (postId: string) => void;
+    hideDivider?: boolean;
+    openLink: (path: string, newTab?: boolean) => () => void;
 }
 
-const PostCard: React.FC<PostCardProps> = props => {
-    const { post, lang, short = true, onOpenFull } = props;
+const PostCard = (props: PostCardProps) => {
+    const {
+        post,
+        locale,
+        short = false,
+        openLink,
+        titles,
+        id,
+        hideDivider,
+    } = props;
     const maxDescriptionLength = config.maxDescriptionLength;
 
     const handlePostClick = () => {
-        if (onOpenFull) {
-            onOpenFull(post.id);
-
-            return;
+        if (short) {
+            openLink(`/post/${ id }`)();
         }
     };
 
-    const localized = getLocalized(lang, post.locales) || {};
+    const localized = getLocalized(locale, post.locales) || {};
     const isDescriptionTruncated = short && localized.description
         && (localized.description?.length || 0) > maxDescriptionLength;
 
+    const showDivider = hideDivider === true
+        ? false
+        : short
+    ;
+
     return <div
         className={ `article w-full ${ short ? 'mb-10' : 'pb-5' }` }
-        data-post-id={ post.id }
         onClick={ handlePostClick }
-        style={ onOpenFull ? { cursor: 'pointer' } : {} }
+        style={ short ? { cursor: 'pointer' } : {} }
     >
         { short && <div
             className="flex justify-between mx-main-spacing md:mx-main-spacing-lg post-header-wrapper"
@@ -56,7 +70,7 @@ const PostCard: React.FC<PostCardProps> = props => {
                 <PostHeaderTitle
                     category={ post.category }
                     type={ post.type }
-                    lang={ lang }
+                    lang={ locale }
                 />
                 <PostDate happenedAt={ post.happenedAt }/>
             </div>
@@ -80,13 +94,18 @@ const PostCard: React.FC<PostCardProps> = props => {
                 maxDescriptionLength={ maxDescriptionLength }
             />
             <PostQuote quote={ localized.quote }/>
-            <PostAudio audio={ post.audio } lang={ lang }/>
+            <PostAudio audio={ post.audio } lang={ locale }/>
             { isDescriptionTruncated && <PostOpenFull
+                text={ titles.openFull }
                 onOpenFull={ handlePostClick }
             /> }
-            <PostLink link={ post.link }/>
+            <PostLink
+                link={ post.link }
+                text={ titles.link }
+                openLink={ openLink }
+            />
         </div>
-        { short && <div
+        { showDivider && <div
             className="post-divider mt-7.5 border-b-8 border-main-color opacity-10 mx-0 md:mx-main-spacing-lg lg:mr-0 lg:ml-0"
         /> }
     </div>;

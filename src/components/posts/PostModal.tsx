@@ -3,23 +3,26 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '@/components/base/Modal';
 import PostCard from '@/components/posts/PostCard';
-import { Languages } from '@/i18n/config';
 import PostHeaderTitle from '@/components/posts/parts/PostHeaderTitle';
 import PostDate from '@/components/posts/parts/PostDate';
 import PostHeaderIcon from '@/components/posts/parts/PostHeaderIcon';
-import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import getPost from '@/utils/data/getPost';
 import { Post } from '@/types';
 import getIndexedEntries from '@/utils/data/getIndexedEntries';
 import enrichPost from '@/utils/data/enrichPost';
+import useOpenLink from '@/utils/hooks/useOpenLink';
+import useLocale from '@/utils/hooks/useLocale';
 
 export interface PostModalProps {
     id: string;
 }
 
 export default function PostModal(props: PostModalProps) {
-    const locale = useLocale() as Languages;
+    const locale = useLocale();
     const [post, setPost] = useState<Post | null>(null);
+    const openLink = useOpenLink();
+    const t = useTranslations('PostCard');
 
     useEffect(() => {
         (async () => {
@@ -59,6 +62,15 @@ export default function PostModal(props: PostModalProps) {
             </div>
         </div> }
     >
-        <PostCard post={ post } lang={ locale } short={ false } fullImage/>
+        <PostCard
+            id={ post.id }
+            post={ post }
+            locale={ locale }
+            openLink={ openLink }
+            titles={{
+                link: t('link'),
+                openFull: t('openFull'),
+            }}
+        />
     </Modal>;
 }

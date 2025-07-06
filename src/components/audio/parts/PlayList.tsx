@@ -4,11 +4,10 @@ import {
     useAudioPlayerContext,
 } from '@/components/providers/AudioPlayerProvider';
 import { Audio } from '@/types';
-import { useLocale } from 'next-intl';
-import { Languages } from '@/i18n/config';
+import useLocale from '@/utils/hooks/useLocale';
 
 export const PlayList = () => {
-    const locale = useLocale() as Languages;
+    const locale = useLocale();
     const {
         currentTrack,
         setCurrentTrack,

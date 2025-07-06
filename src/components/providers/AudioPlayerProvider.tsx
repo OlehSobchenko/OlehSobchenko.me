@@ -93,11 +93,5 @@ export const AudioPlayerProvider = (
 export const useAudioPlayerContext = (): AudioPlayerContextType => {
     const context = useContext(AudioPlayerContext);
 
-    if (context === undefined) {
-        throw new Error(
-            'useAudioPlayerContext must be used within an AudioPlayerProvider',
-        );
-    }
-
-    return context;
+    return context || {} as AudioPlayerContextType;
 };

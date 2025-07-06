@@ -14,12 +14,6 @@
     "search": "Search...",
     "nothingFound": "Nothing found"
   },
-  "PostLink": {
-    "title": "Open link"
-  },
-  "PostOpenFull": {
-    "title": "Open full post"
-  },
   "PostsTitle": {
     "title": "Story of life"
   },
@@ -30,5 +24,9 @@
   },
   "PostsContainer": {
     "clearFilter": "Clear filter"
+  },
+  "PostCard": {
+    "link": "Open link",
+    "openFull": "Open full post"
   }
 }

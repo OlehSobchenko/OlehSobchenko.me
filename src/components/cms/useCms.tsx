@@ -1,10 +1,10 @@
-import { useLocale } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import CMS from 'decap-cms-app';
 import UniqueIdControl from '@/components/cms/UniqueIdControl';
 import getCmsConfig from '@/components/cms/utils/cmsConfig';
 import config from '@/config';
 import getCmsToken from '@/components/cms/utils/getCmsToken';
+import useLocale from '@/utils/hooks/useLocale';
 
 export default function useCms(
     processIndexing: () => void,

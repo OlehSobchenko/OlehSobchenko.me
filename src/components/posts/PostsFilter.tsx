@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
 import DatePicker from 'react-datepicker';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import Accordion from '@/components/base/Accordion';
 import OutlinedButton from '@/components/base/OutlinedButton';
 import { Languages } from '@/i18n/config';
 import classNames from '@/utils/classNames';
 import { usePostsContext } from '@/components/providers/PostsProvider';
+import useLocale from '@/utils/hooks/useLocale';
 
 export interface SelectableButtonsFilterProps {
     title: ReactNode;
@@ -20,7 +21,7 @@ export interface SelectableButtonsFilterProps {
 
 export function SelectableButtonsFilter(props: SelectableButtonsFilterProps) {
     const { items, title, selected, onChange, onRemove } = props;
-    const locale = useLocale() as Languages;
+    const locale = useLocale();
 
     return <Accordion title={ title }>
         <div className="flex flex-wrap gap-4 mb-4">
@@ -58,7 +59,7 @@ function getElementOrNull<T>(array?: T[] | null, index: number = 0): T | null {
 
 export default function PostsFilter() {
     const { filter, ...rest } = usePostsContext();
-    const locale = useLocale() as Languages;
+    const locale = useLocale();
     const t = useTranslations('PostsFilter');
     const startDate = getElementOrNull(filter.options.dates);
     const endDate = getElementOrNull(filter.options.dates, 1);

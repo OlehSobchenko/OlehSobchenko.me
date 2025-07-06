@@ -1,5 +1,5 @@
 import OutlinedButton from '@/components/base/OutlinedButton';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import Modal from '@/components/base/Modal';
 import useOpen from '@/utils/hooks/useOpen';
 import Markdown from 'react-markdown';
@@ -8,6 +8,7 @@ import config from '@/config';
 import { Localized } from '@/i18n/config';
 import LabeledIconContent from '@/components/base/LabeledIconContent';
 import fetchJSON from '@/utils/data/fetchJSON';
+import useLocale from '@/utils/hooks/useLocale';
 
 const biographyUrl = config.contentUrl + 'biography.json';
 

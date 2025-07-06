@@ -2,6 +2,7 @@
 
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useMediaQuery } from '@/utils/hooks/useMediaQuery';
 
 export interface ModalProps {
     open: boolean;
@@ -13,6 +14,7 @@ export interface ModalProps {
 export default function Modal(props: PropsWithChildren<ModalProps>) {
     const router = useRouter();
     const { open, onClose = () => router.push('/'), title, children } = props;
+    const full = useMediaQuery('(min-width: 1024px)');
 
     useEffect(() => {
         if (open) {
@@ -55,7 +57,14 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
                 </button>
             </div>
         </div>
-        <div className="flex-1 w-full overflow-y-auto">
+        <div
+            className="flex-1 w-full overflow-y-auto"
+            style={ full ? {} : {
+                scrollbarGutter: 'stable both-edges',
+                scrollbarWidth: 'none',
+                scrollbarColor: 'rgba(0, 0, 0, 0.3) transparent',
+            } }
+        >
             <div className="max-w-[1024px] ml-auto mr-auto">
                 <div className="px-(--page-indent)">
                     { children }
