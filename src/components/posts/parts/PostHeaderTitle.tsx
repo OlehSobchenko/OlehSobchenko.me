@@ -25,14 +25,10 @@ const PostHeaderTitle: React.FC<{
           { getLocalized(lang, type.name) }
         </span> }
         { category && type && <span
-            className="inline-block relative bottom-1"
-            style={{
-                borderLeft: '3px solid var(--main-color)',
-                margin: '5px 9px 0',
-                height: '1rem',
-                verticalAlign: 'middle',
-            }}
-        /> }
+            className="inline-block relative bottom-1 align-middle mt-1.5 mx-2 text-[13px]"
+        >
+            ┃
+        </span> }
         { category && <span className="uppercase">
           { getLocalized(lang, category.name) }
         </span> }
