@@ -18,7 +18,7 @@ export default function PostsGrid(props: PostsGridProps) {
 
     const getColumnClassName = () => {
         if (variant === 'modal') {
-            return 'posts-column bg-clip-padding ml-4 mr-4 first:ml-0 '
+            return 'posts-column bg-clip-padding ml-8 mr-8 first:ml-0 '
                 + 'last:mr-0';
         }
 

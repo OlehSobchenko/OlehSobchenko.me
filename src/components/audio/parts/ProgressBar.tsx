@@ -60,8 +60,7 @@ export const ProgressBar = () => {
                 />
             </Slider.Track>
             <Slider.Thumb
-                className="block w-6 h-6 cursor-pointer rounded-full border-4 border-(--main-color) bg-(--bg-color)"
-                aria-label="Volume"
+                className="block w-6 h-6 cursor-pointer rounded-full border-4 border-(--main-color) bg-(--bg-color) outline-none focus:outline-none focus:ring-0 focus:shadow-none"
             />
         </Slider.Root>
         <div className="flex justify-between">

@@ -15,12 +15,12 @@ const PostImage = ({ image, short }: {
     }
 
     if (short) {
-        return <div className="lg:m-0 ml-[-32px] mr-[-32px] relative pt-4 pb-4">
+        return <div className="post-image lg:m-0 relative pt-4 pb-4">
             <img src={ imgSrc } alt="" className="w-full"/>
         </div>;
     }
 
-    return <div className="mt-4 mb-4 flex justify-center lg:ml-[-64px] lg:mr-[-64px] ml-[-24px] mr-[-24px]">
+    return <div className="post-image mt-4 mb-4 flex justify-center">
         <img src={ imgSrc } alt="" className="max-w-full max-h-full"/>
     </div>;
 };

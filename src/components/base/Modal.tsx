@@ -41,7 +41,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
     >
         <div className="flex-shrink-0 max-w-[1024px] ml-auto mr-auto w-full">
             <div
-                className="lg:pt-16 pt-6 lg:pl-16 pl-6 lg:pr-16 pr-6 flex justify-between items-center gap-1"
+                className="lg:pt-16 pt-6 px-(--page-indent) flex justify-between items-center gap-1"
             >
                 { header }
                 <button onClick={ onClose } className="cursor-pointer">
@@ -57,7 +57,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
         </div>
         <div className="flex-1 w-full overflow-y-auto">
             <div className="max-w-[1024px] ml-auto mr-auto">
-                <div className="lg:pl-16 pl-6 lg:pr-16 pr-6">
+                <div className="px-(--page-indent)">
                     { children }
                 </div>
             </div>

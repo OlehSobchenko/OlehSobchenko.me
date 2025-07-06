@@ -87,7 +87,7 @@ const PostCard: React.FC<PostCardProps> = props => {
             <PostLink link={ post.link }/>
         </div>
         { short && <div
-            className="should-be-hidden mt-7.5 border-b-8 border-main-color opacity-10 mx-0 md:mx-main-spacing-lg lg:mr-0 lg:ml-0 mr-[-36px] ml-[-36px]"
+            className="post-divider mt-7.5 border-b-8 border-main-color opacity-10 mx-0 md:mx-main-spacing-lg lg:mr-0 lg:ml-0"
         /> }
     </div>;
 };

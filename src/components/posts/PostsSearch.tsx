@@ -131,7 +131,7 @@ function PostsSearchResult({ nothingFound, ids }: PostsSearchResultProps) {
         </div>;
     }
 
-    return <div className="pt-8 max-lg:w-[calc(100%-16px)]">
+    return <div className="pt-8">
         <PostsGrid posts={ posts } variant={ 'modal' }/>
     </div>;
 }

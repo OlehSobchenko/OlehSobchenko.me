@@ -39,7 +39,7 @@
     --li-before-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: black' height='40px' viewBox='0 -960 960 960' width='40px'%3E%3Cpath d='m561-214.67-74-72.66L628.67-429H132v-104.67h496.67l-142.34-143 74-72 268.34 267.34L561-214.67Z'/%3E%3C/svg%3E");
 
     @media (max-width: 64rem) {
-        --page-indent: 32px;
+        --page-indent: 28px;
     }
 
     @media (max-width: 20rem) {
@@ -114,6 +114,24 @@ blockquote:before {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--scrollbar-thumb-color-hovered);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill {
+    box-shadow: 0 0 0 1000px var(--bg-color) inset !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-color) inset !important;
+    -webkit-text-fill-color: var(--main-color) !important;
+    transition: background-color 9999s ease-out;
+    transition-delay: 9999s;
+
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
 }
 
 .article {
@@ -268,8 +286,20 @@ blockquote:before {
     }
 }
 
-.posts-column div:last-child .should-be-hidden {
+.posts-column div:last-child .post-divider {
     display: none;
+}
+
+.post-divider, .post-image {
+    margin-left: calc(-1 * var(--page-indent));
+    margin-right: calc(-1 * var(--page-indent));
+}
+
+@media (min-width: 1025px) {
+    .post-divider, .post-image {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 .audio-play-button {

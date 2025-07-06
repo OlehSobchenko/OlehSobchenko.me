@@ -142,10 +142,24 @@
         }
     }
 
-    .react-datepicker__navigation-icon::before {
-        top: 5px;
+    .react-datepicker__navigation-icon::before,
+    .react-datepicker__navigation-icon:hover::before {
         width: 12px;
         height: 12px;
+    }
+
+    .react-datepicker__navigation--previous,
+    .react-datepicker__navigation--next {
+        top: 11px;
+        position: absolute;
+    }
+
+    .react-datepicker__navigation--previous {
+        left: 0;
+    }
+
+    .react-datepicker__navigation--next {
+        right: 0;
     }
 }
 
