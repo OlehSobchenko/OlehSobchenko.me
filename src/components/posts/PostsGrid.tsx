@@ -85,7 +85,7 @@ export default function PostsGrid(props: PostsGridProps) {
         }
     }, [postsDisplayedLength, columnsCount]);
 
-    if (variant === 'modal') {
+    if (variant === 'modal' || columnsCount === 1) {
         const getColumnClassName = () => {
             if (variant === 'modal') {
                 return 'posts-column bg-clip-padding ml-8 mr-8 first:ml-0 '
