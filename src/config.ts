@@ -24,6 +24,7 @@ const config = {
     postsIndexSeparator: '|',
     storageKeys: {
         cmsUser: 'decap-cms-user',
+        theme: 'theme',
     },
 };
 

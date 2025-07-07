@@ -5,10 +5,37 @@ import { useEffect, useState } from 'react';
 
 export default function ThemeSwitcher() {
     const [mounted, setMounted] = useState(false);
-    const { theme, setTheme } = useTheme();
+    const { setTheme, resolvedTheme: theme } = useTheme();
 
     const handleSwitchThemes = () => {
-        setTheme(theme => theme === 'light' ? 'dark' : 'light');
+        setTheme(theme => {
+            const color = theme === 'dark' ? '#000000' : '#FFFFFF';
+
+            document.querySelector(
+                'meta[name="theme-color"]',
+            )?.setAttribute('content', color);
+            document.querySelector(
+                'meta[name="msapplication-navbutton-color"]',
+            )?.setAttribute('content', color);
+            document.querySelector(
+                'meta[name="apple-mobile-web-app-status-bar-style"]',
+            )?.setAttribute(
+                'content',
+                theme === 'dark' ? 'black' : 'default',
+            );
+            document.querySelector(
+                'meta[name="mobile-web-app-status-bar-style"]',
+            )?.setAttribute(
+                'content',
+                theme === 'dark' ? 'black' : 'default',
+            );
+            document.querySelector('link[rel="mask-icon"]')?.setAttribute(
+                'color',
+                color,
+            );
+
+            return theme === 'light' ? 'dark' : 'light';
+        });
     };
 
     useEffect(() => {
