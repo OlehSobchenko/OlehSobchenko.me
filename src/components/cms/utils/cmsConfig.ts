@@ -41,13 +41,14 @@ const getCmsConfig = (
     collections: [
         {
             name: 'posts',
-            label: 'Допис',
+            label: 'Дописи',
             format: 'json',
             i18n: false,
             create: true,
             folder: `${ config.contentFolder }/posts`,
             slug: '{{id}}',
             summary: `{{locales.${ input.locale }.title}} (ID: {{id}})`,
+            label_singular: 'Допис',
             editor: {
                 preview: false,
             },
@@ -185,6 +186,7 @@ const getCmsConfig = (
             create: true,
             slug: '{{id}}',
             format: 'json',
+            label_singular: 'Аудіофайл',
             editor: {
                 preview: false,
             },
@@ -232,7 +234,7 @@ const getCmsConfig = (
         },
         {
             name: 'categories',
-            label: 'Категорія',
+            label: 'Категорії',
             folder: `${ config.contentFolder }/categories`,
             create: true,
             slug: '{{id}}',
@@ -240,6 +242,7 @@ const getCmsConfig = (
             editor: {
                 preview: false,
             },
+            label_singular: 'Категорія',
             summary: `{{locales.${ input.locale }.name}}`,
             identifier_field: 'id',
             fields: [
@@ -263,12 +266,13 @@ const getCmsConfig = (
         },
         {
             name: 'types',
-            label: 'Тип допису',
+            label: 'Типи допису',
             folder: `${ config.contentFolder }/types`,
             create: true,
             slug: '{{id}}',
             summary: `{{locales.${ input.locale }.name}}`,
             format: 'json',
+            label_singular: 'Тип допису',
             editor: {
                 preview: false,
             },
@@ -306,6 +310,7 @@ const getCmsConfig = (
             editor: {
                 preview: false,
             },
+            label_singular: 'Одиничний об\'єкти',
             format: 'json',
             files: [
                 {
