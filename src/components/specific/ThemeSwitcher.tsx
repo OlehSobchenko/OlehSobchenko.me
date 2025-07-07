@@ -9,7 +9,8 @@ export default function ThemeSwitcher() {
 
     const handleSwitchThemes = () => {
         setTheme(theme => {
-            const color = theme === 'dark' ? '#000000' : '#FFFFFF';
+            const newTheme = theme === 'light' ? 'dark' : 'light';
+            const color = newTheme === 'dark' ? '#000000' : '#FFFFFF';
 
             document.querySelector(
                 'meta[name="theme-color"]',
@@ -21,20 +22,20 @@ export default function ThemeSwitcher() {
                 'meta[name="apple-mobile-web-app-status-bar-style"]',
             )?.setAttribute(
                 'content',
-                theme === 'dark' ? 'default' : 'black',
+                newTheme === 'dark' ? 'default' : 'black-translucent',
             );
             document.querySelector(
                 'meta[name="mobile-web-app-status-bar-style"]',
             )?.setAttribute(
                 'content',
-                theme === 'dark' ? 'default' : 'black',
+                newTheme === 'dark' ? 'default' : 'black-translucent',
             );
             document.querySelector('link[rel="mask-icon"]')?.setAttribute(
                 'color',
                 color,
             );
 
-            return theme === 'light' ? 'dark' : 'light';
+            return newTheme;
         });
     };
 

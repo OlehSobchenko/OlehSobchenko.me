@@ -94,13 +94,13 @@ const themeFollowerScript = `(function () {
         'meta[name="apple-mobile-web-app-status-bar-style"]',
     )?.setAttribute(
         'content',
-        theme === 'dark' ? 'default' : 'black',
+        theme === 'dark' ? 'default' : 'black-translucent',
     );
     document.querySelector(
         'meta[name="mobile-web-app-status-bar-style"]',
     )?.setAttribute(
         'content',
-        theme === 'dark' ? 'default' : 'black',
+        theme === 'dark' ? 'default' : 'black-translucent',
     );
     document.querySelector('link[rel="mask-icon"]')?.setAttribute(
         'color',
