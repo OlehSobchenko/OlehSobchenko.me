@@ -21,13 +21,13 @@ export default function ThemeSwitcher() {
                 'meta[name="apple-mobile-web-app-status-bar-style"]',
             )?.setAttribute(
                 'content',
-                theme === 'dark' ? 'black' : 'default',
+                theme === 'dark' ? 'default' : 'black',
             );
             document.querySelector(
                 'meta[name="mobile-web-app-status-bar-style"]',
             )?.setAttribute(
                 'content',
-                theme === 'dark' ? 'black' : 'default',
+                theme === 'dark' ? 'default' : 'black',
             );
             document.querySelector('link[rel="mask-icon"]')?.setAttribute(
                 'color',
