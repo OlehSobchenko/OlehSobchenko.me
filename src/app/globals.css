@@ -310,7 +310,7 @@ select:-webkit-autofill {
 }
 
 .posts-header-title {
-    @media (max-width: 381px) {
+    @media (max-width: 424px) {
         font-size: 36px;
     }
 
@@ -320,7 +320,7 @@ select:-webkit-autofill {
 }
 
 .posts-header-filter-icon {
-    @media (max-width: 381px) {
+    @media (max-width: 424px) {
         width: 42px;
         height: 42px;
     }
