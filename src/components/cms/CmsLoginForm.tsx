@@ -29,10 +29,9 @@ export default function CmsLoginForm(props: {
             <OutlinedButton
                 className="border-4! outline-0 focus:outline-0 focus:rounded-none uppercase text-xl"
                 onClick={ e => {
-                    const token = (
-                        e.currentTarget.parentElement
-                            ?.children[0] as HTMLInputElement
-                    )?.value;
+                    const token = (document.getElementById(
+                        'cms-auth-token',
+                    ) as HTMLInputElement)?.value;
 
                     if (!token) {
                         return;
