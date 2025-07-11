@@ -186,6 +186,12 @@ select:-webkit-autofill {
     }
 }
 
+@media (max-height: 680px) {
+    .person-quote {
+        display: none;
+    }
+}
+
 @media (max-width: 1024px) {
     .article {
         p {

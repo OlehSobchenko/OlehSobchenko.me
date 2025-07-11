@@ -18,7 +18,7 @@ export default function PersonInfo() {
             <PersonName>{ t('lastName') }</PersonName>
         </div>
         <Biography/>
-        <div className="mt-20 mb-32 lg:flex hidden">
+        <div className="person-quote mt-20 mb-32 lg:flex hidden">
             <svg
                 className="mt-0.5"
                 xmlns="http://www.w3.org/2000/svg"
