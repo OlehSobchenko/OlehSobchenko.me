@@ -59,16 +59,16 @@ export async function generateMetadata(): Promise<Metadata> {
         ],
         openGraph: {
             type: 'website',
-            url: 'https://olehsobchenko.me',
+            url: config.baseUrl,
             title: personInfo.title,
             description: personInfo.description,
             siteName: personInfo.title,
             images: [
                 {
-                    url: 'https://olehsobchenko.me/android-chrome-512x512.png',
+                    url: `${ config.baseUrl }/android-chrome-512x512.png`,
                 },
                 {
-                    url: 'https://olehsobchenko.me/main-photo.svg',
+                    url: `${ config.baseUrl }/main-photo.svg`,
                 },
             ],
         },
@@ -128,11 +128,11 @@ export default async function RootLayout(
                 property="og:description"
                 content={ personInfo.description }
             />
-            <meta property="og:url" content="https://olehsobchenko.me"/>
+            <meta property="og:url" content={ config.baseUrl }/>
             <meta property="og:site_name" content={ personInfo.title }/>
             <meta
                 property="og:image"
-                content="https://olehsobchenko.me/android-chrome-512x512.png"
+                content={ `${ config.baseUrl }/android-chrome-512x512.png` }
             />
             <meta property="og:type" content="website"/>
 

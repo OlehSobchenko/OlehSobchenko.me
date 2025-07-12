@@ -7,10 +7,10 @@ import MainContentActions from '@/components/MainContentActions';
 import PostsContainer from '@/components/posts/PostsContainer';
 
 export default function MainContent() {
-    return <div id="main-content" className="relative">
+    return <div className="relative">
         <div
             id="main-background"
-            className={ 'lg:bg-[75%_calc(100%+2px)] bg-[center_calc(100%+2px)] h-screen bg-no-repeat lg:bg-size-[65vh] bg-size-[50vh] bg-position-y-[calc(100% + 2px)] lg:bg-position-x-[75%] bg-position-x-[50%]' }
+            className="main-background"
             style={ {
                 backgroundImage: `var(--photo-gradient), url("${ portrait.src }")`,
             } }
