@@ -2,6 +2,14 @@
 [class*="EditorContainer"],
 [class*="ToolbarContainer"] {
     min-width: unset !important;
+
+    main > div {
+        width: 100%;
+
+        li {
+            width: 100%;
+        }
+    }
 }
 
 [class*="NoPreviewContainer-card-splitPane"] {

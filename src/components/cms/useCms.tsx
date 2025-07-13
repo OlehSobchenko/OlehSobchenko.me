@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import CMS from 'decap-cms-app';
 import UniqueIdControl from '@/components/cms/UniqueIdControl';
 import getCmsConfig from '@/components/cms/utils/cmsConfig';
 import config from '@/config';
 import getCmsToken from '@/components/cms/utils/getCmsToken';
 import useLocale from '@/utils/hooks/useLocale';
+import addLinkToPost from '@/components/cms/utils/addLinkToPost';
 
 export default function useCms(
     processIndexing: () => void,
@@ -18,7 +19,6 @@ export default function useCms(
         if (!mounted) {
             setAuthorized(!!getCmsToken());
             setMounted(true);
-
             return;
         }
 
@@ -39,10 +39,12 @@ export default function useCms(
             CMS.init({
                 config: getCmsConfig({ locale, repo: config.contentRepo }),
             });
-        }
-    }, [mounted, authorized]);
 
-    const authorize = (
+            addLinkToPost();
+        }
+    }, [mounted, authorized, locale, processIndexing]);
+
+    const authorize = useCallback((
         token: string,
         onError?: () => void,
     ) => {
@@ -55,7 +57,6 @@ export default function useCms(
         }).then(res => res.json()).then(json => {
             if (!json) {
                 onError?.();
-
                 return;
             }
 
@@ -65,15 +66,19 @@ export default function useCms(
                 backendName: 'github',
             }));
 
-            setAuthorized(true);
+            setTimeout(() => {
+                setAuthorized(true);
+            }, 0);
         }).catch(() => {
             onError?.();
         });
-    };
+    }, []);
 
-    const cmsLogin = () => {
-        setAuthorized(true);
-    };
+    const cmsLogin = useCallback(() => {
+        setTimeout(() => {
+            setAuthorized(true);
+        }, 0);
+    }, []);
 
     return { mounted, authorized, authorize, CMSApp: CMSRef.current, cmsLogin };
 }
