@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import openInNewTab from '@/utils/openInNewTab';
+import isPWA from '@/utils/isPWA';
 
 export default function useOpenLink() {
     const router = useRouter();
@@ -9,12 +10,9 @@ export default function useOpenLink() {
             openInNewTab(path)?.focus();
         }
 
-        const isPWA = window.matchMedia(
-                '(display-mode: standalone)',
-            ).matches
-            || (window.navigator as any).standalone === true;
+        const pwa = isPWA();
 
-        if (isPWA) {
+        if (pwa) {
             router.push(path);
 
             return;

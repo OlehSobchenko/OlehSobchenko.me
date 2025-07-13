@@ -13,6 +13,8 @@ import getIndexedEntries from '@/utils/data/getIndexedEntries';
 import enrichPost from '@/utils/data/enrichPost';
 import useOpenLink from '@/utils/hooks/useOpenLink';
 import useLocale from '@/utils/hooks/useLocale';
+import isPWA from '@/utils/isPWA';
+import { useRouter } from 'next/navigation';
 
 export interface PostModalProps {
     id: string;
@@ -22,6 +24,7 @@ export default function PostModal(props: PostModalProps) {
     const locale = useLocale();
     const [post, setPost] = useState<Post | null>(null);
     const openLink = useOpenLink();
+    const router = useRouter();
     const t = useTranslations('PostCard');
 
     useEffect(() => {
@@ -61,6 +64,7 @@ export default function PostModal(props: PostModalProps) {
                 <PostDate happenedAt={ post.happenedAt }/>
             </div>
         </div> }
+        onClose={ isPWA() ? router.back : undefined }
     >
         <PostCard
             id={ post.id }
