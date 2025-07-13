@@ -1,3 +1,4 @@
+const pwaMode = process.env.NEXT_ALL_PWA_MODE === 'true';
 const repo = process.env.NEXT_PUBLIC_REPOSITORY || '';
 const baseUrl = process.env.NEXT_BASE_URL || 'https://olehsobchenko.me';
 const suffixContentRepo = '-Content';
@@ -13,6 +14,7 @@ const contentUrl = `${ dataBaseUrl }${ contentFolder }/`;
 const uploadsUrl = `${ dataBaseUrl }${ uploadsFolder }/`;
 
 const config = {
+    pwaMode,
     repo,
     contentRepo,
     contentFolder,
