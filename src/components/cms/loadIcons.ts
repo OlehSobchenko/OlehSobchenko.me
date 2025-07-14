@@ -9,14 +9,17 @@ interface NodeRequire {
     };
 }
 
-const requireSvg = (
-    require as unknown as NodeRequire
-).context('@/icons', false, /\.svg$/);
+const requireSvg = (<NodeRequire><unknown>require).context(
+    '@/icons',
+    false,
+    /\.svg$/,
+);
 
 const svgs: { [key: string]: string } = {};
 
 requireSvg.keys().forEach((fileName: string) => {
     const svgKey = fileName.replace('./', '').replace('.svg', '');
+
     svgs[svgKey] = requireSvg(fileName).default;
 });
 

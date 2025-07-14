@@ -1,6 +1,5 @@
 'use client';
 
-import portrait from '@/images/main-photo.svg';
 import PersonInfo from '@/components/specific/PersonInfo';
 import ScrollDown from '@/components/specific/ScrollDown';
 import MainContentActions from '@/components/MainContentActions';
@@ -12,7 +11,7 @@ export default function MainContent() {
             id="main-background"
             className="main-background"
             style={ {
-                backgroundImage: `var(--photo-gradient), url("${ portrait.src }")`,
+                backgroundImage: `var(--photo-gradient), url("/main-photo.svg")`,
             } }
         >
             <MainContentActions/>
