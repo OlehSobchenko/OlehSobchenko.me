@@ -163,13 +163,19 @@ const MaterialIconsControl = (props: MaterialIconWidgetProps) => {
                     onClick={ handleToggle }
                 >
                     { currentIconId
-                        ? <div style={ {
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                        } }>
+                        ? <div
+                            style={ {
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                            } }
+                        >
                             <div
-                                style={ { width: 40, height: 40 } }
+                                style={ {
+                                    width: 40,
+                                    height: 40,
+                                    fill: '#000000',
+                                } }
                                 dangerouslySetInnerHTML={ {
                                     __html: currentIconSvg,
                                 } }
@@ -266,7 +272,11 @@ const MaterialIconsControl = (props: MaterialIconWidgetProps) => {
                             } }
                         >
                             <div
-                                style={ { width: 40, height: 40 } }
+                                style={ {
+                                    width: 40,
+                                    height: 40,
+                                    fill: '#000000',
+                                } }
                                 dangerouslySetInnerHTML={ {
                                     __html: currentIconSvg,
                             } }
@@ -339,6 +349,7 @@ const MaterialIconsControl = (props: MaterialIconWidgetProps) => {
                                     height: 40,
                                     marginBottom: '8px',
                                     fontWeight: 700,
+                                    fill: '#000000',
                                 } }
                                 dangerouslySetInnerHTML={ {
                                     __html: svg as any,
