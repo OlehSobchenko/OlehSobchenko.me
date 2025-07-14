@@ -289,8 +289,10 @@ const getCmsConfig = (
                 {
                     label: 'Іконка',
                     name: 'icon',
-                    widget: 'text',
+                    widget: 'material-symbols',
                     required: true,
+                    index_file: 'index.json',
+                    meta: false,
                 },
                 getLocalizedContentField([
                     {

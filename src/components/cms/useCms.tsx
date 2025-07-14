@@ -6,6 +6,7 @@ import config from '@/config';
 import getCmsToken from '@/components/cms/utils/getCmsToken';
 import useLocale from '@/utils/hooks/useLocale';
 import addLinkToPost from '@/components/cms/utils/addLinkToPost';
+import MaterialIconsControl from '@/components/cms/MaterialIconsControl';
 
 export default function useCms(
     processIndexing: () => void,
@@ -28,6 +29,7 @@ export default function useCms(
             CMSRef.current = CMS;
 
             CMS.registerWidget('uuid', UniqueIdControl);
+            CMS.registerWidget('material-symbols', MaterialIconsControl);
             CMS.registerEventListener({
                 name: 'postSave',
                 handler: processIndexing,
