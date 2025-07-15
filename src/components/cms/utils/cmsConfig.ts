@@ -312,7 +312,7 @@ const getCmsConfig = (
             editor: {
                 preview: false,
             },
-            label_singular: 'Одиничний об\'єкти',
+            label_singular: 'Одиничний об\'єкт',
             format: 'json',
             files: [
                 {

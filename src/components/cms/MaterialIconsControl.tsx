@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import type { CmsWidgetControlProps } from 'decap-cms-core';
-import icons from '@/components/cms/loadIcons';
+import icons from '@/icons.json';
 
 interface MaterialIconWidgetProps extends CmsWidgetControlProps {
     hasActiveStyle?: boolean;
@@ -35,6 +35,7 @@ const MaterialIconsControl = (props: MaterialIconWidgetProps) => {
         }
 
         const term = searchTerm.toLowerCase();
+
         return iconEntries.filter(([key]) => key.toLowerCase().includes(term));
     }, [searchTerm, iconEntries]);
 

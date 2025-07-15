@@ -4,6 +4,7 @@ import PersonInfo from '@/components/specific/PersonInfo';
 import ScrollDown from '@/components/specific/ScrollDown';
 import MainContentActions from '@/components/MainContentActions';
 import PostsContainer from '@/components/posts/PostsContainer';
+import portrait from '@/images/main-photo-less.svg';
 
 export default function MainContent() {
     return <div className="relative">
@@ -11,12 +12,12 @@ export default function MainContent() {
             id="main-background"
             className="main-background"
             style={ {
-                backgroundImage: `var(--photo-gradient), url("/main-photo-less.svg")`,
+                backgroundImage: `var(--photo-gradient), url("${ portrait.src }")`,
             } }
         >
             <MainContentActions/>
             <div className="relative max-w-[1920px] ml-auto mr-auto">
-                <div className="real-fullscreen pt-(--page-indent) pl-(--page-indent) pb-(--page-indent)">
+                <div className="h-screen pt-(--page-indent) pl-(--page-indent) pb-(--page-indent)">
                     <div
                         className="flex h-full lg:items-center lg:pl-16"
                     >
