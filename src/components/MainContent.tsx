@@ -11,7 +11,7 @@ export default function MainContent() {
             id="main-background"
             className="main-background"
             style={ {
-                backgroundImage: `var(--photo-gradient), url("/main-photo.svg")`,
+                backgroundImage: `var(--photo-gradient), url("/main-photo-less.svg")`,
             } }
         >
             <MainContentActions/>
