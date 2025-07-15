@@ -340,3 +340,7 @@ select:-webkit-autofill {
         height: 36px;
     }
 }
+
+.real-fullscreen {
+    height: var(--with-address-bar-height);
+}

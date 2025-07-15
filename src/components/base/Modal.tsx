@@ -39,7 +39,7 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
     ;
 
     return <div
-        className="fixed inset-0 z-[10000] bg-[var(--bg-color)] flex flex-col w-full mx-auto lg:gap-6 gap-4"
+        className="real-fullscreen fixed top-0 left-0 z-[10000] bg-[var(--bg-color)] flex flex-col w-full mx-auto lg:gap-6 gap-4"
     >
         <div className="flex-shrink-0 max-w-[1024px] ml-auto mr-auto w-full">
             <div

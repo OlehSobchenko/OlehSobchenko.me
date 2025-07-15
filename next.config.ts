@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
         config.module.rules.push({
             test: /\.svg$/,
             use: 'raw-loader',
+            exclude: '/images/main-photo.svg',
         });
 
         return config;
