@@ -69,7 +69,7 @@ const getCmsConfig = (
                     collection: 'categories',
                     value_field: 'id',
                     display_fields: [`locales.${ input.locale }.name`],
-                    search_fields: ['categories.*'],
+                    search_fields: ['locales.*'],
                 },
                 {
                     label: 'Тип',
@@ -78,7 +78,7 @@ const getCmsConfig = (
                     collection: 'types',
                     value_field: 'id',
                     display_fields: [`locales.${ input.locale }.name`],
-                    search_fields: ['types.*'],
+                    search_fields: ['locales.*'],
                 },
                 {
                     label: 'Дата створення',
