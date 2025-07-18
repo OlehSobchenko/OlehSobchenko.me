@@ -14,6 +14,73 @@ export interface PostsGridProps {
     variant?: 'default' | 'modal';
 }
 
+const updatePostDividers = (
+    containerRef: React.RefObject<HTMLDivElement | null>,
+): () => void => {
+    return () => {
+        const postElements = containerRef.current
+            ?.firstChild?.childNodes as NodeListOf<HTMLDivElement>;
+
+        if (!postElements?.length) {
+            return;
+        }
+
+        const firstColumn: { element: HTMLDivElement; top: number }[] = [];
+        const secondColumn: { element: HTMLDivElement; top: number }[] = [];
+
+        for (const postElement of postElements) {
+            const left = (
+                postElement.computedStyleMap().get('left') as any
+            ).value;
+
+            if (left === 0) {
+                firstColumn.push({
+                    top: (
+                        postElement.computedStyleMap().get('top') as any
+                    ).value,
+                    element: postElement?.firstChild as HTMLDivElement,
+                });
+
+                continue;
+            }
+
+            secondColumn.push({
+                top: (
+                    postElement.computedStyleMap().get('top') as any
+                ).value,
+                element: postElement?.firstChild as HTMLDivElement,
+            });
+        }
+
+        const [
+            firstLastElement,
+        ] = firstColumn.toSorted((a, b) => b.top - a.top);
+        const [
+            secondLastElement,
+        ] = secondColumn.toSorted((a, b) => b.top - a.top);
+        const firstTarget = firstLastElement?.element;
+        const secondTarget = secondLastElement?.element;
+
+        const [firstEl] = (
+            firstTarget?.getElementsByClassName(
+                'post-divider',
+            ) || []
+        ) as unknown as HTMLDivElement[];
+        const [secondEl] = (
+            secondTarget?.getElementsByClassName(
+                'post-divider',
+            ) || []
+        ) as unknown as HTMLDivElement[];
+
+        if (firstEl) {
+            firstEl.style.display = 'none';
+        }
+
+        if (secondEl) {
+            secondEl.style.display = 'none';
+        }
+    };
+};
 export default function PostsGrid(props: PostsGridProps) {
     const { posts, variant = 'default' } = props;
     const locale = useLocale();
@@ -30,63 +97,7 @@ export default function PostsGrid(props: PostsGridProps) {
             return;
         }
 
-        const observer = new MutationObserver(() => {
-            const postElements = containerRef.current
-                ?.firstChild?.childNodes as NodeListOf<HTMLDivElement>;
-
-            if (!postElements?.length) {
-                return;
-            }
-
-            const firstColumn: { element: HTMLDivElement; top: number }[] = [];
-            const secondColumn: { element: HTMLDivElement; top: number }[] = [];
-
-            for (const postElement of postElements) {
-                const left = (
-                    postElement.computedStyleMap().get('left') as any
-                ).value;
-
-                if (left === 0) {
-                    firstColumn.push({
-                        top: (
-                            postElement.computedStyleMap().get('top') as any
-                        ).value,
-                        element: postElement?.firstChild as HTMLDivElement,
-                    });
-
-                    continue;
-                }
-
-                secondColumn.push({
-                    top: (postElement.computedStyleMap().get('top') as any).value,
-                    element: postElement?.firstChild as HTMLDivElement,
-                });
-            }
-
-            const [
-                firstLastElement,
-            ] = firstColumn.toSorted((a, b) => b.top - a.top);
-            const [
-                secondLastElement,
-            ] = secondColumn.toSorted((a, b) => b.top - a.top);
-            const firstTarget = firstLastElement?.element;
-            const secondTarget = secondLastElement?.element;
-
-            const [firstEl] = (firstTarget?.getElementsByClassName(
-                'post-divider',
-            ) || []) as unknown as HTMLDivElement[];
-            const [secondEl] = (secondTarget?.getElementsByClassName(
-                'post-divider',
-            ) || []) as unknown as HTMLDivElement[];
-
-            if (firstEl) {
-                firstEl.style.display = 'none';
-            }
-
-            if (secondEl) {
-                secondEl.style.display = 'none';
-            }
-        });
+        const observer = new MutationObserver(updatePostDividers(containerRef));
 
         observer.observe(containerRef.current, {
             childList: true,
@@ -95,6 +106,10 @@ export default function PostsGrid(props: PostsGridProps) {
             characterData: false,
         });
     }, [containerDisplayed]);
+
+    useEffect(() => {
+        updatePostDividers(containerRef);
+    }, [posts.length, columnsCount, full, containerDisplayed]);
 
     if (variant === 'modal' || columnsCount === 1) {
         const getColumnClassName = () => {
