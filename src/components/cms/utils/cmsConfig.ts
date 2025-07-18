@@ -113,7 +113,7 @@ const getCmsConfig = (
                     required: false,
                 },
                 {
-                    label: 'Video',
+                    label: 'Відео',
                     name: 'video',
                     widget: 'object',
                     collapsed: true,
