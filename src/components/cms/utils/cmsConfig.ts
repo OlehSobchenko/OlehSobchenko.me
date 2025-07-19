@@ -47,7 +47,7 @@ const getCmsConfig = (
             create: true,
             folder: `${ config.contentFolder }/posts`,
             slug: '{{id}}',
-            summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}}){{locales.${ input.locale }.title | ternary(' | ', '')}}{{locales.${ input.locale }.title}}`,
+            summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}}{{locales.${ input.locale }.title | ternary(' | ', '')}}{{locales.${ input.locale }.title}}`,
             label_singular: 'Допис',
             editor: {
                 preview: false,
