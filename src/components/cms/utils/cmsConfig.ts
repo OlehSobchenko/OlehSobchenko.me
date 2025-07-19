@@ -47,7 +47,7 @@ const getCmsConfig = (
             create: true,
             folder: `${ config.contentFolder }/posts`,
             slug: '{{id}}',
-            summary: `{{locales.${ input.locale }.title}} (ID: {{id}})`,
+            summary: `{{locales.${ input.locale }.title}} (ID: {{id}}, Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}})`,
             label_singular: 'Допис',
             editor: {
                 preview: false,
@@ -191,7 +191,7 @@ const getCmsConfig = (
                 preview: false,
             },
             summary: `{{locales.${ input.locale }.name}} - {{locales.${
-                input.locale }.description}} (Шлях: {{link}})`,
+                input.locale }.description}} | {{prioritized | ternary('Найпріоритетніший |','')}} Шлях: {{link}}`,
             identifier_field: 'id',
             fields: [
                 {
@@ -260,6 +260,7 @@ const getCmsConfig = (
                         name: 'name',
                         widget: 'string',
                         i18n: true,
+                        index_file: 'name_index.json',
                     },
                 ]),
             ],
@@ -291,7 +292,7 @@ const getCmsConfig = (
                     name: 'icon',
                     widget: 'material-symbols',
                     required: true,
-                    index_file: 'index.json',
+                    index_file: 'name_index.json',
                     meta: false,
                 },
                 getLocalizedContentField([

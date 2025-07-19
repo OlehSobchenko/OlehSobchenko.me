@@ -39,7 +39,10 @@ export default function useCms(
                 handler: processIndexing,
             });
             CMS.init({
-                config: getCmsConfig({ locale, repo: config.contentRepo }),
+                config: getCmsConfig({
+                    locale,
+                    repo: config.contentRepo,
+                }),
             });
 
             addLinkToPost();
