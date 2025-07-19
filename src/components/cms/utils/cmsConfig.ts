@@ -47,7 +47,7 @@ const getCmsConfig = (
             create: true,
             folder: `${ config.contentFolder }/posts`,
             slug: '{{id}}',
-            summary: `{{locales.${ input.locale }.title}} (ID: {{id}}, Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}})`,
+            summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}}){{locales.${ input.locale }.title | ternary(' | ', '')}}{{locales.${ input.locale }.title}}`,
             label_singular: 'Допис',
             editor: {
                 preview: false,
@@ -69,7 +69,11 @@ const getCmsConfig = (
                     collection: 'categories',
                     value_field: 'id',
                     display_fields: [`locales.${ input.locale }.name`],
-                    search_fields: [`locales.${ input.locale }.name`],
+                    search_fields: [
+                        'id',
+                        ...locales.map(l => `locales.${ l }.name`),
+                    ],
+                    options_length: 1000,
                 },
                 {
                     label: 'Тип',
@@ -78,7 +82,11 @@ const getCmsConfig = (
                     collection: 'types',
                     value_field: 'id',
                     display_fields: [`locales.${ input.locale }.name`],
-                    search_fields: [`locales.${ input.locale }.name`],
+                    search_fields: [
+                        'id',
+                        ...locales.map(l => `locales.${ l }.name`),
+                    ],
+                    options_length: 1000,
                 },
                 {
                     label: 'Дата створення',
@@ -140,7 +148,7 @@ const getCmsConfig = (
                     collection: 'audios',
                     value_field: 'id',
                     display_fields: [
-                        `{{locales.${ input.locale }.name}} - `,
+                        `locales.${ input.locale }.name`,
                         `locales.${ input.locale }.description`,
                         `(Шлях: {{link}})`,
                     ],
@@ -150,6 +158,7 @@ const getCmsConfig = (
                         `link`,
                     ],
                     required: false,
+                    options_length: 1000,
                 },
                 getLocalizedContentField([
                     {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import CMS from 'decap-cms-app';
 import UniqueIdControl from '@/components/cms/UniqueIdControl';
 import getCmsConfig from '@/components/cms/utils/cmsConfig';
@@ -28,6 +28,11 @@ export default function useCms(
             window.CMS = CMS;
             CMSRef.current = CMS;
 
+            const cmsConfig = getCmsConfig({
+                locale,
+                repo: config.contentRepo,
+            });
+
             CMS.registerWidget('uuid', UniqueIdControl);
             CMS.registerWidget('material-symbols', MaterialIconsControl);
             CMS.registerEventListener({
@@ -39,10 +44,7 @@ export default function useCms(
                 handler: processIndexing,
             });
             CMS.init({
-                config: getCmsConfig({
-                    locale,
-                    repo: config.contentRepo,
-                }),
+                config: cmsConfig,
             });
 
             addLinkToPost();
