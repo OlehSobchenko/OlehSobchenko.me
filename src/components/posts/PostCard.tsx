@@ -83,7 +83,7 @@ const PostCard = (props: PostCardProps) => {
                 image={ post.image }
                 short={ short }
             />
-            <PostVideo video={ post.video } short={ short }/>
+            <PostVideo video={ post.video }/>
         </div>
 
         <div className="mx-main-spacing md:mx-main-spacing-lg">
@@ -91,7 +91,7 @@ const PostCard = (props: PostCardProps) => {
             <PostDescription
                 shortDescription={ localized.shortDescription }
                 description={ localized.description }
-                isShort={ short }
+                short={ short }
                 maxDescriptionLength={ maxDescriptionLength }
             />
             <PostQuote quote={ localized.quote }/>
@@ -106,6 +106,7 @@ const PostCard = (props: PostCardProps) => {
                 openLink={ openLink }
             />
         </div>
+
         { showDivider && <div
             className="post-divider mt-7.5 border-b-8 border-main-color opacity-10 mx-0 md:mx-main-spacing-lg lg:mr-0 lg:ml-0"
         /> }

@@ -4,13 +4,13 @@ import Markdown from 'react-markdown';
 const PostDescription = (props: {
     shortDescription?: string;
     description?: string;
-    isShort: boolean;
+    short: boolean;
     maxDescriptionLength: number;
 }) => {
     const {
         shortDescription,
         description,
-        isShort,
+        short,
         maxDescriptionLength,
     } = props;
 
@@ -19,7 +19,7 @@ const PostDescription = (props: {
     }
 
     const fullHtml = description || '';
-    const data = isShort && fullHtml
+    const data = short && fullHtml
         ? truncateContent(fullHtml, maxDescriptionLength)
         : {
             output: fullHtml,
