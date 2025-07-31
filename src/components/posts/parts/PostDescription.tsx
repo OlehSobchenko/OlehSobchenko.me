@@ -1,5 +1,6 @@
 import truncateContent from '@/utils/truncateContent';
 import Markdown from 'react-markdown';
+import classNames from '@/utils/classNames';
 
 const PostDescription = (props: {
     shortDescription?: string;
@@ -35,7 +36,14 @@ const PostDescription = (props: {
         </Markdown> }
         { shortDescription && description && <>&nbsp;</> }
         { description && <Markdown
-            components={{ p: 'span' }}
+            components={ short ? {
+                p: 'span',
+            } : {
+                p: elProps => <span
+                    { ...elProps }
+                    className={ classNames(elProps.className, 'block mb-5') }
+                />,
+            }}
         >
             { data.output }
         </Markdown> }

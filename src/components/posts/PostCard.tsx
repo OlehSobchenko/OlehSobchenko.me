@@ -58,7 +58,7 @@ const PostCard = (props: PostCardProps) => {
 
     return <div
         id={ `post-${ id }` }
-        className={ `article w-full ${ short ? 'mb-10' : 'pb-5' }` }
+        className={ `article w-full ${ short ? 'mb-10' : 'lg:pb-12 pb-5' }` }
         onClick={ handlePostClick }
         style={ short ? { cursor: 'pointer' } : {} }
     >
