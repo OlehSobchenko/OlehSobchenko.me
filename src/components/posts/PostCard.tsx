@@ -15,6 +15,7 @@ import PostQuote from '@/components/posts/parts/PostQuote';
 import PostLink from '@/components/posts/parts/PostLink';
 import PostOpenFull from '@/components/posts/parts/PostOpenFull';
 import config from '@/config';
+import PostSource from '@/components/posts/parts/PostSource';
 
 interface PostCardProps {
     id: string;
@@ -96,6 +97,7 @@ const PostCard = (props: PostCardProps) => {
             />
             <PostQuote quote={ localized.quote }/>
             <PostAudio audio={ post.audio } lang={ locale }/>
+            <PostSource source={ localized.source }/>
             { isDescriptionTruncated && <PostOpenFull
                 text={ titles.openFull }
                 onOpenFull={ handlePostClick }

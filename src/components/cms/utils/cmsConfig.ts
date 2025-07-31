@@ -185,6 +185,12 @@ const getCmsConfig = (
                         widget: 'markdown',
                         required: false,
                     },
+                    {
+                        label: 'Джерело / Автор',
+                        name: 'source',
+                        widget: 'string',
+                        required: false,
+                    },
                 ]),
             ],
         },

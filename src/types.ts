@@ -53,5 +53,6 @@ export type Post = {
         shortDescription?: string;
         description?: string;
         quote?: string;
+        source?: string;
     }>;
 };
