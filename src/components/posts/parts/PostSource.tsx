@@ -6,7 +6,7 @@ const PostSource = ({ source }: {
     }
 
     return <div
-        className="flex items-center text-lg gap-x-2.5"
+        className="flex items-center text-lg gap-x-2.5 py-1.5"
     >
         <div>
             <svg
