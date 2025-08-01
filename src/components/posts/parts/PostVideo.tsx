@@ -56,8 +56,6 @@ const PostVideo = ({ video }: {
         embed?: string;
     };
 }) => {
-    console.info(video);
-
     if (!video || (!video.link && !video.embed)) {
         return null;
     }

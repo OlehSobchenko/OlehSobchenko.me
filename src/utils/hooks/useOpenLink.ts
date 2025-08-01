@@ -6,10 +6,6 @@ export default function useOpenLink() {
     const router = useRouter();
 
     return (path: string, newTab = false) => () => {
-        if (newTab) {
-            openInNewTab(path)?.focus();
-        }
-
         const pwa = isPWA();
 
         if (pwa) {
@@ -18,6 +14,11 @@ export default function useOpenLink() {
             return;
         }
 
-        openInNewTab(path)?.focus();
+        if (newTab) {
+            openInNewTab(path)?.focus();
+        } else {
+            router.push(path);
+        }
     };
 }
+

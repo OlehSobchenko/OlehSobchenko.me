@@ -9,7 +9,11 @@ export const PostLink = ({ link, text, openLink }: {
 
     return <div
         className="flex items-center justify-between text-lg pt-2.5 cursor-pointer"
-        onClick={ openLink(link, true) }
+        onClick={ event => {
+            openLink(link, true)();
+            event.preventDefault();
+            event.stopPropagation();
+        } }
     >
         <div className="uppercase">{ text }</div>
         <div>

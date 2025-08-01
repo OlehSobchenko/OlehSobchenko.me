@@ -48,6 +48,9 @@ export default function ScrollDown() {
                 </g>
                 <g>
                     <polygon
+                        style={{
+                            filter: 'drop-shadow(var(--scroll-down-shadow))',
+                        }}
                         points="4.59,16.59 6,18 14,10 6,2 4.59,3.41 11.17,10"
                     />
                 </g>
