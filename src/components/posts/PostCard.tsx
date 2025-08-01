@@ -89,13 +89,13 @@ const PostCard = (props: PostCardProps) => {
 
         <div className="mx-main-spacing md:mx-main-spacing-lg">
             <PostTitle title={ localized.title }/>
+            <PostQuote quote={ localized.quote }/>
             <PostDescription
                 shortDescription={ localized.shortDescription }
                 description={ localized.description }
                 short={ short }
                 maxDescriptionLength={ maxDescriptionLength }
             />
-            <PostQuote quote={ localized.quote }/>
             <PostAudio audio={ post.audio } lang={ locale }/>
             <PostSource source={ localized.source }/>
             { isDescriptionTruncated && <PostOpenFull

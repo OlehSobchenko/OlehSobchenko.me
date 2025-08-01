@@ -25,12 +25,12 @@ const PostHeaderTitle = ({ category, type, lang }: {
         </span> }
         { category && type && <span
             className="inline-block relative bottom-1"
-            style={{
+            style={ {
                 borderLeft: '3px solid var(--main-color)',
                 margin: '6px 9px 1px',
                 height: '1rem',
                 verticalAlign: 'middle',
-            }}
+            } }
         /> }
         { category && <span className="uppercase">
           { getLocalized(lang, category.name) }
