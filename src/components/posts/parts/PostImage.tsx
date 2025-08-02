@@ -20,7 +20,7 @@ const PostImage = ({ image, short }: {
         </div>;
     }
 
-    return <div className="post-image mt-4 mb-4 flex justify-center">
+    return <div className="post-image mb-4 flex justify-center">
         <img src={ imgSrc } alt="" className="w-full max-h-full"/>
     </div>;
 };
