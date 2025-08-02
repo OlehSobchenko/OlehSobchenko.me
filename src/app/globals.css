@@ -153,37 +153,37 @@ select:-webkit-autofill {
     h1 {
         font-size: 40px;
         margin: 0 0 20px;
-        line-height: 40px;
+        line-height: 1.1em;
     }
 
     h2 {
         font-size: 38px;
         margin: 0 0 19px;
-        line-height: 38px;
+        line-height: 1.1em;
     }
 
     h3 {
         font-size: 36px;
         margin: 0 0 18px;
-        line-height: 36px;
+        line-height: 1.1em;
     }
 
     h4 {
         font-size: 34px;
         margin: 0 0 17px;
-        line-height: 34px;
+        line-height: 1.1em;
     }
 
     h5 {
         font-size: 32px;
         margin: 0 0 16px;
-        line-height: 32px;
+        line-height: 1.1em;
     }
 
     h6 {
         font-size: 30px;
         margin: 0 0 15px;
-        line-height: 30px;
+        line-height: 1.1em;
     }
 
     li {
@@ -220,39 +220,39 @@ select:-webkit-autofill {
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 26px;
             margin: 0 0 12px;
-            line-height: 24px;
+            line-height: 1.75rem;
         }
 
         h2 {
-            font-size: 22px;
+            font-size: 24px;
             margin: 0 0 11px;
-            line-height: 22px;
+            line-height: 1.75rem;
         }
 
         h3 {
-            font-size: 20px;
+            font-size: 22px;
             margin: 0 0 10px;
-            line-height: 20px;
+            line-height: 1.75rem;
         }
 
         h4 {
-            font-size: 19px;
+            font-size: 20px;
             margin: 0 0 10px;
-            line-height: 19px;
+            line-height: 1.75rem;
         }
 
         h5 {
-            font-size: 18px;
+            font-size: 19px;
             margin: 0 0 9px;
-            line-height: 18px;
+            line-height: 1.75rem;
         }
 
         h6 {
-            font-size: 17px;
+            font-size: 18px;
             margin: 0 0 9px;
-            line-height: 17px;
+            line-height: 1.75rem;
         }
 
         li {
