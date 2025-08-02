@@ -12,7 +12,7 @@ export default function Accordion(props: AccordionProps) {
     return <div className="w-full">
         <div
             onClick={ () => setOpen(prev => !prev) }
-            className="flex items-center w-full cursor-pointer select-none gap-2 mb-3"
+            className="flex items-center w-full cursor-pointer select-none gap-2 mb-1"
         >
             <span
                 className={ classNames(
@@ -44,7 +44,7 @@ export default function Accordion(props: AccordionProps) {
                 }`
             }
         >
-            { open && props.children }
+            { open && <div className="pt-3 pb-1">{ props.children }</div> }
         </div>
     </div>;
 }

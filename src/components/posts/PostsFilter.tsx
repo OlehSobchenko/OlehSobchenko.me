@@ -24,7 +24,7 @@ export function SelectableButtonsFilter(props: SelectableButtonsFilterProps) {
     const locale = useLocale();
 
     return <Accordion title={ title }>
-        <div className="flex flex-wrap gap-4 mb-4">
+        <div className="flex flex-wrap lg:gap-4 gap-3 mb-4">
             { items.map(item => {
                 const isSelected = selected.includes(item.id);
 
