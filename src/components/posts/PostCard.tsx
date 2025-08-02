@@ -84,7 +84,7 @@ const PostCard = (props: PostCardProps) => {
                 image={ post.image }
                 short={ short }
             />
-            <PostVideo video={ post.video }/>
+            <PostVideo video={ post.video } short={ short }/>
         </div>
 
         <div className="mx-main-spacing md:mx-main-spacing-lg">

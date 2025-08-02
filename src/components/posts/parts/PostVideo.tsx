@@ -17,7 +17,11 @@ function HtmlParser({ htmlString }: HtmlParserProps) {
                 const reactProps = attributesToProps(domNode.attribs);
 
                 if (domNode.name === 'iframe') {
-                    return <PersistentIframe {...reactProps} />;
+                    return <PersistentIframe
+                        { ...reactProps }
+                        width="100%"
+                        height="100%"
+                    />;
                 }
             }
 
@@ -50,17 +54,18 @@ const VideoContent = (
     />;
 };
 
-const PostVideo = ({ video }: {
+const PostVideo = ({ video, short }: {
     video?: {
         link?: string;
         embed?: string;
     };
+    short?: boolean;
 }) => {
     if (!video || (!video.link && !video.embed)) {
         return null;
     }
 
-    return <div className="py-4 lg:m-0 ml-[-34px] mr-[-34px]">
+    return <div className={ `${ short ? 'py-4' : 'pb-4' } lg:m-0 ml-[-34px] mr-[-34px]` }>
         <div className="video-wrapper relative pb-[56.25%] h-0">
             <VideoContent video={ video }/>
         </div>
