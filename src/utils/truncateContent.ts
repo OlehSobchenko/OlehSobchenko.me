@@ -89,7 +89,14 @@ export default function truncateContent(
         }
     }
 
-    let finalOutput = outputLines.join('\n');
+    let finalOutput = outputLines.join('\n').trim();
+
+    if (
+        finalOutput.endsWith(',')
+        || finalOutput.endsWith('.')
+    ) {
+        finalOutput = finalOutput.substring(0, finalOutput.length - 1);
+    }
 
     if (truncated) {
         finalOutput += '...';

@@ -30,11 +30,11 @@
     --li-before-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: black' height='40px' viewBox='0 -960 960 960' width='40px'%3E%3Cpath d='m561-214.67-74-72.66L628.67-429H132v-104.67h496.67l-142.34-143 74-72 268.34 267.34L561-214.67Z'/%3E%3C/svg%3E");
 
     @media (max-width: 64rem) {
-        --page-indent: 28px;
+        --page-indent: 26px;
     }
 
     @media (max-width: 20rem) {
-        --page-indent: 16px;
+        --page-indent: 14px;
     }
 
     --scroll-down-shadow: 0 0 1px var(--bg-color);
