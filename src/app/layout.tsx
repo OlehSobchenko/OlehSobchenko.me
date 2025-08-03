@@ -152,6 +152,10 @@ export default async function RootLayout(
             <script
                 dangerouslySetInnerHTML={ { __html: themeFollowerScript } }
             />
+
+            <link href="emoji.css" rel="stylesheet" type="text/css" />
+            <script src="emoji.js" type="text/javascript"></script>
+
             <script
                 defer
                 src="https://static.cloudflareinsights.com/beacon.min.js"

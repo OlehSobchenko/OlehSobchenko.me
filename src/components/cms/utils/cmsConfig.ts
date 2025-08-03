@@ -47,16 +47,17 @@ const getCmsConfig = (
             create: true,
             folder: `${ config.contentFolder }/posts`,
             slug: '{{id}}',
-            summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}}\n{{locales.${
-                input.locale }.title | ternary('Заголовок: ', '')}}{{locales.${ input.locale }.title}}\n{{locales.${
-                input.locale }.quote | ternary('Цитата: ', '')}}{{locales.${ input.locale }.quote}}\n{{locales.${
-                input.locale }.shortDescription | ternary('Короткий опис: ', '')}}{{locales.${
+            summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}} {{image | ternary('🖼️ ', '')}}{{video | ternary('▶️ ', '')}}{{locales.${
+                input.locale }.audioId | ternary('🎧 ', '')}}\n{{locales.${
+                input.locale }.title | ternary('ЗАГОЛОВОК: ', '')}}{{locales.${ input.locale }.title}}\n{{locales.${
+                input.locale }.quote | ternary('ЦИТАТА: ', '')}}{{locales.${ input.locale }.quote}}\n{{locales.${
+                input.locale }.shortDescription | ternary('КОРОТКИЙ ОПИС: ', '')}}{{locales.${
                 input.locale }.shortDescription}}\n{{locales.${
-                input.locale }.description | ternary('------ Тіло допису ------', '')}}{{locales.${
+                input.locale }.description | ternary('------ ТІЛО ДОПИСУ ------', '')}}\n{{locales.${
                 input.locale }.description | truncate(140)}}\n{{locales.${
-                input.locale }.source | ternary('Джерело / Автор: ', '')}}{{locales.${
-                input.locale }.source}}\n{{image | ternary('Містить зображення', '')}}\n{{video | ternary('Містить відео', '')}}\n{{locales.${
-                input.locale }.audioId | ternary('Містить аудіо', '')}}`,
+                input.locale }.description | ternary('------------------------------------', '')}}\n\n{{locales.${
+                input.locale }.source | ternary('ДЖЕРЕЛО / АВТОР: ', '')}}{{locales.${
+                input.locale }.source}}\n{{displayedPreviewText}}`,
             label_singular: 'Допис',
             editor: {
                 preview: false,
@@ -70,6 +71,14 @@ const getCmsConfig = (
                     required: true,
                     index_file: 'index.json',
                     meta: false,
+                },
+                {
+                    label: 'Підказка',
+                    name: 'displayedPreviewText',
+                    hint: 'Надпис буде відображено у прев\'ю допису, але не '
+                        + 'буде відсутній на сторінці допису на вебсайті',
+                    widget: 'string',
+                    required: true,
                 },
                 {
                     label: 'Категорія',
