@@ -31,7 +31,7 @@ const getCmsConfig = (
         repo: input.repo,
         use_graphql: true,
     } as CmsBackend & { use_graphql?: boolean },
-    locale: input.locale,
+    locale: 'uk',
     i18n: {
         structure: 'single_file',
         locales,
