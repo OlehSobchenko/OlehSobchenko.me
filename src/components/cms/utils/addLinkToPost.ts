@@ -63,12 +63,23 @@ export default function addLinkToPost() {
                     firstChild.style.display = 'flex';
                     firstChild.style.justifyContent = 'space-between';
                     firstChild.appendChild(createdElement);
+
                     return;
                 }
 
                 link.style.display = 'flex';
                 link.style.justifyContent = 'space-between';
                 link.appendChild(createdElement);
+
+                const linkContent =
+                    link?.firstChild?.firstChild as HTMLHeadingElement;
+
+                if (linkContent && linkContent.innerText) {
+                    linkContent.innerText = linkContent.innerText?.replaceAll(
+                        '\n\n',
+                        '\n',
+                    );
+                }
             });
         };
 

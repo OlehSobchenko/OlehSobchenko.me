@@ -29,7 +29,7 @@ export default function useCms(
             CMSRef.current = CMS;
 
             const cmsConfig = getCmsConfig({
-                locale,
+                locale: 'uk',
                 repo: config.contentRepo,
             });
 

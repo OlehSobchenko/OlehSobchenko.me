@@ -31,7 +31,7 @@ const getCmsConfig = (
         repo: input.repo,
         use_graphql: true,
     } as CmsBackend & { use_graphql?: boolean },
-    locale: 'uk',
+    locale: input.locale,
     i18n: {
         structure: 'single_file',
         locales,
@@ -47,7 +47,16 @@ const getCmsConfig = (
             create: true,
             folder: `${ config.contentFolder }/posts`,
             slug: '{{id}}',
-            summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}}{{locales.${ input.locale }.title | ternary(' | ', '')}}{{locales.${ input.locale }.title}}`,
+            summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}}\n{{locales.${
+                input.locale }.title | ternary('Заголовок: ', '')}}{{locales.${ input.locale }.title}}\n{{locales.${
+                input.locale }.quote | ternary('Цитата: ', '')}}{{locales.${ input.locale }.quote}}\n{{locales.${
+                input.locale }.shortDescription | ternary('Короткий опис: ', '')}}{{locales.${
+                input.locale }.shortDescription}}\n{{locales.${
+                input.locale }.description | ternary('------ Тіло допису ------', '')}}{{locales.${
+                input.locale }.description | truncate(140)}}\n{{locales.${
+                input.locale }.source | ternary('Джерело / Автор: ', '')}}{{locales.${
+                input.locale }.source}}\n{{image | ternary('Містить зображення', '')}}\n{{video | ternary('Містить відео', '')}}\n{{locales.${
+                input.locale }.audioId | ternary('Містить аудіо', '')}}`,
             label_singular: 'Допис',
             editor: {
                 preview: false,
