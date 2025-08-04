@@ -69,7 +69,7 @@ const getCmsConfig = (
                     hint: 'Надпис буде відображено у прев\'ю допису, але не '
                         + 'буде відсутній на сторінці допису на вебсайті',
                     widget: 'string',
-                    required: true,
+                    required: false,
                 },
                 {
                     label: 'Категорія',
