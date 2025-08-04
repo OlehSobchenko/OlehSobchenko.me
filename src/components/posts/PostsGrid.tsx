@@ -145,6 +145,10 @@ export default function PostsGrid(props: PostsGridProps) {
         </MasonryCss>;
     }
 
+    if (!posts.length) {
+        return null;
+    }
+
     return <div ref={ containerRef }>
         <Masonry
             className="overflow-y-hidden"
