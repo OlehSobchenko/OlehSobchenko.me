@@ -49,15 +49,7 @@ const getCmsConfig = (
             slug: '{{id}}',
             summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}} {{image | ternary('🖼️ ', '')}}{{video | ternary('▶️ ', '')}}{{locales.${
                 input.locale }.audioId | ternary('🎧 ', '')}}\n{{locales.${
-                input.locale }.title | ternary('ЗАГОЛОВОК: ', '')}}{{locales.${ input.locale }.title}}\n{{locales.${
-                input.locale }.quote | ternary('ЦИТАТА: ', '')}}{{locales.${ input.locale }.quote}}\n{{locales.${
-                input.locale }.shortDescription | ternary('КОРОТКИЙ ОПИС: ', '')}}{{locales.${
-                input.locale }.shortDescription}}\n{{locales.${
-                input.locale }.description | ternary('------ ТІЛО ДОПИСУ ------', '')}}\n{{locales.${
-                input.locale }.description | truncate(140)}}\n{{locales.${
-                input.locale }.description | ternary('------------------------------------', '')}}\n\n{{locales.${
-                input.locale }.source | ternary('ДЖЕРЕЛО / АВТОР: ', '')}}{{locales.${
-                input.locale }.source}}\n{{displayedPreviewText}}`,
+                input.locale }.title | ternary('ЗАГОЛОВОК: ', '')}}{{locales.${ input.locale }.title}}\n{{displayedPreviewText}}`,
             label_singular: 'Допис',
             editor: {
                 preview: false,
