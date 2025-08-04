@@ -47,8 +47,7 @@ const getCmsConfig = (
             create: true,
             folder: `${ config.contentFolder }/posts`,
             slug: '{{id}}',
-            summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}} {{image | ternary('🖼️ ', '')}}{{video | ternary('▶️ ', '')}}{{locales.${
-                input.locale }.audioId | ternary('🎧 ', '')}}\n{{locales.${
+            summary: `ID: {{id}} | Дата: {{createdAt | date('YYYY-MM-DD HH:mm')}} {{image | ternary('🖼️ ', '')}}{{video | ternary('▶️ ', '')}}{{audioId | ternary('🎵 ', '')}}\n{{locales.${
                 input.locale }.title | ternary('ЗАГОЛОВОК: ', '')}}{{locales.${ input.locale }.title}}\n{{displayedPreviewText}}`,
             label_singular: 'Допис',
             editor: {
