@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import ErrorBoundary from '@/components/common/ErrorBoundary';
 import useCms from '@/components/cms/useCms';
 import Indexing from '@/components/cms/Indexing';
 import CmsLoginForm from '@/components/cms/CmsLoginForm';

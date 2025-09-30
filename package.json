@@ -42,7 +42,8 @@
     "react-datepicker": "^8.7.0",
     "react-dom": "^19.1.1",
     "react-markdown": "^10.1.0",
-    "react-masonry-css": "^1.0.16"
+    "react-masonry-css": "^1.0.16",
+    "url": "^0.11.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

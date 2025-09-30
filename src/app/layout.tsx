@@ -8,6 +8,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { LocaleProvider } from '@/components/providers/LocaleProvider';
 import ThemeProvider from '@/components/providers/ThemeProvider';
 import config from '@/config';
+import CloudflareBeacon from '@/components/analytics/CloudflareBeacon';
 
 const robotoCondensed = Roboto_Condensed({
     subsets: ['latin', 'cyrillic'],
@@ -152,12 +153,6 @@ export default async function RootLayout(
             <script
                 dangerouslySetInnerHTML={ { __html: themeFollowerScript } }
             />
-
-            <script
-                defer
-                src="https://static.cloudflareinsights.com/beacon.min.js"
-                data-cf-beacon='{"token": "f10bbbf0803f43b1aef10c9040c79ac6"}'
-            />
         </head>
         <body
             className={
@@ -165,6 +160,7 @@ export default async function RootLayout(
             }
             suppressHydrationWarning
         >
+            <CloudflareBeacon />
             <ThemeProvider>
                 <LocaleProvider>
                     { children }
