@@ -33,7 +33,7 @@ const PostDescription = (props: {
        : !!description
     ;
 
-    return <div className="py-2.5 text-lg leading-6">
+    return <div className="flex flex-col gap-2.5 py-2.5 text-lg leading-6">
         { shortDescription && <Markdown components={{ p: 'span' }}>
             { shortDescription }
         </Markdown> }
