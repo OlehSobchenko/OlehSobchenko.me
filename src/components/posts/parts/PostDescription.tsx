@@ -28,13 +28,17 @@ const PostDescription = (props: {
             truncated: false,
         }
     ;
+    const showDescription = short
+       ? !shortDescription && description
+       : !!description
+    ;
 
     return <div className="py-2.5 text-lg leading-6">
         { shortDescription && <Markdown components={{ p: 'span' }}>
             { shortDescription }
         </Markdown> }
         { shortDescription && description && <>&nbsp;</> }
-        { description && <Markdown
+        { showDescription && <Markdown
             components={ short ? {
                 p: 'span',
                 img: () => null,
