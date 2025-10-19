@@ -47,32 +47,28 @@ const PostDescription = (props: {
                     { ...elProps }
                     className={ classNames(elProps.className, 'block mb-5') }
                 />,
-                img: elProps => {
-                    console.log(elProps);
-
-                    return <div
-                        className="post-image flex flex-col justify-center"
+                img: elProps => <div
+                    className="post-image flex flex-col justify-center"
+                >
+                    <img
+                        { ...elProps }
+                        src={
+                            typeof elProps.src === 'string'
+                                ? normalizeUrl(elProps.src)
+                                : elProps.src
+                        }
+                        alt={ elProps.alt }
+                        className={ classNames(
+                            elProps.className,
+                            'w-full max-h-full',
+                        ) }
+                    />
+                    { elProps.title && <div
+                        className="text-sm px-(--page-indent) lg:px-0 pt-2"
                     >
-                        <img
-                            { ...elProps }
-                            src={
-                                typeof elProps.src === 'string'
-                                    ? normalizeUrl(elProps.src)
-                                    : elProps.src
-                            }
-                            alt={ elProps.alt }
-                            className={ classNames(
-                                elProps.className,
-                                'w-full max-h-full',
-                            ) }
-                        />
-                        { elProps.title && <div
-                            className="text-sm px-(--page-indent) lg:px-0 pt-2"
-                        >
-                            { elProps.title }
-                        </div> }
-                    </div>;
-                },
+                        { elProps.title }
+                    </div> }
+                </div>,
             }}
         >
             { data.output }
