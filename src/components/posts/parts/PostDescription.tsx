@@ -67,7 +67,7 @@ const PostDescription = (props: {
                             ) }
                         />
                         { elProps.title && <div
-                            className="text-sm px-(--page-indent) pt-2"
+                            className="text-sm px-(--page-indent) lg:px-0 pt-2"
                         >
                             { elProps.title }
                         </div> }
