@@ -10,6 +10,7 @@
     --gradient-background-color-end: rgba(255, 255, 255, 1);
 
     --page-indent: 64px;
+    --page-indent-negative: calc(var(--page-indent) * -1);
 
     --photo-gradient: linear-gradient(
         to bottom,

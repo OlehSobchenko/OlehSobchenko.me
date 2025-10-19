@@ -47,15 +47,23 @@ const PostDescription = (props: {
                     { ...elProps }
                     className={ classNames(elProps.className, 'block mb-5') }
                 />,
-                img: elProps => <img
-                    { ...elProps }
-                    src={
-                        typeof elProps.src === 'string'
-                            ? normalizeUrl(elProps.src)
-                            : elProps.src
-                    }
-                    alt={ elProps.alt }
-                />,
+                img: elProps => <div
+                    className="post-image flex justify-center"
+                >
+                    <img
+                        { ...elProps }
+                        src={
+                            typeof elProps.src === 'string'
+                                ? normalizeUrl(elProps.src)
+                                : elProps.src
+                        }
+                        alt={ elProps.alt }
+                        className={ classNames(
+                            elProps.className,
+                            'w-full max-h-full',
+                        ) }
+                    />
+                </div>,
             }}
         >
             { data.output }
