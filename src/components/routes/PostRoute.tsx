@@ -15,5 +15,9 @@ export async function generateStaticParams() {
         true,
     );
 
-    return Object.keys(index || {}).map(id => ({ id }));
+    const params = Object.keys(index || {}).map(id => ({ id }));
+
+    console.log(params);
+
+    return params;
 }
