@@ -215,7 +215,7 @@ const getCmsConfig = (
                 preview: false,
             },
             summary: `{{locales.${ input.locale }.name}} - {{locales.${
-                input.locale }.description}} | {{prioritized | ternary('Найпріоритетніший |','')}} Шлях: {{link}}`,
+                input.locale }.description}} | Порядок сортування: {{priority}} | Шлях: {{link}}`,
             identifier_field: 'id',
             fields: [
                 {
@@ -233,10 +233,10 @@ const getCmsConfig = (
                     required: true,
                 },
                 {
-                    label: 'Найпріоритетніший',
-                    name: 'prioritized',
-                    widget: 'boolean',
-                    default: false,
+                    label: 'Порядок сортування',
+                    name: 'priority',
+                    widget: 'number',
+                    default: 100,
                 },
                 getLocalizedContentField([
                     {

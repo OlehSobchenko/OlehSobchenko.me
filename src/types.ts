@@ -24,7 +24,7 @@ export type Audio = {
     id: string;
     link?: string;
     thumbnail?: string;
-    prioritized?: boolean;
+    priority?: number;
     locales?: Localized<{
         name?: string;
         description?: string;

@@ -55,12 +55,16 @@ export const AudioPlayerProvider = (
                 return;
             }
 
-            const enrichedTracks = loadedTracks.map(enrichAudio);
+            const enrichedTracks = loadedTracks
+                .map(enrichAudio)
+                .toSorted(
+                    (a, b) =>
+                        +(a?.priority || Infinity) -
+                        +(b?.priority || Infinity));
 
             setTracks(enrichedTracks as Audio[]);
 
-            const track = enrichedTracks.find(t => t?.prioritized)
-                || enrichedTracks[0];
+            const track = enrichedTracks[0];
 
             if (track) {
                 setCurrentTrack(track);
