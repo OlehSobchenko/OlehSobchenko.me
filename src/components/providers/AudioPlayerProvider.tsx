@@ -59,8 +59,8 @@ export const AudioPlayerProvider = (
                 .map(enrichAudio)
                 .toSorted(
                     (a, b) =>
-                        +(b?.priority || Infinity) -
-                        +(a?.priority || Infinity));
+                        +(a?.priority || Infinity) -
+                        +(b?.priority || Infinity));
 
             setTracks(enrichedTracks as Audio[]);
 
