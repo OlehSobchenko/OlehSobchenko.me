@@ -8,6 +8,7 @@ import { Post } from '@/types';
 import useLocale from '@/utils/hooks/useLocale';
 import { Masonry } from 'masonic';
 import { useMediaQuery } from '@/utils/hooks/useMediaQuery';
+import { useOpenedPost } from '@/components/providers/OpenedPostProvider';
 
 export interface PostsGridProps {
     posts: Post[];
@@ -85,6 +86,7 @@ export default function PostsGrid(props: PostsGridProps) {
     const { posts, variant = 'default' } = props;
     const locale = useLocale();
     const openLink = useOpenLink();
+    const openPost = useOpenedPost();
     const t = useTranslations('PostCard');
     const full = useMediaQuery('(min-width: 1024px)');
     const columnsCount = full ? 2 : 1;
@@ -137,6 +139,7 @@ export default function PostsGrid(props: PostsGridProps) {
                 locale={ locale as Languages }
                 short
                 openLink={ openLink }
+                onOpen={ openPost && (() => openPost(post)) }
                 titles={{
                     link: t('link'),
                     openFull: t('openFull'),
@@ -167,6 +170,7 @@ export default function PostsGrid(props: PostsGridProps) {
                 locale={ locale as Languages }
                 short
                 openLink={ openLink }
+                onOpen={ openPost && (() => openPost(post)) }
                 titles={{
                     link: t('link'),
                     openFull: t('openFull'),

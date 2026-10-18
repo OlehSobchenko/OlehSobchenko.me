@@ -28,6 +28,7 @@ interface PostCardProps {
     short?: boolean;
     hideDivider?: boolean;
     openLink: (path: string, newTab?: boolean) => () => void;
+    onOpen?: () => void;
 }
 
 const PostCard = (props: PostCardProps) => {
@@ -39,11 +40,18 @@ const PostCard = (props: PostCardProps) => {
         titles,
         id,
         hideDivider,
+        onOpen,
     } = props;
     const maxDescriptionLength = config.maxDescriptionLength;
 
     const handlePostClick = () => {
-        if (short) {
+        if (!short) {
+            return;
+        }
+
+        if (onOpen) {
+            onOpen();
+        } else {
             openLink(`/post/${ id }`)();
         }
     };

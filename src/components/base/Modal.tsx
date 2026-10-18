@@ -11,17 +11,30 @@ export interface ModalProps {
     children?: ReactNode;
 }
 
+// Modals can be stacked (e.g. a post opened from search results), so the page
+// stays locked until the last one closes.
+let openedModals = 0;
+
 export default function Modal(props: PropsWithChildren<ModalProps>) {
     const router = useRouter();
     const { open, onClose = () => router.push('/'), title, children } = props;
     const full = useMediaQuery('(min-width: 1024px)');
 
     useEffect(() => {
-        if (open) {
-            document.documentElement.style.overflow = 'hidden';
-        } else {
-            document.documentElement.style.overflow = 'auto';
+        if (!open) {
+            return;
         }
+
+        openedModals++;
+        document.documentElement.style.overflow = 'hidden';
+
+        return () => {
+            openedModals--;
+
+            if (!openedModals) {
+                document.documentElement.style.overflow = 'auto';
+            }
+        };
     }, [open]);
 
     if (!open) {

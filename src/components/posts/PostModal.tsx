@@ -18,16 +18,24 @@ import { useRouter } from 'next/navigation';
 
 export interface PostModalProps {
     id: string;
+    post?: Post;
+    onClose?: () => void;
 }
 
 export default function PostModal(props: PostModalProps) {
     const locale = useLocale();
-    const [post, setPost] = useState<Post | null>(null);
+    const [post, setPost] = useState<Post | null>(
+        props.post || null,
+    );
     const openLink = useOpenLink();
     const router = useRouter();
     const t = useTranslations('PostCard');
 
     useEffect(() => {
+        if (props.post) {
+            return;
+        }
+
         (async () => {
             const [
                 rawPost,
@@ -43,7 +51,7 @@ export default function PostModal(props: PostModalProps) {
                 setPost(enrichPost(rawPost, loadedTypes, loadedCategories));
             }
         })();
-    }, [props.id]);
+    }, [props.id, props.post]);
 
     if (!post) {
         return null;
@@ -64,7 +72,7 @@ export default function PostModal(props: PostModalProps) {
                 <PostDate happenedAt={ post.happenedAt }/>
             </div>
         </div> }
-        onClose={ isPWA() ? router.back : undefined }
+        onClose={ props.onClose || (isPWA() ? router.back : undefined) }
     >
         <PostCard
             id={ post.id }
